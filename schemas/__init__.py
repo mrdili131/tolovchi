@@ -1,2 +1,3 @@
 from .user import *
 from .application import *
+from .card import *

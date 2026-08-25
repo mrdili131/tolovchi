@@ -54,4 +54,21 @@ async def get_user(token: Annotated[str,Depends(oauth2_scheme)]):
     except JWTError:
         raise exception_err
     
-user_dependency = Annotated[dict,Depends(get_user)]
+
+
+# Role based dependency
+async def service_required(user: user_dependency):
+    if user.get("role") != UserType.SERVICE.value:
+        raise HTTPException(status_code=403, detail="User role should be service")
+    return user
+
+
+async def user_required(user: user_dependency):
+    if user.get("role") != UserType.USER.value:
+        raise HTTPException(status_code=403, detail="User role should be user")
+    return user
+
+
+user_dependency = Annotated[dict,Depends(get_user)] # For Authorized account view
+service_role = Annotated[dict, Depends(service_required)] # For Service account view
+user_role = Annotated[dict, Depends(user_required)] # For User account view

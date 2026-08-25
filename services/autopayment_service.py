@@ -1,8 +1,9 @@
-import requests
 import time, json, hmac, hashlib, secrets, requests
 from dotenv import load_dotenv
 import os
 import random
+from fastapi import HTTPException
+from schemas import CardBindResponse
 
 
 load_dotenv()
@@ -16,7 +17,7 @@ class InpayAutoPayService:
             "merchant_token":os.getenv("MERCHANT_TOKEN")
         })
         if not r.ok:
-            raise TypeError("Cannot get access token")
+            raise HTTPException(status_code=400,detail="Cannot get access token")
         self.access_token = r.json()["bearer_token"]
 
 
@@ -45,7 +46,7 @@ class InpayAutoPayService:
             "amount":amount
         })
         if not r.ok:
-            raise TypeError("Cannot create order")
+            raise HTTPException(status_code=400,detail="Cannot create order")
         return r.json()["cardsystem_order_id"]
 
 
@@ -57,7 +58,7 @@ class InpayAutoPayService:
             secret = os.getenv("INPAY_CARD_SECRET")
         ).json()
         if r["success"] == False:
-            raise TypeError("Cannot generate card link page")
+            raise HTTPException(status_code=400,detail="Cannot generate card link page")
         return r
 
     def charge(self,card_id,amount):
@@ -82,7 +83,7 @@ class InpayAutoPayService:
             case _:
                 r = r.json()
                 if r["success"] == False:
-                    raise TypeError("Could not get amount")
+                    raise HTTPException(status_code=400,detail="Could not charge")
                 return r
             
 

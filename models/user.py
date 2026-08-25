@@ -17,6 +17,7 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
     service_name = Column(String,default="Unnamed")
+    balance = Column(Integer,default=0)
 
     last_name = Column(String,default="")
     first_name = Column(String,default="")
