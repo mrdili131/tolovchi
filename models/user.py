@@ -28,3 +28,5 @@ class User(Base):
     cards = relationship("Card", back_populates="user")
     service_applications = relationship("Application", foreign_keys="Application.service_id", back_populates="service")
     applications = relationship("Application", foreign_keys="Application.payer_id", back_populates="payer")
+    transactions = relationship("Transaction", foreign_keys="Transaction.sender_id", back_populates="sender")
+    service_transactions = relationship("Transaction", foreign_keys="Transaction.receiver_id", back_populates="receiver")

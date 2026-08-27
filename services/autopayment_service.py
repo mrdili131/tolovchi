@@ -17,7 +17,7 @@ class InpayAutoPayService:
             "merchant_token":os.getenv("MERCHANT_TOKEN")
         })
         if not r.ok:
-            raise HTTPException(status_code=400,detail="Cannot get access token")
+            raise HTTPException(status_code=400,detail="SERVICE: Cannot get access token")
         self.access_token = r.json()["bearer_token"]
 
 
@@ -46,44 +46,44 @@ class InpayAutoPayService:
             "amount":amount
         })
         if not r.ok:
-            raise HTTPException(status_code=400,detail="Cannot create order")
+            raise HTTPException(status_code=400,detail="SERVICE: Cannot create order")
         return r.json()["cardsystem_order_id"]
 
 
-    def bind(self,customer_id="99160133"):
+    def bind(self,customer_id="99160133",return_url="/"):
         r = self.inpay_cards(
             action = "bind",
-            body = {"customer_ref":customer_id}, # Customer ID ni to‘g‘irlang
+            body = {"customer_ref":customer_id,"return_url":return_url}, # Customer ID ni to‘g‘irlang
             key_id = os.getenv("INPAY_KEY_ID"),
             secret = os.getenv("INPAY_CARD_SECRET")
         ).json()
         if r["success"] == False:
-            raise HTTPException(status_code=400,detail="Cannot generate card link page")
+            raise HTTPException(status_code=400,detail="SERVICE: Cannot generate card link page")
         return r
 
-    def charge(self,card_id,amount):
+    def charge(self,card_id,amount,reason="Avto-to‘lov"):
         r = self.inpay_cards(
             action = "charge",
             body = {
                 "card_id":card_id,
                 "amount":amount,
                 "idem_key":random.randint(1000,9999), # Memorial order [NEEDS TO BE CHANGED]
-                "reason":"Avto-to‘lov"
+                "reason":reason
             },
             key_id = os.getenv("INPAY_KEY_ID"),
             secret = os.getenv("INPAY_CARD_SECRET")
         )
         match r.status_code:
             case 400:
-                raise TypeError("Summa yechishda xatolik")
+                raise HTTPException(status_code=400,detail="SERVICE: Summa yechishda xatolik")
             case 402:
-                raise TypeError("Bank kartasi faol emas")
+                raise HTTPException(status_code=400,detail="SERVICE: Bank kartasi faol emas yoki yechish summasi kam")
             case 401:
-                raise TypeError("Imzoda xatolik")
+                raise HTTPException(status_code=400,detail="SERVICE: Imzoda xatolik")
             case _:
                 r = r.json()
                 if r["success"] == False:
-                    raise HTTPException(status_code=400,detail="Could not charge")
+                    raise HTTPException(status_code=400,detail="SERVICE: Could not charge")
                 return r
             
 
