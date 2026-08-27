@@ -57,6 +57,7 @@ class InpayAutoPayService:
             key_id = os.getenv("INPAY_KEY_ID"),
             secret = os.getenv("INPAY_CARD_SECRET")
         ).json()
+
         if r["success"] == False:
             raise HTTPException(status_code=400,detail="SERVICE: Cannot generate card link page")
         return r
@@ -82,6 +83,7 @@ class InpayAutoPayService:
                 raise HTTPException(status_code=400,detail="SERVICE: Imzoda xatolik")
             case _:
                 r = r.json()
+                print(r)
                 if r["success"] == False:
                     raise HTTPException(status_code=400,detail="SERVICE: Could not charge")
                 return r

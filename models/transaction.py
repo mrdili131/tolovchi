@@ -20,4 +20,4 @@ class Transaction(Base):
     receiver_id = Column(Integer,ForeignKey("users.id"))
 
     sender = relationship("User", foreign_keys=[sender_id], back_populates="transactions")
-    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="transactions")
+    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="service_transactions")

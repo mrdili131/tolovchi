@@ -36,4 +36,4 @@ async def login(db: Session, form: Annotated[OAuth2PasswordRequestForm, Depends(
         raise HTTPException(status_code=404, detail="Invalid credentials, try again")
 
     token = create_token(user.username,user.id,user.type,timedelta(days=5))
-    return LoginResponse(access_token=token,token_type="bearer")
+    return LoginResponse(access_token=token,token_type="bearer", role=user.type)

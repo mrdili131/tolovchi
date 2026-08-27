@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 router = APIRouter()
 
-@router.get('/', response_model=list[ApplicationResponse], status_code=200, summary="Get applications based on your role")
+@router.get('/', response_model=list[ApplicationResponse], status_code=200, summary="Get applications based on your role. Service's app or client connected app")
 async def get_applications(user: user_dependency, db: Session):
     match user.get("role"):
         case UserType.USER.value:
