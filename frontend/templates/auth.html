@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bindin - Davlat Obunalar Portali</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Real QR Code Reader & Generator Libraries -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #004488;
+            --primary-hover: #003366;
+            --bg: #F4F6F9;
+            --surface: #FFFFFF;
+            --border: #CBD5E1;
+            --text: #1F2937;
+            --text-muted: #6B7280;
+            --success: #059669;
+            --danger: #DC2626;
+            --gov-accent: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Sticky Header */
+        header {
+            background-color: var(--primary);
+            color: var(--surface);
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .user-badge-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Layout Main */
+        main {
+            flex: 1;
+            padding: 1.25rem 1rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 5.5rem;
+        }
+
+        /* Auth Card */
+        .auth-container {
+            max-width: 420px;
+            margin: 2rem auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .auth-container h2 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 0.35rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.65rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            font-size: 0.95rem;
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid var(--primary);
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--surface);
+            border: none;
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.75rem;
+            width: auto;
+        }
+
+        /* Dynamic Views */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+        }
+
+        .card h2 {
+            font-size: 0.95rem;
+            color: var(--gov-accent);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Registry Items */
+        .registry-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .gov-item {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            padding: 0.85rem 1rem;
+        }
+
+        .gov-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .gov-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .gov-val {
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        /* Responsive Data Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.65rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg);
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        /* QR Scanner Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        #qr-reader-container {
+            width: 100%;
+            min-height: 250px;
+            background: #000;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qr-reader {
+            width: 100%;
+            border: none !important;
+        }
+
+        #qr-reader video {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: cover !important;
+        }
+
+        #qrDisplayContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--bg);
+            border: 1px dashed var(--border);
+        }
+
+        .gov-alert-body {
+            font-size: 0.9rem;
+            padding: 1rem;
+            border-left: 4px solid var(--primary);
+            background: #F8FAFC;
+            margin-bottom: 1.25rem;
+            word-break: break-all;
+        }
+
+        .gov-alert-body.error {
+            border-left-color: var(--danger);
+            background: #FEF2F2;
+            color: #991B1B;
+        }
+
+        .gov-alert-body.success {
+            border-left-color: var(--success);
+            background: #ECFDF5;
+            color: #065F46;
+        }
+
+        /* Mobile Bottom 3-Button Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            text-decoration: none;
+            cursor: pointer;
+            gap: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Desktop Optimization */
+        @media (min-width: 768px) {
+            main { padding-bottom: 1.5rem; }
+            .bottom-nav { display: none !important; }
+            .tab-page { display: block !important; }
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-title">🏛️ Bindin Portali</div>
+        <div id="userInfo" class="user-badge-container hidden">
+            <span id="roleBadge" class="badge">ROLI</span>
+            <button onclick="logout()" class="btn-logout">Chiqish</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Auth Screen -->
+        <div id="authBlock" class="auth-container">
+            <h2 id="authTitle">Tizimga Kirish</h2>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="form-group">
+                    <label>Foydalanuvchi nomi (Username)</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Parol</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div id="confirmPasswordGroup" class="form-group hidden">
+                    <label>Parolni tasdiqlash</label>
+                    <input type="password" id="password_confirm">
+                </div>
+                <button type="submit" id="authSubmitBtn">Kirish</button>
+                <button type="button" class="btn-secondary" onclick="toggleAuthMode()" id="authToggleBtn">Ro'yxatdan o'tish</button>
+            </form>
+        </div>
+
+        <!-- Authenticated Dashboard -->
+        <div id="dashboard" class="dashboard-grid hidden">
+
+            <!-- TAB 1: Main View (User Cards OR Service Application Creation) -->
+            <div id="tab-main" class="tab-page">
+                <!-- User Specific View -->
+                <div id="userCardSection" class="card hidden">
+                    <h2>Bank Kartalari</h2>
+                    <div style="margin-bottom: 1rem;">
+                        <button onclick="bindCard()" class="btn-secondary">Yangi karta biriktirish</button>
+                    </div>
+                    <div id="userCardsContainer" class="registry-grid">
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Kartalar yuklanmoqda...</p>
+                    </div>
+                </div>
+
+                <!-- Service Specific View -->
+                <div id="serviceAppSection" class="card hidden">
+                    <h2>Yangi Ariza Yaratish</h2>
+                    <form onsubmit="handleCreateApp(event)">
+                        <div class="form-group">
+                            <label>Ariza Nomi</label>
+                            <input type="text" id="appName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tavsif</label>
+                            <input type="text" id="appDesc" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Summa (Min: 1000)</label>
+                            <input type="number" id="appAmount" min="1000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Davriyligi</label>
+                            <select id="appFrequency">
+                                <option value="monthly">Har oy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To'lov kuni (1 - 31)</label>
+                            <input type="number" id="appPayDay" min="1" max="31" required>
+                        </div>
+                        <button type="submit">Arizani joylashtirish</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 2: Applications & QR Scanner View -->
+            <div id="tab-applications" class="tab-page">
+                <div class="card">
+                    <h2>Arizalar Ro'yxati</h2>
+                    
+                    <!-- USER Role QR Code Scanner Action -->
+                    <div id="userScanAction" class="hidden" style="margin-bottom: 1.25rem;">
+                        <button onclick="openQrScanner()" style="display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+                            <svg style="width:18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5zM7 7h4v4H7V7zm10 0h-4v4h4V7zM7 17h4v-4H7v4zm5-5h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2z"/></svg>
+                            QR Kodni Skanerlash
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr id="appTableHeader">
+                                    <th>ID</th>
+                                    <th>Tavsif</th>
+                                    <th>To'lov jadvali</th>
+                                    <th>Holati</th>
+                                    <th id="thActionHeader" class="hidden">Amal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTableBody">
+                                <tr><td colspan="5" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Transactions & Charging View -->
+            <div id="tab-transactions" class="tab-page">
+                <!-- Service Role Manual Charging Action -->
+                <div id="serviceChargeSection" class="card hidden" style="margin-bottom: 1.25rem;">
+                    <h2>Kartadan Yechish</h2>
+                    <form onsubmit="handleChargeCard(event)">
+                        <div class="form-group">
+                            <label>Karta ID</label>
+                            <input type="number" id="chargeCardId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Xizmat (Service) ID</label>
+                            <input type="number" id="chargeServiceId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Summa</label>
+                            <input type="number" id="chargeAmount" min="1000" required>
+                        </div>
+                        <button type="submit">Mablag'ni Yechish</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>Tranzaksiyalar Daftari</h2>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Summa</th>
+                                    <th>Holat</th>
+                                    <th>Yuboruvchi ID</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionsTableBody">
+                                <tr><td colspan="4" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Mobile 3-Button Navigation -->
+    <nav id="bottomNav" class="bottom-nav hidden">
+        <div class="nav-item active" data-tab="main" onclick="switchTab('main')">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span id="navMainLabel">Bosh sahifa</span>
+        </div>
+        <div class="nav-item" data-tab="applications" onclick="switchTab('applications')">
+            <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+            <span>Arizalar</span>
+        </div>
+        <div class="nav-item" data-tab="transactions" onclick="switchTab('transactions')">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            <span>Daftar</span>
+        </div>
+    </nav>
+
+    <!-- USER Camera Scanner Modal -->
+    <div id="qrModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 style="margin-bottom:0.75rem; font-size:0.95rem; text-transform:uppercase;">QR koddagi havolani skanerlang</h3>
+            <div id="qr-reader-container">
+                <div id="qr-reader"></div>
+            </div>
+            <button onclick="closeQrScanner()" class="btn-secondary">Kamerani Yopish</button>
+        </div>
+    </div>
+
+    <!-- SERVICE QR Code Display Modal -->
+    <div id="qrDisplayModal" class="modal hidden">
+        <div class="modal-content" style="text-align: center;">
+            <h3 style="margin-bottom:0.5rem; font-size:0.95rem; text-transform:uppercase;">Ariza QR Kodi</h3>
+            <p id="qrModalAppDesc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">--</p>
+            <div id="qrDisplayContainer"></div>
+            <button onclick="closeQrDisplayModal()" class="btn-secondary">Yopish</button>
+        </div>
+    </div>
+
+    <!-- Official Alert Modal -->
+    <div id="govModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="govModalTitle" style="margin-bottom:0.75rem; font-size:0.95rem; text-transform:uppercase; color:var(--gov-accent);">Tizim Bildirishnomasi</h3>
+            <div id="govModalBody" class="gov-alert-body">--</div>
+            <button onclick="closeGovAlert()">Tushundim</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:8000/api";
+        let isRegisterMode = false;
+        let html5QrCodeEngine = null;
+
+        // Custom Government Notification System
+        function showAlert(message, type = 'info', title = 'Tizim Bildirishnomasi') {
+            document.getElementById("govModalTitle").innerText = title;
+            const body = document.getElementById("govModalBody");
+            body.innerText = message;
+            body.className = `gov-alert-body ${type}`;
+            document.getElementById("govModal").classList.remove("hidden");
+        }
+
+        function closeGovAlert() {
+            document.getElementById("govModal").classList.add("hidden");
+        }
+
+        // Authentication Handlers
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById("authTitle").innerText = isRegisterMode ? "Ro'yxatdan O'tish" : "Tizimga Kirish";
+            document.getElementById("authSubmitBtn").innerText = isRegisterMode ? "Hisob Yaratish" : "Kirish";
+            document.getElementById("authToggleBtn").innerText = isRegisterMode ? "Kirishga o'tish" : "Ro'yxatdan o'tish";
+            document.getElementById("confirmPasswordGroup").classList.toggle("hidden", !isRegisterMode);
+        }
+
+        async function handleAuth(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (isRegisterMode) {
+                const password_confirm = document.getElementById("password_confirm").value;
+                const res = await fetch(`${API_BASE}/auth/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password, password_confirm })
+                });
+                if (res.ok) {
+                    showAlert("Ro'yxatdan o'tish muvaffaqiyatli yakunlandi. Iltimos, tizimga kiring.", "success");
+                    toggleAuthMode();
+                } else {
+                    showAlert("Ro'yxatdan o'tishda xatolik. Ma'lumotlarni tekshiring.", "error");
+                }
+            } else {
+                const formData = new URLSearchParams();
+                formData.append("username", username);
+                formData.append("password", password);
+
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: formData
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem("token", data.access_token);
+                    localStorage.setItem("role", data.role);
+                    initDashboard();
+                } else {
+                    showAlert("Foydalanuvchi nomi yoki parol noto'g'ri.", "error");
+                }
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            location.hash = "";
+            location.reload();
+        }
+
+        // Authorized Fetch Wrapper
+        async function apiFetch(endpoint, options = {}) {
+            const token = localStorage.getItem("token");
+            const headers = {
+                ...options.headers,
+                "Authorization": `Bearer ${token}`
+            };
+            return fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+        }
+
+        // Dashboard Initialization & Role Management
+        async function initDashboard() {
+            const token = localStorage.getItem("token");
+            const role = localStorage.getItem("role");
+            if (!token) return;
+
+            document.getElementById("authBlock").classList.add("hidden");
+            document.getElementById("dashboard").classList.remove("hidden");
+            document.getElementById("userInfo").classList.remove("hidden");
+            document.getElementById("bottomNav").classList.remove("hidden");
+            document.getElementById("roleBadge").innerText = role.toUpperCase();
+
+            if (role === 'user') {
+                document.getElementById("userCardSection").classList.remove("hidden");
+                document.getElementById("userScanAction").classList.remove("hidden");
+                document.getElementById("navMainLabel").innerText = "Kartalar";
+                document.getElementById("thActionHeader").classList.add("hidden");
+                loadCards();
+            } else if (role === 'service') {
+                document.getElementById("serviceAppSection").classList.remove("hidden");
+                document.getElementById("serviceChargeSection").classList.remove("hidden");
+                document.getElementById("navMainLabel").innerText = "Yaratish";
+                document.getElementById("thActionHeader").classList.remove("hidden");
+            }
+
+            // Restore tab from URL hash or default to 'main'
+            const currentHash = window.location.hash.replace('#', '');
+            const initialTab = ['main', 'applications', 'transactions'].includes(currentHash) ? currentHash : 'main';
+            switchTab(initialTab, false);
+
+            loadApplications();
+            loadTransactions();
+        }
+
+        // Mobile & Desktop Hash Sync Tab Navigation System
+        function switchTab(tabName, updateHash = true) {
+            const validTabs = ['main', 'applications', 'transactions'];
+            if (!validTabs.includes(tabName)) tabName = 'main';
+
+            if (updateHash) {
+                window.location.hash = tabName;
+            }
+
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.tab-page').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+                const targetTab = document.getElementById(`tab-${tabName}`);
+                const targetNav = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+                if (targetTab) targetTab.style.display = 'block';
+                if (targetNav) targetNav.classList.add('active');
+            }
+        }
+
+        // Handle URL Hash Changes (Browser Back/Forward or Reload)
+        window.addEventListener('hashchange', () => {
+            const currentHash = window.location.hash.replace('#', '');
+            if (currentHash) switchTab(currentHash, false);
+        });
+
+        // DATA LOADERS & API CALLS
+
+        // USER: Get Cards
+        async function loadCards() {
+            const res = await apiFetch("/card/");
+            if (res.ok) {
+                const cards = await res.json();
+                const container = document.getElementById("userCardsContainer");
+                if(cards.length === 0) {
+                    container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Biriktirilgan bank kartalari mavjud emas.</p>';
+                    return;
+                }
+                container.innerHTML = cards.map(c => `
+                    <div class="gov-item">
+                        <div class="gov-row"><span class="gov-label">Egasining ismi:</span><span class="gov-val">${c.holder || 'Mavjud emas'}</span></div>
+                        <div class="gov-row"><span class="gov-label">Raqami:</span><span class="gov-val">${c.pan || '•••• ••••'}</span></div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // USER: Card Binding Redirect
+        async function bindCard() {
+            const returnUrl = encodeURIComponent(window.location.href);
+            const res = await apiFetch(`/card/bind?return_url=${returnUrl}`);
+            if (res.ok) {
+                const data = await res.json();
+                window.open(data.card_link_url, '_blank');
+            } else {
+                showAlert("Karta biriktirish seansini yaratishda xatolik.", "error");
+            }
+        }
+
+        // SERVICE: Create Application
+        async function handleCreateApp(e) {
+            e.preventDefault();
+            const payload = {
+                name: document.getElementById("appName").value,
+                description: document.getElementById("appDesc").value,
+                amount: parseInt(document.getElementById("appAmount").value),
+                frequency: document.getElementById("appFrequency").value,
+                pay_day: parseInt(document.getElementById("appPayDay").value)
+            };
+
+            const res = await apiFetch("/application/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                showAlert("Ariza muvaffaqiyatli yaratildi.", "success");
+                loadApplications();
+            } else {
+                showAlert("Ariza yaratishda xatolik yuz berdi.", "error");
+            }
+        }
+
+        // USER & SERVICE: Load Applications
+        async function loadApplications() {
+            const role = localStorage.getItem("role");
+            const res = await apiFetch("/application/");
+            if (res.ok) {
+                const apps = await res.json();
+                const tbody = document.getElementById("applicationsTableBody");
+                if (apps.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Arizalar yozuvlari topilmadi</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = apps.map(a => {
+                    const hasPayer = a.user_id !== null && a.user_id !== undefined || a.subscriber_id !== null && a.subscriber_id !== undefined;
+                    const canShowQr = role === 'service' && (!a.is_active && !hasPayer);
+
+                    return `
+                        <tr>
+                            <td>#${a.id}</td>
+                            <td>${a.description || 'Mavjud emas'}</td>
+                            <td>${a.pay_day}-sana (${a.frequency === 'monthly' ? 'Har oy' : a.frequency})</td>
+                            <td>${a.is_active ? 'Faol' : 'Faol emas'}</td>
+                            ${role === 'service' ? `
+                                <td>
+                                    ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.description)}')" class="btn-secondary btn-sm">QR ko'rsatish</button>` : '<span style="color:var(--text-muted); font-size:0.75rem;">Ulangan</span>'}
+                                </td>
+                            ` : ''}
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        // SERVICE: Display QR Code for an application link
+        function generateQrModal(appId, appDesc) {
+            const targetUrl = `${API_BASE}/application/link/${appId}`;
+            const container = document.getElementById("qrDisplayContainer");
+            container.innerHTML = "";
+            
+            document.getElementById("qrModalAppDesc").innerText = `Ariza #${appId}: ${decodeURIComponent(appDesc)}`;
+
+            new QRCode(container, {
+                text: targetUrl,
+                width: 200,
+                height: 200,
+                colorDark : "#004488",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById("qrDisplayModal").classList.remove("hidden");
+        }
+
+        function closeQrDisplayModal() {
+            document.getElementById("qrDisplayModal").classList.add("hidden");
+        }
+
+        // USER: Real QR Code Camera Scanner Integration
+        async function openQrScanner() {
+            document.getElementById("qrModal").classList.remove("hidden");
+            
+            if (html5QrCodeEngine) {
+                await closeQrScanner();
+            }
+
+            try {
+                html5QrCodeEngine = new Html5Qrcode("qr-reader");
+                
+                const qrConfig = {
+                    fps: 10,
+                    qrbox: { width: 220, height: 220 }
+                };
+
+                const cameras = await Html5Qrcode.getCameras();
+                if (cameras && cameras.length > 0) {
+                    const cameraId = cameras[cameras.length - 1].id;
+                    await html5QrCodeEngine.start(cameraId, qrConfig, onScanSuccess, onScanFailure);
+                } else {
+                    await html5QrCodeEngine.start({ facingMode: "environment" }, qrConfig, onScanSuccess, onScanFailure);
+                }
+            } catch (err) {
+                showAlert("Kamerani ishga tushirib bo'lmadi. Ruhsatlarni tekshiring.", "error");
+                closeQrScanner();
+            }
+        }
+
+        async function closeQrScanner() {
+            if (html5QrCodeEngine) {
+                try {
+                    await html5QrCodeEngine.stop();
+                    html5QrCodeEngine.clear();
+                } catch(e) {}
+                html5QrCodeEngine = null;
+            }
+            document.getElementById("qrModal").classList.add("hidden");
+        }
+
+        // USER: Real Scan Handler Executing POST Link
+        async function onScanSuccess(decodedText) {
+            await closeQrScanner();
+            
+            let targetUrl = decodedText;
+            if (!isNaN(decodedText)) {
+                targetUrl = `${API_BASE}/application/link/${decodedText}`;
+            }
+
+            try {
+                const res = await fetch(targetUrl, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    showAlert(`Ariza muvaffaqiyatli ulandi!\nHolati: ${data.status}\nTafsilot: ${data.detail}`, "success");
+                    loadApplications();
+                } else {
+                    showAlert("QR kod orqali arizani ulash imkonsiz bo'ldi.", "error");
+                }
+            } catch (err) {
+                showAlert("QR havolani bajarishda tarmoq xatoligi.", "error");
+            }
+        }
+
+        function onScanFailure(error) {
+            // Quiet continuous capture frame failures
+        }
+
+        // SERVICE: Process Charge
+        async function handleChargeCard(e) {
+            e.preventDefault();
+            const payload = {
+                card_id: parseInt(document.getElementById("chargeCardId").value),
+                service_id: parseInt(document.getElementById("chargeServiceId").value),
+                amount: parseInt(document.getElementById("chargeAmount").value)
+            };
+
+            const res = await apiFetch("/card/charge", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                showAlert("Mablag' kartadan muvaffaqiyatli yechildi.", "success");
+                loadTransactions();
+            } else {
+                showAlert("Mablag' yechishda xatolik yuz berdi.", "error");
+            }
+        }
+
+        // USER & SERVICE: Load Transactions
+        async function loadTransactions() {
+            const role = localStorage.getItem("role");
+            const res = await apiFetch("/card/transactions");
+            
+            if (res.ok) {
+                const txs = await res.json();
+                const tbody = document.getElementById("transactionsTableBody");
+                const thead = document.querySelector("#tab-transactions table thead tr");
+
+                // Dynamic table headers based on role
+                thead.innerHTML = `
+                    <th>ID</th>
+                    <th>Summa</th>
+                    <th>Holat</th>
+                    <th>Yuboruvchi ID</th>
+                    ${role === 'service' ? '<th>Yuboruvchi F.I.Sh.</th>' : ''}
+                `;
+
+                if (txs.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="${role === 'service' ? 5 : 4}" style="text-align:center;">Tranzaksiyalar mavjud emas</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = txs.map(t => {
+                    const sender = t.sender || {};
+                    const firstName = sender.first_name || '';
+                    const lastName = sender.last_name || '';
+                    const middleName = sender.middle_name || '';
+                    
+                    const fullName = `${lastName} ${firstName} ${middleName}`.trim() || sender.username || 'Mavjud emas';
+
+                    return `
+                        <tr>
+                            <td>#${t.id}</td>
+                            <td>${t.amount}</td>
+                            <td>${t.status}</td>
+                            <td>#${t.sender_id}</td>
+                            ${role === 'service' ? `<td><strong>${fullName}</strong></td>` : ''}
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Initialize App on Load
+        window.onload = () => {
+            if (localStorage.getItem("token")) {
+                initDashboard();
+            }
+        };
+    </script>
+</body>
+</html>

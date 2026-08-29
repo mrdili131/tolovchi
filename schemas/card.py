@@ -2,10 +2,9 @@ from pydantic import BaseModel
 
 
 class CardResponse(BaseModel):
-    id: int
-    pan: str
-    expiry: str
-    is_active: bool
+    holder: str | None = None
+    pan: str | None = None
+    expiry: str | None = None
 
     model_config = {
         "from_attributes": True

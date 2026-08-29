@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from database import Session
-from schemas import RegisterSchema, LoginResponse
-from services import  authenticate_user, create_token, pwd_context, Annotated, OAuth2PasswordRequestForm
+from schemas import RegisterSchema, LoginResponse, UserResponse
+from services import  authenticate_user, create_token, pwd_context, Annotated, OAuth2PasswordRequestForm, user_dependency
 from datetime import timedelta
 from sqlalchemy import select
 from models import User
@@ -18,8 +18,7 @@ async def register(db: Session, form: RegisterSchema):
     if form.password == form.password_confirm:
         new_user = User(
             username = form.username,
-            password_hash = pwd_context.hash(form.password),
-            service_name = form.username,
+            password_hash = pwd_context.hash(form.password)
         )
         db.add(new_user)
         await db.commit()
@@ -35,5 +34,11 @@ async def login(db: Session, form: Annotated[OAuth2PasswordRequestForm, Depends(
     if not user:
         raise HTTPException(status_code=404, detail="Invalid credentials, try again")
 
-    token = create_token(user.username,user.id,user.type,timedelta(days=5))
-    return LoginResponse(access_token=token,token_type="bearer", role=user.type)
+    token = create_token(user.username,user.id,user.role,timedelta(days=5))
+    return LoginResponse(access_token=token,token_type="bearer", role=user.role)
+
+
+@router.get('/me', response_model=UserResponse, status_code=200, summary="Get user data. ROLES: [USER, SERVICE]")
+async def return_user(db: Session, user: user_dependency):
+    db_user = await db.scalar(select(User).where(User.id==user.get("id")))
+    return db_user

@@ -16,14 +16,14 @@ class User(Base):
 
     username = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    service_name = Column(String,default="Unnamed")
+    service_name = Column(String,default="This is not a service account")
     balance = Column(Integer,default=0)
 
     last_name = Column(String,default="")
     first_name = Column(String,default="")
     middle_name = Column(String,default="")
 
-    type = Column(SQLEnum(UserType),default=UserType.USER)
+    role = Column(SQLEnum(UserType),default=UserType.USER)
 
     cards = relationship("Card", back_populates="user")
     service_applications = relationship("Application", foreign_keys="Application.service_id", back_populates="service")

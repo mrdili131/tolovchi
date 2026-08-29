@@ -17,5 +17,6 @@ class UserResponse(BaseModel):
     last_name: str | None = None
     first_name: str | None = None
     middle_name: str | None = None
+    role: UserType | None = None
 
     model_config = ConfigDict(from_attributes=True)

@@ -21,7 +21,7 @@ class InpayAutoPayService:
         self.access_token = r.json()["bearer_token"]
 
 
-    def inpay_cards(self, action, body, key_id, secret):
+    def inpay_cards(self, action, body, key_id=os.getenv("INPAY_KEY_ID"), secret=os.getenv("INPAY_CARD_SECRET")):
         path  = f'/api/v1/cards/{action}'
         raw   = json.dumps(body, ensure_ascii=False)
         ts    = str(int(time.time()))
@@ -31,8 +31,10 @@ class InpayAutoPayService:
         return requests.post(
             f"https://inpay.uz{path}", data=raw.encode(),
             headers={'Content-Type': 'application/json', 'X-Inpay-Key': key_id,
-                    'X-Inpay-Timestamp': ts, 'X-Inpay-Nonce': nonce,
-                    'X-Inpay-Signature': sig}, timeout=30)
+                'X-Inpay-Timestamp': ts, 'X-Inpay-Nonce': nonce,
+                'X-Inpay-Signature': sig},
+            timeout=30
+        )
 
 
     def order(self,amount: int):
@@ -53,9 +55,7 @@ class InpayAutoPayService:
     def bind(self,customer_id="99160133",return_url="/"):
         r = self.inpay_cards(
             action = "bind",
-            body = {"customer_ref":customer_id,"return_url":return_url}, # Customer ID ni to‘g‘irlang
-            key_id = os.getenv("INPAY_KEY_ID"),
-            secret = os.getenv("INPAY_CARD_SECRET")
+            body = {"customer_ref":customer_id,"return_url":return_url} # Customer ID ni to‘g‘irlang
         ).json()
 
         if r["success"] == False:
@@ -70,9 +70,7 @@ class InpayAutoPayService:
                 "amount":amount,
                 "idem_key":random.randint(1000,9999), # Memorial order [NEEDS TO BE CHANGED]
                 "reason":reason
-            },
-            key_id = os.getenv("INPAY_KEY_ID"),
-            secret = os.getenv("INPAY_CARD_SECRET")
+            }
         )
         match r.status_code:
             case 400:
@@ -87,6 +85,28 @@ class InpayAutoPayService:
                 if r["success"] == False:
                     raise HTTPException(status_code=400,detail="SERVICE: Could not charge")
                 return r
+
+
+    def list_cards(self,client_id):
+        action = "list"
+        path  = f'/api/v1/cards/{action}'
+        raw   = json.dumps({}, ensure_ascii=False)
+        ts    = str(int(time.time()))
+        nonce = secrets.token_hex(12)
+        base  = f"GET\n{path}\n{ts}\n{nonce}\n" + hashlib.sha256(raw.encode()).hexdigest()
+        sig   = hmac.new(os.getenv("INPAY_CARD_SECRET").encode(), base.encode(), hashlib.sha256).hexdigest()
+        r = requests.get(
+            f"https://inpay.uz{path}", data=raw.encode(),
+            headers={'Content-Type': 'application/json', 'X-Inpay-Key': os.getenv("INPAY_KEY_ID"),
+                'X-Inpay-Timestamp': ts,
+                'X-Inpay-Nonce': nonce,
+                'X-Inpay-Signature': sig},
+            params={
+                "customer_ref":client_id
+            },
+            timeout=30
+            ).json()
+        return r
             
 
 # print(InpayAutoPayService().bind())

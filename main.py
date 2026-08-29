@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import main_router
+from frontend import router as frontend_router
 
 
 app = FastAPI(title="Subscription maganer", description="This api for monthly subscription manager app", version="0.0.1")
@@ -14,6 +15,7 @@ app.add_middleware(
 )
 
 app.include_router(main_router, prefix="/api")
+app.include_router(frontend_router)
 
 @app.get('/health', include_in_schema=False)
 def health():
