@@ -9,16 +9,21 @@ from services import user_dependency
 
 app = FastAPI(title="Subscription maganer", description="This api for monthly subscription manager app", version="0.0.1")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-    allow_credentials=True
-)
-
 app.include_router(main_router, prefix="/api")
 app.include_router(frontend_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://test-c401bb6e.fastapicloud.dev",
+        "http://magazinjon.uz",
+        "https://magazinjon.uz",
+        "http://127.0.0.1:8000"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 @app.get('/health', include_in_schema=False)
 def health():
