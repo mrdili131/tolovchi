@@ -16,7 +16,7 @@
         :root {
             --primary: #004488;
             --primary-hover: #003366;
-            --bg: #F1F5F9;
+            --bg: #F8FAFC;
             --surface: #FFFFFF;
             --border: #E2E8F0;
             --text: #0F172A;
@@ -24,24 +24,24 @@
             --success: #10B981;
             --danger: #EF4444;
             --warning: #F59E0B;
-            --gov-accent: #0F172A;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Fixed Mobile App Viewport */
+        /* App Viewport Container */
         html, body {
             height: 100%;
             height: 100dvh;
             overflow: hidden;
             background-color: var(--bg);
             color: var(--text);
+            font-size: 15px;
         }
 
         body {
@@ -53,7 +53,7 @@
         header {
             background-color: var(--primary);
             color: var(--surface);
-            padding: 0.65rem 1rem;
+            padding: 0.85rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,113 +62,104 @@
         }
 
         .brand-title {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .brand-title img {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
         }
 
         .user-badge-container {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         .badge {
             background: rgba(255, 255, 255, 0.2);
-            padding: 0.15rem 0.4rem;
-            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
+            border-radius: 4px;
         }
 
         .btn-logout {
             background: transparent;
             color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 0.15rem 0.4rem;
-            font-size: 0.65rem;
+            border: 1px solid rgba(255,255,255,0.6);
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
             cursor: pointer;
             font-weight: 600;
-            border-radius: 3px;
-            text-transform: uppercase;
+            border-radius: 4px;
         }
 
-        /* App Main Scroll Area */
+        /* App Scroll Body */
         main {
             flex: 1;
             overflow-y: auto;
-            padding: 0.75rem;
-            max-width: 1200px;
+            padding: 1rem;
+            max-width: 600px;
             width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
         }
 
-        /* Status Badges */
+        /* Status Indicators */
         .status-tag {
             display: inline-block;
-            padding: 0.1rem 0.3rem;
-            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 3px;
+            border-radius: 4px;
         }
         .status-tag.provided, .status-tag.active { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
         .status-tag.pending, .status-tag.inactive { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
         .status-tag.rejected { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
 
-        /* Compact Forms & Cards */
+        /* Auth Screen */
         .auth-container {
-            max-width: 380px;
-            margin: auto;
+            margin: auto 0;
             width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 1.25rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
 
         .auth-container h2 {
-            font-size: 1rem;
+            font-size: 1.25rem;
             color: var(--primary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.35rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         label {
             display: block;
-            font-size: 0.7rem;
-            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
             color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
+            font-weight: 600;
         }
 
         input, select {
             width: 100%;
-            padding: 0.5rem 0.65rem;
+            height: 46px;
+            padding: 0 0.85rem;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border-radius: 8px;
+            font-size: 1rem;
             background: var(--surface);
             color: var(--text);
         }
@@ -180,152 +171,109 @@
 
         button {
             width: 100%;
+            height: 48px;
             background-color: var(--primary);
             color: var(--surface);
             border: none;
-            padding: 0.6rem;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        button:hover {
-            background-color: var(--primary-hover);
+        button:active {
+            opacity: 0.9;
         }
 
         .btn-secondary {
             background-color: transparent;
             color: var(--primary);
             border: 1px solid var(--primary);
-            margin-top: 0.4rem;
         }
 
         .btn-sm {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.7rem;
+            height: 36px;
+            padding: 0 0.75rem;
+            font-size: 0.85rem;
             width: auto;
-            border-radius: 4px;
         }
 
-        /* Dashboard App Grid */
-        .dashboard-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            flex: 1;
-        }
-
+        /* Screen Views */
         .tab-page {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            height: 100%;
+            gap: 1rem;
+            width: 100%;
         }
 
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 0.85rem;
-            border-radius: 8px;
+            padding: 1rem;
+            border-radius: 10px;
         }
 
         .card h2 {
-            font-size: 0.85rem;
-            color: var(--gov-accent);
-            text-transform: uppercase;
-            margin-bottom: 0.65rem;
-            border-bottom: 1px solid var(--bg);
-            padding-bottom: 0.35rem;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 0.85rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .user-profile-summary {
-            background: #F8FAFC;
+            background: var(--surface);
             border: 1px solid var(--border);
-            padding: 0.65rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
         }
 
-        .registry-grid {
+        .app-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        .gov-item {
-            background: #ffffff;
+        .list-item {
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-left: 3px solid var(--primary);
-            padding: 0.5rem 0.65rem;
-            border-radius: 4px;
-        }
-
-        .gov-row {
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
-            margin-bottom: 0.15rem;
         }
 
-        .gov-label {
-            color: var(--text-muted);
-            font-size: 0.65rem;
-            text-transform: uppercase;
+        .list-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .list-item-title {
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
-        .gov-val {
-            font-weight: 600;
-            font-family: monospace;
-        }
-
-        /* Scrollable Data Containers */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            max-height: calc(100dvh - 220px);
-            overflow-y: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.75rem;
-        }
-
-        th, td {
-            border: 1px solid var(--border);
-            padding: 0.45rem 0.5rem;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        th {
-            background-color: var(--bg);
+        .list-item-sub {
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
-        /* Modal App Overlays */
+        /* Modal Overlays */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100dvh;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(4px);
             z-index: 2000;
             display: flex;
@@ -337,23 +285,19 @@
         .modal-content {
             background: #ffffff;
             width: 100%;
-            max-width: 380px;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            max-width: 400px;
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
         #qr-reader-container {
             width: 100%;
-            min-height: 220px;
+            min-height: 240px;
             background: #000;
-            margin-bottom: 0.75rem;
-            border-radius: 6px;
+            margin-bottom: 1rem;
+            border-radius: 8px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         #qr-reader {
@@ -363,41 +307,29 @@
 
         #qrDisplayContainer {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
             background: var(--bg);
-            border: 1px dashed var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
         }
 
         .gov-alert-body {
-            font-size: 0.8rem;
-            padding: 0.75rem;
-            border-left: 3px solid var(--primary);
+            font-size: 0.9rem;
+            padding: 0.85rem;
+            border-left: 4px solid var(--primary);
             background: #F8FAFC;
-            margin-bottom: 1rem;
-            word-break: break-all;
+            margin-bottom: 1.25rem;
             border-radius: 4px;
+            line-height: 1.4;
         }
 
-        .gov-alert-body.error {
-            border-left-color: var(--danger);
-            background: #FEF2F2;
-            color: #991B1B;
-        }
+        .gov-alert-body.error { border-left-color: var(--danger); background: #FEF2F2; color: #991B1B; }
+        .gov-alert-body.success { border-left-color: var(--success); background: #ECFDF5; color: #065F46; }
 
-        .gov-alert-body.success {
-            border-left-color: var(--success);
-            background: #ECFDF5;
-            color: #065F46;
-        }
-
-        /* Fixed App Bottom Navigation */
+        /* Bottom Tab Navigation Bar */
         .bottom-nav {
-            height: 56px;
+            height: 60px;
             background: var(--surface);
             border-top: 1px solid var(--border);
             display: flex;
@@ -405,6 +337,7 @@
             align-items: center;
             flex-shrink: 0;
             z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .nav-item {
@@ -415,38 +348,25 @@
             flex: 1;
             height: 100%;
             color: var(--text-muted);
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             text-decoration: none;
             cursor: pointer;
-            gap: 2px;
-            font-weight: 600;
-            text-transform: uppercase;
+            gap: 3px;
+            font-weight: 500;
         }
 
         .nav-item svg {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             fill: currentColor;
         }
 
         .nav-item.active {
             color: var(--primary);
+            font-weight: 700;
         }
 
         .hidden { display: none !important; }
-
-        /* Desktop Optimization */
-        @media (min-width: 768px) {
-            .bottom-nav { display: none !important; }
-            .tab-page { display: block !important; }
-            .dashboard-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .table-responsive {
-                max-height: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -454,13 +374,13 @@
     <header>
         <div class="brand-title"><img src="static/favicon.ico" alt=""> Bindin App</div>
         <div id="userInfo" class="user-badge-container hidden">
-            <span id="roleBadge" class="badge">ROLI</span>
+            <span id="roleBadge" class="badge">USER</span>
             <button onclick="logout()" class="btn-logout">Chiqish</button>
         </div>
     </header>
 
     <main>
-        <!-- Auth Screen -->
+        <!-- Login / Register Form -->
         <div id="authBlock" class="auth-container">
             <h2 id="authTitle">Tizimga Kirish</h2>
             <form id="authForm" onsubmit="handleAuth(event)">
@@ -476,38 +396,44 @@
                     <label>Parolni tasdiqlash</label>
                     <input type="password" id="password_confirm" autocomplete="new-password">
                 </div>
-                <button type="submit" id="authSubmitBtn">Kirish</button>
-                <button type="button" class="btn-secondary" onclick="toggleAuthMode()" id="authToggleBtn">Ro'yxatdan o'tish</button>
+                <button type="submit" id="authSubmitBtn" style="margin-top: 0.5rem;">Kirish</button>
+                <button type="button" class="btn-secondary" onclick="toggleAuthMode()" id="authToggleBtn" style="margin-top: 0.5rem;">Ro'yxatdan o'tish</button>
             </form>
         </div>
 
-        <!-- Authenticated Dashboard -->
-        <div id="dashboard" class="dashboard-grid hidden">
+        <!-- Dashboard Wrapper -->
+        <div id="dashboard" class="tab-page hidden">
 
             <!-- TAB 1: Main View -->
             <div id="tab-main" class="tab-page">
-                <!-- Profile Summary -->
                 <div id="profileSection" class="user-profile-summary">
-                    <div class="gov-row"><span class="gov-label">F.I.Sh:</span><span id="profFullName" class="gov-val">--</span></div>
-                    <div class="gov-row"><span class="gov-label">Username:</span><span id="profUsername" class="gov-val">--</span></div>
-                    <div id="serviceBalanceRow" class="gov-row hidden"><span class="gov-label">Balans:</span><span id="profBalance" class="gov-val" style="color:var(--success)">0 UZS</span></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="color:var(--text-muted);">F.I.Sh:</span>
+                        <strong id="profFullName">--</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color:var(--text-muted);">Username:</span>
+                        <strong id="profUsername">--</strong>
+                    </div>
+                    <div id="serviceBalanceRow" style="display: flex; justify-content: space-between; margin-top: 0.5rem;" class="hidden">
+                        <span style="color:var(--text-muted);">Balans:</span>
+                        <strong id="profBalance" style="color:var(--success)">0 UZS</strong>
+                    </div>
                 </div>
 
                 <!-- User Cards View -->
                 <div id="userCardSection" class="card hidden">
                     <h2>
-                        Bank Kartalari
+                        <span>Bank Kartalari</span>
                         <button onclick="syncCards()" class="btn-secondary btn-sm">Yangilash</button>
                     </h2>
-                    <div style="margin-bottom: 0.65rem;">
-                        <button onclick="bindCard()" class="btn-secondary">Yangi karta biriktirish</button>
-                    </div>
-                    <div id="userCardsContainer" class="registry-grid">
-                        <p style="color: var(--text-muted); font-size: 0.75rem;">Kartalar yuklanmoqda...</p>
+                    <button onclick="bindCard()" class="btn-secondary" style="margin-bottom: 0.85rem;">+ Yangi karta biriktirish</button>
+                    <div id="userCardsContainer" class="app-list">
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Kartalar yuklanmoqda...</p>
                     </div>
                 </div>
 
-                <!-- Service Application View -->
+                <!-- Service Application Form -->
                 <div id="serviceAppSection" class="card hidden">
                     <h2>Yangi Ariza Yaratish</h2>
                     <form onsubmit="handleCreateApp(event)">
@@ -519,7 +445,7 @@
                             <label>Tavsif</label>
                             <input type="text" id="appDesc" required>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                             <div class="form-group">
                                 <label>Summa</label>
                                 <input type="number" id="appAmount" min="1000" required>
@@ -541,43 +467,29 @@
             </div>
 
             <!-- TAB 2: Applications View -->
-            <div id="tab-applications" class="tab-page">
-                <div class="card" style="display:flex; flex-direction:column; height:100%;">
-                    <h2>Arizalar Ro'yxati</h2>
-                    
-                    <!-- USER Scan Action -->
-                    <div id="userScanAction" class="hidden" style="margin-bottom: 0.65rem;">
-                        <button onclick="openQrScanner()" style="display:flex; align-items:center; justify-content:center; gap:0.4rem;">
-                            <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5zM7 7h4v4H7V7zm10 0h-4v4h4V7zM7 17h4v-4H7v4zm5-5h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2z"/></svg>
-                            QR Skaner
-                        </button>
-                    </div>
+            <div id="tab-applications" class="tab-page hidden">
+                <div id="userScanAction" class="hidden">
+                    <button onclick="openQrScanner()">
+                        <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5zM7 7h4v4H7V7zm10 0h-4v4h4V7zM7 17h4v-4H7v4zm5-5h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2z"/></svg>
+                        QR Skanerni ochish
+                    </button>
+                </div>
 
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID / Nomi</th>
-                                    <th>To'lov & Balans</th>
-                                    <th>Holat</th>
-                                    <th id="thActionHeader" class="hidden">Amal</th>
-                                </tr>
-                            </thead>
-                            <tbody id="applicationsTableBody">
-                                <tr><td colspan="4" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
-                            </tbody>
-                        </table>
+                <div class="card">
+                    <h2>Arizalar Ro'yxati</h2>
+                    <div id="applicationsContainer" class="app-list">
+                        <p style="text-align:center; color: var(--text-muted);">Ma'lumotlar yuklanmoqda...</p>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 3: Transactions View -->
-            <div id="tab-transactions" class="tab-page">
+            <div id="tab-transactions" class="tab-page hidden">
                 <!-- Service Charge Action -->
                 <div id="serviceChargeSection" class="card hidden">
                     <h2>Kartadan Yechish</h2>
                     <form onsubmit="handleChargeCard(event)">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                             <div class="form-group">
                                 <label>Karta ID</label>
                                 <input type="number" id="chargeCardId" required>
@@ -595,22 +507,10 @@
                     </form>
                 </div>
 
-                <div class="card" style="display:flex; flex-direction:column; flex:1;">
+                <div class="card">
                     <h2>Tranzaksiyalar Daftari</h2>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID / Sana</th>
-                                    <th>Summa</th>
-                                    <th>Holat</th>
-                                    <th>Tomonlar</th>
-                                </tr>
-                            </thead>
-                            <tbody id="transactionsTableBody">
-                                <tr><td colspan="4" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
-                            </tbody>
-                        </table>
+                    <div id="transactionsContainer" class="app-list">
+                        <p style="text-align:center; color: var(--text-muted);">Ma'lumotlar yuklanmoqda...</p>
                     </div>
                 </div>
             </div>
@@ -618,7 +518,7 @@
         </div>
     </main>
 
-    <!-- Mobile Navigation -->
+    <!-- Navigation Bar -->
     <nav id="bottomNav" class="bottom-nav hidden">
         <div class="nav-item active" data-tab="main" onclick="switchTab('main')">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -634,10 +534,10 @@
         </div>
     </nav>
 
-    <!-- USER Camera Scanner Modal -->
+    <!-- Scanner Modal -->
     <div id="qrModal" class="modal hidden">
         <div class="modal-content">
-            <h3 style="margin-bottom:0.5rem; font-size:0.85rem; text-transform:uppercase;">QR koddagi havolani skanerlang</h3>
+            <h3 style="margin-bottom:0.75rem; font-size:1rem;">QR koddagi havolani skanerlang</h3>
             <div id="qr-reader-container">
                 <div id="qr-reader"></div>
             </div>
@@ -645,11 +545,11 @@
         </div>
     </div>
 
-    <!-- SERVICE QR Display Modal -->
+    <!-- QR Display Modal -->
     <div id="qrDisplayModal" class="modal hidden">
         <div class="modal-content" style="text-align: center;">
-            <h3 style="margin-bottom:0.35rem; font-size:0.85rem; text-transform:uppercase;">Ariza QR Kodi</h3>
-            <p id="qrModalAppDesc" style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">--</p>
+            <h3 style="margin-bottom:0.5rem; font-size:1rem;">Ariza QR Kodi</h3>
+            <p id="qrModalAppDesc" style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">--</p>
             <div id="qrDisplayContainer"></div>
             <button onclick="closeQrDisplayModal()" class="btn-secondary">Yopish</button>
         </div>
@@ -658,7 +558,7 @@
     <!-- Alert Modal -->
     <div id="govModal" class="modal hidden">
         <div class="modal-content">
-            <h3 id="govModalTitle" style="margin-bottom:0.5rem; font-size:0.85rem; text-transform:uppercase; color:var(--gov-accent);">Tizim Bildirishnomasi</h3>
+            <h3 id="govModalTitle" style="margin-bottom:0.75rem; font-size:1rem;">Tizim Bildirishnomasi</h3>
             <div id="govModalBody" class="gov-alert-body">--</div>
             <button onclick="closeGovAlert()">Tushundim</button>
         </div>
@@ -797,13 +697,11 @@
                 document.getElementById("userCardSection").classList.remove("hidden");
                 document.getElementById("userScanAction").classList.remove("hidden");
                 document.getElementById("navMainLabel").innerText = "Kartalar";
-                document.getElementById("thActionHeader").classList.add("hidden");
                 loadCards();
             } else if (role === 'service') {
                 document.getElementById("serviceAppSection").classList.remove("hidden");
                 document.getElementById("serviceChargeSection").classList.remove("hidden");
                 document.getElementById("navMainLabel").innerText = "Yaratish";
-                document.getElementById("thActionHeader").classList.remove("hidden");
             }
 
             const currentHash = window.location.hash.replace('#', '');
@@ -822,15 +720,13 @@
                 window.location.hash = tabName;
             }
 
-            if (window.innerWidth < 768) {
-                document.querySelectorAll('.tab-page').forEach(el => el.style.display = 'none');
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#tab-main, #tab-applications, #tab-transactions').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-                const targetTab = document.getElementById(`tab-${tabName}`);
-                const targetNav = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
-                if (targetTab) targetTab.style.display = 'flex';
-                if (targetNav) targetNav.classList.add('active');
-            }
+            const targetTab = document.getElementById(`tab-${tabName}`);
+            const targetNav = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+            if (targetTab) targetTab.classList.remove('hidden');
+            if (targetNav) targetNav.classList.add('active');
         }
 
         window.addEventListener('hashchange', () => {
@@ -845,14 +741,16 @@
                 const cards = await res.json();
                 const container = document.getElementById("userCardsContainer");
                 if (!cards || cards.length === 0) {
-                    container.innerHTML = '<p style="font-size:0.75rem; color:var(--text-muted);">Kartalar mavjud emas.</p>';
+                    container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Kartalar mavjud emas.</p>';
                     return;
                 }
                 container.innerHTML = cards.map(c => `
-                    <div class="gov-item">
-                        <div class="gov-row"><span class="gov-label">ID:</span><span class="gov-val">#${c.id}</span></div>
-                        <div class="gov-row"><span class="gov-label">Egasining ismi:</span><span class="gov-val">${c.holder || 'Mavjud emas'}</span></div>
-                        <div class="gov-row"><span class="gov-label">Raqami:</span><span class="gov-val">${c.pan || '•••• ••••'}</span></div>
+                    <div class="list-item">
+                        <div class="list-item-info">
+                            <span class="list-item-title">${c.holder || 'Karta'}</span>
+                            <span class="list-item-sub">${c.pan || '•••• ••••'}</span>
+                        </div>
+                        <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">#${c.id}</span>
                     </div>
                 `).join('');
             }
@@ -910,36 +808,29 @@
             const res = await apiFetch("/application/");
             if (res.ok) {
                 const apps = await res.json();
-                const tbody = document.getElementById("applicationsTableBody");
+                const container = document.getElementById("applicationsContainer");
                 if (!apps || apps.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Mavjud emas</td></tr>';
+                    container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Mavjud emas</p>';
                     return;
                 }
                 
-                tbody.innerHTML = apps.map(a => {
+                container.innerHTML = apps.map(a => {
                     const hasPayer = a.payer_id !== null && a.payer_id !== undefined;
                     const canShowQr = role === 'service' && (!a.is_active && !hasPayer);
 
                     return `
-                        <tr>
-                            <td>
-                                <strong>${a.name || 'Nomsiz'}</strong> (#${a.id})
-                            </td>
-                            <td>
-                                ${a.pay_day}-sana (${a.frequency})<br>
-                                <small>Balans: ${a.balance || 0} UZS</small>
-                            </td>
-                            <td>
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <span class="list-item-title">${a.name || 'Nomsiz'} <small style="color:var(--text-muted)">(#${a.id})</small></span>
+                                <span class="list-item-sub">Sana: ${a.pay_day} (${a.frequency}) | Balans: ${a.balance || 0} UZS</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:0.5rem;">
                                 <span class="status-tag ${a.is_active ? 'active' : 'inactive'}">
-                                    ${a.is_active ? 'Faol' : 'Faol emas'}
+                                    ${a.is_active ? 'Faol' : 'Nofaol'}
                                 </span>
-                            </td>
-                            ${role === 'service' ? `
-                                <td>
-                                    ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.name || a.description)}')" class="btn-secondary btn-sm">QR</button>` : '<span style="color:var(--text-muted); font-size:0.65rem;">Ulangan</span>'}
-                                </td>
-                            ` : ''}
-                        </tr>
+                                ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.name || a.description)}')" class="btn-secondary btn-sm">QR</button>` : ''}
+                            </div>
+                        </div>
                     `;
                 }).join('');
             }
@@ -954,8 +845,8 @@
 
             new QRCode(container, {
                 text: targetUrl,
-                width: 180,
-                height: 180,
+                width: 200,
+                height: 200,
                 colorDark : "#004488",
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
@@ -974,7 +865,7 @@
 
             try {
                 html5QrCodeEngine = new Html5Qrcode("qr-reader");
-                const qrConfig = { fps: 10, qrbox: { width: 180, height: 180 } };
+                const qrConfig = { fps: 10, qrbox: { width: 200, height: 200 } };
                 const cameras = await Html5Qrcode.getCameras();
                 
                 if (cameras && cameras.length > 0) {
@@ -1060,34 +951,25 @@
             
             if (res.ok) {
                 const txs = await res.json();
-                const tbody = document.getElementById("transactionsTableBody");
+                const container = document.getElementById("transactionsContainer");
 
                 if (!txs || txs.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Tranzaksiyalar mavjud emas</td></tr>';
+                    container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Tranzaksiyalar mavjud emas</p>';
                     return;
                 }
 
-                tbody.innerHTML = txs.map(t => {
+                container.innerHTML = txs.map(t => {
                     const senderName = formatUserFullName(t.sender);
                     const receiverName = formatUserFullName(t.receiver);
 
                     return `
-                        <tr>
-                            <td>
-                                <strong>#${t.id}</strong><br>
-                                <small style="color:var(--text-muted);">${t.created_at || ''}</small>
-                            </td>
-                            <td><strong>${t.amount} UZS</strong></td>
-                            <td>
-                                <span class="status-tag ${t.status}">
-                                    ${t.status}
-                                </span>
-                            </td>
-                            <td>
-                                <small>Yuboruvchi: ${senderName}</small><br>
-                                <small>Qabul: ${receiverName}</small>
-                            </td>
-                        </tr>
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <span class="list-item-title">${t.amount} UZS</span>
+                                <span class="list-item-sub">#${t.id} | ${senderName} -> ${receiverName}</span>
+                            </div>
+                            <span class="status-tag ${t.status}">${t.status}</span>
+                        </div>
                     `;
                 }).join('');
             }
