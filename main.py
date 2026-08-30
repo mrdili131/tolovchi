@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from routers import main_router
 from frontend import router as frontend_router
 import os
@@ -8,6 +9,8 @@ from services import user_dependency
 
 
 app = FastAPI(title="Subscription maganer", description="This api for monthly subscription manager app", version="0.0.1")
+
+app.mount('/static', StaticFiles(directory='frontend/static'),name='static')
 
 app.include_router(main_router, prefix="/api")
 app.include_router(frontend_router)

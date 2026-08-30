@@ -3,8 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bindin - Davlat Obunalar Portali</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Bindin - Obunalar Platformasi</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="Bindin.uz — O'zbekistondagi obunalar va elektron xizmatlarni boshqarish platformasi. QR-kod orqali tezkor va xavfsiz obuna bo'ling.">
+    <meta name="keywords" content="Bindin, bindin.uz, obunalar platformasi, QR obuna, elektron obuna, O'zbekiston obuna xizmatlari">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Uzbek">
+    <meta name="author" content="Bindin">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bindin.uz/">
+
+    <!-- Open Graph / Facebook / Telegram -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bindin.uz/">
+    <meta property="og:title" content="Bindin — Obunalar Platformasi">
+    <meta property="og:description" content="Bindin.uz — Obuna va xizmatlarni qulay, tezkor hamda xavfsiz boshqarish platformasi.">
+    <meta property="og:image" content="https://bindin.uz/static/og-image.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://bindin.uz/">
+    <meta name="twitter:title" content="Bindin — Obunalar Platformasi">
+    <meta name="twitter:description" content="Bindin.uz — Obuna va xizmatlarni qulay, tezkor hamda xavfsiz boshqarish platformasi.">
+    <meta name="twitter:image" content="https://bindin.uz/static/og-image.jpg">
+
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <!-- Real QR Code Reader & Generator Libraries -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -57,6 +82,11 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap:10px;
         }
 
         .user-badge-container {
@@ -394,7 +424,7 @@
 <body>
 
     <header>
-        <div class="brand-title">🏛️ Bindin Portali</div>
+        <div class="brand-title"><img src="static/favicon.ico" alt=""> Bindin Portali</div>
         <div id="userInfo" class="user-badge-container hidden">
             <span id="roleBadge" class="badge">ROLI</span>
             <button onclick="logout()" class="btn-logout">Chiqish</button>
