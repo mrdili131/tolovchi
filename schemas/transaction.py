@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, ConfigDict
 from models import TransactionStatus
 from schemas import UserResponse
+from datetime import date
 
 class TransactionForm(BaseModel):
     amount: int = Field(ge=1000)
@@ -18,6 +19,8 @@ class TransactionResponse(BaseModel):
     status: TransactionStatus
     sender_id: int
     receiver_id: int
+    created_at: date
+    receiver: UserResponse
     sender: UserResponse
 
     model_config = ConfigDict(from_attributes=True)

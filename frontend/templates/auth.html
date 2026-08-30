@@ -2,168 +2,173 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bindin - Obunalar Platformasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Bindin App</title>
     
-    <!-- Primary Meta Tags -->
-    <meta name="description" content="Bindin.uz — O'zbekistondagi obunalar va elektron xizmatlarni boshqarish platformasi. QR-kod orqali tezkor va xavfsiz obuna bo'ling.">
-    <meta name="keywords" content="Bindin, bindin.uz, obunalar platformasi, QR obuna, elektron obuna, O'zbekiston obuna xizmatlari">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Uzbek">
-    <meta name="author" content="Bindin">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://bindin.uz/">
-
-    <!-- Open Graph / Facebook / Telegram -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://bindin.uz/">
-    <meta property="og:title" content="Bindin — Obunalar Platformasi">
-    <meta property="og:description" content="Bindin.uz — Obuna va xizmatlarni qulay, tezkor hamda xavfsiz boshqarish platformasi.">
-    <meta property="og:image" content="https://bindin.uz/static/og-image.jpg">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://bindin.uz/">
-    <meta name="twitter:title" content="Bindin — Obunalar Platformasi">
-    <meta name="twitter:description" content="Bindin.uz — Obuna va xizmatlarni qulay, tezkor hamda xavfsiz boshqarish platformasi.">
-    <meta name="twitter:image" content="https://bindin.uz/static/og-image.jpg">
-
+    <meta name="description" content="Bindin.uz — Obuna va xizmatlarni boshqarish platformasi.">
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
-    <!-- Real QR Code Reader & Generator Libraries -->
+    
+    <!-- Real QR Libraries -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <style>
         :root {
             --primary: #004488;
             --primary-hover: #003366;
-            --bg: #F4F6F9;
+            --bg: #F1F5F9;
             --surface: #FFFFFF;
-            --border: #CBD5E1;
-            --text: #1F2937;
-            --text-muted: #6B7280;
-            --success: #059669;
-            --danger: #DC2626;
-            --gov-accent: #0f172a;
+            --border: #E2E8F0;
+            --text: #0F172A;
+            --text-muted: #64748B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --gov-accent: #0F172A;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
+        /* Fixed Mobile App Viewport */
+        html, body {
+            height: 100%;
+            height: 100dvh;
+            overflow: hidden;
             background-color: var(--bg);
             color: var(--text);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        /* Sticky Header */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* App Header */
         header {
             background-color: var(--primary);
             color: var(--surface);
-            padding: 0.85rem 1.25rem;
+            padding: 0.65rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
+            flex-shrink: 0;
             z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .brand-title {
-            font-size: 1.15rem;
+            font-size: 0.95rem;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             display: flex;
-            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            gap:10px;
+            gap: 8px;
+        }
+
+        .brand-title img {
+            width: 18px;
+            height: 18px;
         }
 
         .user-badge-container {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .badge {
             background: rgba(255, 255, 255, 0.2);
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
+            padding: 0.15rem 0.4rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
         }
 
         .btn-logout {
             background: transparent;
             color: #ffffff;
             border: 1px solid #ffffff;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
+            padding: 0.15rem 0.4rem;
+            font-size: 0.65rem;
             cursor: pointer;
             font-weight: 600;
+            border-radius: 3px;
             text-transform: uppercase;
         }
 
-        /* Layout Main */
+        /* App Main Scroll Area */
         main {
             flex: 1;
-            padding: 1.25rem 1rem;
+            overflow-y: auto;
+            padding: 0.75rem;
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
-            padding-bottom: 5.5rem;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Auth Card */
+        /* Status Badges */
+        .status-tag {
+            display: inline-block;
+            padding: 0.1rem 0.3rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 3px;
+        }
+        .status-tag.provided, .status-tag.active { background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+        .status-tag.pending, .status-tag.inactive { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+        .status-tag.rejected { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
+
+        /* Compact Forms & Cards */
         .auth-container {
-            max-width: 420px;
-            margin: 2rem auto;
+            max-width: 380px;
+            margin: auto;
+            width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 1.75rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .auth-container h2 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--primary);
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.35rem;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         label {
             display: block;
-            font-size: 0.8rem;
-            margin-bottom: 0.35rem;
+            font-size: 0.7rem;
+            margin-bottom: 0.25rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
         }
 
         input, select {
             width: 100%;
-            padding: 0.65rem 0.75rem;
+            padding: 0.5rem 0.65rem;
             border: 1px solid var(--border);
-            border-radius: 0;
-            font-size: 0.95rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
             background: var(--surface);
             color: var(--text);
         }
@@ -178,13 +183,13 @@
             background-color: var(--primary);
             color: var(--surface);
             border: none;
-            padding: 0.75rem;
-            font-size: 0.85rem;
+            padding: 0.6rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
-            border-radius: 0;
+            border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         button:hover {
@@ -195,65 +200,83 @@
             background-color: transparent;
             color: var(--primary);
             border: 1px solid var(--primary);
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
         }
 
         .btn-sm {
-            padding: 0.35rem 0.65rem;
-            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
             width: auto;
+            border-radius: 4px;
         }
 
-        /* Dynamic Views */
+        /* Dashboard App Grid */
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        .tab-page {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            height: 100%;
         }
 
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 1.25rem;
+            padding: 0.85rem;
+            border-radius: 8px;
         }
 
         .card h2 {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: var(--gov-accent);
             text-transform: uppercase;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.65rem;
+            border-bottom: 1px solid var(--bg);
+            padding-bottom: 0.35rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* Registry Items */
+        .user-profile-summary {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            padding: 0.65rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
         .registry-grid {
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 0.5rem;
         }
 
         .gov-item {
             background: #ffffff;
             border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            padding: 0.85rem 1rem;
+            border-left: 3px solid var(--primary);
+            padding: 0.5rem 0.65rem;
+            border-radius: 4px;
         }
 
         .gov-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            margin-bottom: 0.35rem;
+            font-size: 0.75rem;
+            margin-bottom: 0.15rem;
         }
 
         .gov-label {
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             font-weight: 600;
         }
@@ -263,22 +286,25 @@
             font-family: monospace;
         }
 
-        /* Responsive Data Tables */
+        /* Scrollable Data Containers */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
+            max-height: calc(100dvh - 220px);
+            overflow-y: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
         th, td {
             border: 1px solid var(--border);
-            padding: 0.65rem;
+            padding: 0.45rem 0.5rem;
             text-align: left;
+            vertical-align: middle;
         }
 
         th {
@@ -286,16 +312,19 @@
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        /* QR Scanner Modal */
+        /* Modal App Overlays */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100dvh;
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(4px);
             z-index: 2000;
@@ -308,17 +337,20 @@
         .modal-content {
             background: #ffffff;
             width: 100%;
-            max-width: 450px;
-            padding: 1.25rem;
+            max-width: 380px;
+            padding: 1rem;
+            border-radius: 8px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
         }
 
         #qr-reader-container {
             width: 100%;
-            min-height: 250px;
+            min-height: 220px;
             background: #000;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -329,30 +361,26 @@
             border: none !important;
         }
 
-        #qr-reader video {
-            width: 100% !important;
-            height: auto !important;
-            object-fit: cover !important;
-        }
-
         #qrDisplayContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
             background: var(--bg);
             border: 1px dashed var(--border);
+            border-radius: 6px;
         }
 
         .gov-alert-body {
-            font-size: 0.9rem;
-            padding: 1rem;
-            border-left: 4px solid var(--primary);
+            font-size: 0.8rem;
+            padding: 0.75rem;
+            border-left: 3px solid var(--primary);
             background: #F8FAFC;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             word-break: break-all;
+            border-radius: 4px;
         }
 
         .gov-alert-body.error {
@@ -367,18 +395,15 @@
             color: #065F46;
         }
 
-        /* Mobile Bottom 3-Button Navigation */
+        /* Fixed App Bottom Navigation */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
+            height: 56px;
             background: var(--surface);
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             align-items: center;
+            flex-shrink: 0;
             z-index: 1000;
         }
 
@@ -390,17 +415,17 @@
             flex: 1;
             height: 100%;
             color: var(--text-muted);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-decoration: none;
             cursor: pointer;
-            gap: 3px;
+            gap: 2px;
             font-weight: 600;
             text-transform: uppercase;
         }
 
         .nav-item svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
 
@@ -412,11 +437,14 @@
 
         /* Desktop Optimization */
         @media (min-width: 768px) {
-            main { padding-bottom: 1.5rem; }
             .bottom-nav { display: none !important; }
             .tab-page { display: block !important; }
             .dashboard-grid {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .table-responsive {
+                max-height: none;
             }
         }
     </style>
@@ -424,7 +452,7 @@
 <body>
 
     <header>
-        <div class="brand-title"><img src="static/favicon.ico" alt=""> Bindin Portali</div>
+        <div class="brand-title"><img src="static/favicon.ico" alt=""> Bindin App</div>
         <div id="userInfo" class="user-badge-container hidden">
             <span id="roleBadge" class="badge">ROLI</span>
             <button onclick="logout()" class="btn-logout">Chiqish</button>
@@ -437,16 +465,16 @@
             <h2 id="authTitle">Tizimga Kirish</h2>
             <form id="authForm" onsubmit="handleAuth(event)">
                 <div class="form-group">
-                    <label>Foydalanuvchi nomi (Username)</label>
-                    <input type="text" id="username" required>
+                    <label>Foydalanuvchi nomi</label>
+                    <input type="text" id="username" required autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label>Parol</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" required autocomplete="current-password">
                 </div>
                 <div id="confirmPasswordGroup" class="form-group hidden">
                     <label>Parolni tasdiqlash</label>
-                    <input type="password" id="password_confirm">
+                    <input type="password" id="password_confirm" autocomplete="new-password">
                 </div>
                 <button type="submit" id="authSubmitBtn">Kirish</button>
                 <button type="button" class="btn-secondary" onclick="toggleAuthMode()" id="authToggleBtn">Ro'yxatdan o'tish</button>
@@ -456,20 +484,30 @@
         <!-- Authenticated Dashboard -->
         <div id="dashboard" class="dashboard-grid hidden">
 
-            <!-- TAB 1: Main View (User Cards OR Service Application Creation) -->
+            <!-- TAB 1: Main View -->
             <div id="tab-main" class="tab-page">
-                <!-- User Specific View -->
+                <!-- Profile Summary -->
+                <div id="profileSection" class="user-profile-summary">
+                    <div class="gov-row"><span class="gov-label">F.I.Sh:</span><span id="profFullName" class="gov-val">--</span></div>
+                    <div class="gov-row"><span class="gov-label">Username:</span><span id="profUsername" class="gov-val">--</span></div>
+                    <div id="serviceBalanceRow" class="gov-row hidden"><span class="gov-label">Balans:</span><span id="profBalance" class="gov-val" style="color:var(--success)">0 UZS</span></div>
+                </div>
+
+                <!-- User Cards View -->
                 <div id="userCardSection" class="card hidden">
-                    <h2>Bank Kartalari</h2>
-                    <div style="margin-bottom: 1rem;">
+                    <h2>
+                        Bank Kartalari
+                        <button onclick="syncCards()" class="btn-secondary btn-sm">Yangilash</button>
+                    </h2>
+                    <div style="margin-bottom: 0.65rem;">
                         <button onclick="bindCard()" class="btn-secondary">Yangi karta biriktirish</button>
                     </div>
                     <div id="userCardsContainer" class="registry-grid">
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">Kartalar yuklanmoqda...</p>
+                        <p style="color: var(--text-muted); font-size: 0.75rem;">Kartalar yuklanmoqda...</p>
                     </div>
                 </div>
 
-                <!-- Service Specific View -->
+                <!-- Service Application View -->
                 <div id="serviceAppSection" class="card hidden">
                     <h2>Yangi Ariza Yaratish</h2>
                     <form onsubmit="handleCreateApp(event)">
@@ -481,9 +519,15 @@
                             <label>Tavsif</label>
                             <input type="text" id="appDesc" required>
                         </div>
-                        <div class="form-group">
-                            <label>Summa (Min: 1000)</label>
-                            <input type="number" id="appAmount" min="1000" required>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <div class="form-group">
+                                <label>Summa</label>
+                                <input type="number" id="appAmount" min="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Kuni (1-31)</label>
+                                <input type="number" id="appPayDay" min="1" max="31" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Davriyligi</label>
@@ -491,60 +535,57 @@
                                 <option value="monthly">Har oy</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>To'lov kuni (1 - 31)</label>
-                            <input type="number" id="appPayDay" min="1" max="31" required>
-                        </div>
                         <button type="submit">Arizani joylashtirish</button>
                     </form>
                 </div>
             </div>
 
-            <!-- TAB 2: Applications & QR Scanner View -->
+            <!-- TAB 2: Applications View -->
             <div id="tab-applications" class="tab-page">
-                <div class="card">
+                <div class="card" style="display:flex; flex-direction:column; height:100%;">
                     <h2>Arizalar Ro'yxati</h2>
                     
-                    <!-- USER Role QR Code Scanner Action -->
-                    <div id="userScanAction" class="hidden" style="margin-bottom: 1.25rem;">
-                        <button onclick="openQrScanner()" style="display:flex; align-items:center; justify-content:center; gap:0.5rem;">
-                            <svg style="width:18px; height:18px; fill:currentColor;" viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5zM7 7h4v4H7V7zm10 0h-4v4h4V7zM7 17h4v-4H7v4zm5-5h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2z"/></svg>
-                            QR Kodni Skanerlash
+                    <!-- USER Scan Action -->
+                    <div id="userScanAction" class="hidden" style="margin-bottom: 0.65rem;">
+                        <button onclick="openQrScanner()" style="display:flex; align-items:center; justify-content:center; gap:0.4rem;">
+                            <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5zM7 7h4v4H7V7zm10 0h-4v4h4V7zM7 17h4v-4H7v4zm5-5h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2z"/></svg>
+                            QR Skaner
                         </button>
                     </div>
 
                     <div class="table-responsive">
                         <table>
                             <thead>
-                                <tr id="appTableHeader">
-                                    <th>ID</th>
-                                    <th>Tavsif</th>
-                                    <th>To'lov jadvali</th>
-                                    <th>Holati</th>
+                                <tr>
+                                    <th>ID / Nomi</th>
+                                    <th>To'lov & Balans</th>
+                                    <th>Holat</th>
                                     <th id="thActionHeader" class="hidden">Amal</th>
                                 </tr>
                             </thead>
                             <tbody id="applicationsTableBody">
-                                <tr><td colspan="5" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
+                                <tr><td colspan="4" style="text-align:center;">Ma'lumotlar yuklanmoqda...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 3: Transactions & Charging View -->
+            <!-- TAB 3: Transactions View -->
             <div id="tab-transactions" class="tab-page">
-                <!-- Service Role Manual Charging Action -->
-                <div id="serviceChargeSection" class="card hidden" style="margin-bottom: 1.25rem;">
+                <!-- Service Charge Action -->
+                <div id="serviceChargeSection" class="card hidden">
                     <h2>Kartadan Yechish</h2>
                     <form onsubmit="handleChargeCard(event)">
-                        <div class="form-group">
-                            <label>Karta ID</label>
-                            <input type="number" id="chargeCardId" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Xizmat (Service) ID</label>
-                            <input type="number" id="chargeServiceId" required>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <div class="form-group">
+                                <label>Karta ID</label>
+                                <input type="number" id="chargeCardId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Service ID</label>
+                                <input type="number" id="chargeServiceId" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Summa</label>
@@ -554,16 +595,16 @@
                     </form>
                 </div>
 
-                <div class="card">
+                <div class="card" style="display:flex; flex-direction:column; flex:1;">
                     <h2>Tranzaksiyalar Daftari</h2>
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>ID / Sana</th>
                                     <th>Summa</th>
                                     <th>Holat</th>
-                                    <th>Yuboruvchi ID</th>
+                                    <th>Tomonlar</th>
                                 </tr>
                             </thead>
                             <tbody id="transactionsTableBody">
@@ -577,11 +618,11 @@
         </div>
     </main>
 
-    <!-- Mobile 3-Button Navigation -->
+    <!-- Mobile Navigation -->
     <nav id="bottomNav" class="bottom-nav hidden">
         <div class="nav-item active" data-tab="main" onclick="switchTab('main')">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span id="navMainLabel">Bosh sahifa</span>
+            <span id="navMainLabel">Asosiy</span>
         </div>
         <div class="nav-item" data-tab="applications" onclick="switchTab('applications')">
             <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
@@ -596,7 +637,7 @@
     <!-- USER Camera Scanner Modal -->
     <div id="qrModal" class="modal hidden">
         <div class="modal-content">
-            <h3 style="margin-bottom:0.75rem; font-size:0.95rem; text-transform:uppercase;">QR koddagi havolani skanerlang</h3>
+            <h3 style="margin-bottom:0.5rem; font-size:0.85rem; text-transform:uppercase;">QR koddagi havolani skanerlang</h3>
             <div id="qr-reader-container">
                 <div id="qr-reader"></div>
             </div>
@@ -604,20 +645,20 @@
         </div>
     </div>
 
-    <!-- SERVICE QR Code Display Modal -->
+    <!-- SERVICE QR Display Modal -->
     <div id="qrDisplayModal" class="modal hidden">
         <div class="modal-content" style="text-align: center;">
-            <h3 style="margin-bottom:0.5rem; font-size:0.95rem; text-transform:uppercase;">Ariza QR Kodi</h3>
-            <p id="qrModalAppDesc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">--</p>
+            <h3 style="margin-bottom:0.35rem; font-size:0.85rem; text-transform:uppercase;">Ariza QR Kodi</h3>
+            <p id="qrModalAppDesc" style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">--</p>
             <div id="qrDisplayContainer"></div>
             <button onclick="closeQrDisplayModal()" class="btn-secondary">Yopish</button>
         </div>
     </div>
 
-    <!-- Official Alert Modal -->
+    <!-- Alert Modal -->
     <div id="govModal" class="modal hidden">
         <div class="modal-content">
-            <h3 id="govModalTitle" style="margin-bottom:0.75rem; font-size:0.95rem; text-transform:uppercase; color:var(--gov-accent);">Tizim Bildirishnomasi</h3>
+            <h3 id="govModalTitle" style="margin-bottom:0.5rem; font-size:0.85rem; text-transform:uppercase; color:var(--gov-accent);">Tizim Bildirishnomasi</h3>
             <div id="govModalBody" class="gov-alert-body">--</div>
             <button onclick="closeGovAlert()">Tushundim</button>
         </div>
@@ -628,7 +669,6 @@
         let isRegisterMode = false;
         let html5QrCodeEngine = null;
 
-        // Custom Government Notification System
         function showAlert(message, type = 'info', title = 'Tizim Bildirishnomasi') {
             document.getElementById("govModalTitle").innerText = title;
             const body = document.getElementById("govModalBody");
@@ -641,13 +681,30 @@
             document.getElementById("govModal").classList.add("hidden");
         }
 
-        // Authentication Handlers
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
             document.getElementById("authTitle").innerText = isRegisterMode ? "Ro'yxatdan O'tish" : "Tizimga Kirish";
             document.getElementById("authSubmitBtn").innerText = isRegisterMode ? "Hisob Yaratish" : "Kirish";
             document.getElementById("authToggleBtn").innerText = isRegisterMode ? "Kirishga o'tish" : "Ro'yxatdan o'tish";
             document.getElementById("confirmPasswordGroup").classList.toggle("hidden", !isRegisterMode);
+        }
+
+        function formatUserFullName(usr) {
+            if (!usr) return 'Mavjud emas';
+            const parts = [usr.last_name, usr.first_name, usr.middle_name].filter(Boolean);
+            return parts.length > 0 ? parts.join(' ') : (usr.username || 'Mavjud emas');
+        }
+
+        async function extractErrorMessage(res) {
+            try {
+                const data = await res.json();
+                if (data.detail && Array.isArray(data.detail)) {
+                    return data.detail.map(e => e.msg).join(', ');
+                }
+                return data.detail || "Xatolik yuz berdi.";
+            } catch {
+                return "Noma'lum xatolik yuz berdi.";
+            }
         }
 
         async function handleAuth(e) {
@@ -663,10 +720,11 @@
                     body: JSON.stringify({ username, password, password_confirm })
                 });
                 if (res.ok) {
-                    showAlert("Ro'yxatdan o'tish muvaffaqiyatli yakunlandi. Iltimos, tizimga kiring.", "success");
+                    showAlert("Ro'yxatdan o'tish muvaffaqiyatli yakunlandi.", "success");
                     toggleAuthMode();
                 } else {
-                    showAlert("Ro'yxatdan o'tishda xatolik. Ma'lumotlarni tekshiring.", "error");
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Xatolik: ${err}`, "error");
                 }
             } else {
                 const formData = new URLSearchParams();
@@ -685,7 +743,8 @@
                     localStorage.setItem("role", data.role);
                     initDashboard();
                 } else {
-                    showAlert("Foydalanuvchi nomi yoki parol noto'g'ri.", "error");
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Kirishda xatolik: ${err}`, "error");
                 }
             }
         }
@@ -696,7 +755,6 @@
             location.reload();
         }
 
-        // Authorized Fetch Wrapper
         async function apiFetch(endpoint, options = {}) {
             const token = localStorage.getItem("token");
             const headers = {
@@ -706,7 +764,22 @@
             return fetch(`${API_BASE}${endpoint}`, { ...options, headers });
         }
 
-        // Dashboard Initialization & Role Management
+        async function loadProfile() {
+            const role = localStorage.getItem("role");
+            const endpoint = role === 'service' ? '/auth/me_service' : '/auth/me';
+            const res = await apiFetch(endpoint);
+            if (res.ok) {
+                const profile = await res.json();
+                document.getElementById("profFullName").innerText = formatUserFullName(profile);
+                document.getElementById("profUsername").innerText = profile.username || 'Mavjud emas';
+                
+                if (role === 'service') {
+                    document.getElementById("serviceBalanceRow").classList.remove("hidden");
+                    document.getElementById("profBalance").innerText = `${profile.balance || 0} UZS`;
+                }
+            }
+        }
+
         async function initDashboard() {
             const token = localStorage.getItem("token");
             const role = localStorage.getItem("role");
@@ -716,7 +789,9 @@
             document.getElementById("dashboard").classList.remove("hidden");
             document.getElementById("userInfo").classList.remove("hidden");
             document.getElementById("bottomNav").classList.remove("hidden");
-            document.getElementById("roleBadge").innerText = role.toUpperCase();
+            document.getElementById("roleBadge").innerText = role ? role.toUpperCase() : 'USER';
+
+            loadProfile();
 
             if (role === 'user') {
                 document.getElementById("userCardSection").classList.remove("hidden");
@@ -731,7 +806,6 @@
                 document.getElementById("thActionHeader").classList.remove("hidden");
             }
 
-            // Restore tab from URL hash or default to 'main'
             const currentHash = window.location.hash.replace('#', '');
             const initialTab = ['main', 'applications', 'transactions'].includes(currentHash) ? currentHash : 'main';
             switchTab(initialTab, false);
@@ -740,7 +814,6 @@
             loadTransactions();
         }
 
-        // Mobile & Desktop Hash Sync Tab Navigation System
         function switchTab(tabName, updateHash = true) {
             const validTabs = ['main', 'applications', 'transactions'];
             if (!validTabs.includes(tabName)) tabName = 'main';
@@ -755,31 +828,29 @@
 
                 const targetTab = document.getElementById(`tab-${tabName}`);
                 const targetNav = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
-                if (targetTab) targetTab.style.display = 'block';
+                if (targetTab) targetTab.style.display = 'flex';
                 if (targetNav) targetNav.classList.add('active');
             }
         }
 
-        // Handle URL Hash Changes (Browser Back/Forward or Reload)
         window.addEventListener('hashchange', () => {
             const currentHash = window.location.hash.replace('#', '');
             if (currentHash) switchTab(currentHash, false);
         });
 
-        // DATA LOADERS & API CALLS
-
-        // USER: Get Cards
+        // CARDS API
         async function loadCards() {
             const res = await apiFetch("/card/");
             if (res.ok) {
                 const cards = await res.json();
                 const container = document.getElementById("userCardsContainer");
-                if(cards.length === 0) {
-                    container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Biriktirilgan bank kartalari mavjud emas.</p>';
+                if (!cards || cards.length === 0) {
+                    container.innerHTML = '<p style="font-size:0.75rem; color:var(--text-muted);">Kartalar mavjud emas.</p>';
                     return;
                 }
                 container.innerHTML = cards.map(c => `
                     <div class="gov-item">
+                        <div class="gov-row"><span class="gov-label">ID:</span><span class="gov-val">#${c.id}</span></div>
                         <div class="gov-row"><span class="gov-label">Egasining ismi:</span><span class="gov-val">${c.holder || 'Mavjud emas'}</span></div>
                         <div class="gov-row"><span class="gov-label">Raqami:</span><span class="gov-val">${c.pan || '•••• ••••'}</span></div>
                     </div>
@@ -787,7 +858,16 @@
             }
         }
 
-        // USER: Card Binding Redirect
+        async function syncCards() {
+            const res = await apiFetch("/card/update");
+            if (res.status === 204 || res.ok) {
+                showAlert("Kartalar yangilandi.", "success");
+                loadCards();
+            } else {
+                showAlert("Kartalarni yangilashda xatolik.", "error");
+            }
+        }
+
         async function bindCard() {
             const returnUrl = encodeURIComponent(window.location.href);
             const res = await apiFetch(`/card/bind?return_url=${returnUrl}`);
@@ -795,11 +875,11 @@
                 const data = await res.json();
                 window.open(data.card_link_url, '_blank');
             } else {
-                showAlert("Karta biriktirish seansini yaratishda xatolik.", "error");
+                showAlert("Karta biriktirishda xatolik.", "error");
             }
         }
 
-        // SERVICE: Create Application
+        // APPLICATION API
         async function handleCreateApp(e) {
             e.preventDefault();
             const payload = {
@@ -817,38 +897,46 @@
             });
 
             if (res.ok) {
-                showAlert("Ariza muvaffaqiyatli yaratildi.", "success");
+                showAlert("Ariza yaratildi.", "success");
                 loadApplications();
             } else {
-                showAlert("Ariza yaratishda xatolik yuz berdi.", "error");
+                const err = await extractErrorMessage(res);
+                showAlert(`Xatolik: ${err}`, "error");
             }
         }
 
-        // USER & SERVICE: Load Applications
         async function loadApplications() {
             const role = localStorage.getItem("role");
             const res = await apiFetch("/application/");
             if (res.ok) {
                 const apps = await res.json();
                 const tbody = document.getElementById("applicationsTableBody");
-                if (apps.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Arizalar yozuvlari topilmadi</td></tr>';
+                if (!apps || apps.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Mavjud emas</td></tr>';
                     return;
                 }
                 
                 tbody.innerHTML = apps.map(a => {
-                    const hasPayer = a.user_id !== null && a.user_id !== undefined || a.subscriber_id !== null && a.subscriber_id !== undefined;
+                    const hasPayer = a.payer_id !== null && a.payer_id !== undefined;
                     const canShowQr = role === 'service' && (!a.is_active && !hasPayer);
 
                     return `
                         <tr>
-                            <td>#${a.id}</td>
-                            <td>${a.description || 'Mavjud emas'}</td>
-                            <td>${a.pay_day}-sana (${a.frequency === 'monthly' ? 'Har oy' : a.frequency})</td>
-                            <td>${a.is_active ? 'Faol' : 'Faol emas'}</td>
+                            <td>
+                                <strong>${a.name || 'Nomsiz'}</strong> (#${a.id})
+                            </td>
+                            <td>
+                                ${a.pay_day}-sana (${a.frequency})<br>
+                                <small>Balans: ${a.balance || 0} UZS</small>
+                            </td>
+                            <td>
+                                <span class="status-tag ${a.is_active ? 'active' : 'inactive'}">
+                                    ${a.is_active ? 'Faol' : 'Faol emas'}
+                                </span>
+                            </td>
                             ${role === 'service' ? `
                                 <td>
-                                    ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.description)}')" class="btn-secondary btn-sm">QR ko'rsatish</button>` : '<span style="color:var(--text-muted); font-size:0.75rem;">Ulangan</span>'}
+                                    ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.name || a.description)}')" class="btn-secondary btn-sm">QR</button>` : '<span style="color:var(--text-muted); font-size:0.65rem;">Ulangan</span>'}
                                 </td>
                             ` : ''}
                         </tr>
@@ -857,7 +945,6 @@
             }
         }
 
-        // SERVICE: Display QR Code for an application link
         function generateQrModal(appId, appDesc) {
             const targetUrl = `${API_BASE}/application/link/${appId}`;
             const container = document.getElementById("qrDisplayContainer");
@@ -867,8 +954,8 @@
 
             new QRCode(container, {
                 text: targetUrl,
-                width: 200,
-                height: 200,
+                width: 180,
+                height: 180,
                 colorDark : "#004488",
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
@@ -881,31 +968,22 @@
             document.getElementById("qrDisplayModal").classList.add("hidden");
         }
 
-        // USER: Real QR Code Camera Scanner Integration
         async function openQrScanner() {
             document.getElementById("qrModal").classList.remove("hidden");
-            
-            if (html5QrCodeEngine) {
-                await closeQrScanner();
-            }
+            if (html5QrCodeEngine) await closeQrScanner();
 
             try {
                 html5QrCodeEngine = new Html5Qrcode("qr-reader");
-                
-                const qrConfig = {
-                    fps: 10,
-                    qrbox: { width: 220, height: 220 }
-                };
-
+                const qrConfig = { fps: 10, qrbox: { width: 180, height: 180 } };
                 const cameras = await Html5Qrcode.getCameras();
+                
                 if (cameras && cameras.length > 0) {
-                    const cameraId = cameras[cameras.length - 1].id;
-                    await html5QrCodeEngine.start(cameraId, qrConfig, onScanSuccess, onScanFailure);
+                    await html5QrCodeEngine.start(cameras[cameras.length - 1].id, qrConfig, onScanSuccess, onScanFailure);
                 } else {
                     await html5QrCodeEngine.start({ facingMode: "environment" }, qrConfig, onScanSuccess, onScanFailure);
                 }
             } catch (err) {
-                showAlert("Kamerani ishga tushirib bo'lmadi. Ruhsatlarni tekshiring.", "error");
+                showAlert("Kamerani ishga tushirib bo'lmadi.", "error");
                 closeQrScanner();
             }
         }
@@ -921,10 +999,8 @@
             document.getElementById("qrModal").classList.add("hidden");
         }
 
-        // USER: Real Scan Handler Executing POST Link
         async function onScanSuccess(decodedText) {
             await closeQrScanner();
-            
             let targetUrl = decodedText;
             if (!isNaN(decodedText)) {
                 targetUrl = `${API_BASE}/application/link/${decodedText}`;
@@ -941,21 +1017,20 @@
 
                 if (res.ok) {
                     const data = await res.json();
-                    showAlert(`Ariza muvaffaqiyatli ulandi!\nHolati: ${data.status}\nTafsilot: ${data.detail}`, "success");
+                    showAlert(`Ariza ulandi!\nHolati: ${data.status ? 'Muvaffaqiyatli' : 'Muvaffaqiyatsiz'}\nTafsilot: ${data.detail}`, "success");
                     loadApplications();
                 } else {
-                    showAlert("QR kod orqali arizani ulash imkonsiz bo'ldi.", "error");
+                    const err = await extractErrorMessage(res);
+                    showAlert(`QR ulashda xatolik: ${err}`, "error");
                 }
             } catch (err) {
-                showAlert("QR havolani bajarishda tarmoq xatoligi.", "error");
+                showAlert("QR havolani bajarishda xatolik.", "error");
             }
         }
 
-        function onScanFailure(error) {
-            // Quiet continuous capture frame failures
-        }
+        function onScanFailure(error) {}
 
-        // SERVICE: Process Charge
+        // TRANSACTIONS & CHARGE API
         async function handleChargeCard(e) {
             e.preventDefault();
             const payload = {
@@ -971,59 +1046,53 @@
             });
 
             if (res.ok) {
-                showAlert("Mablag' kartadan muvaffaqiyatli yechildi.", "success");
+                showAlert("Mablag' yechildi.", "success");
                 loadTransactions();
+                loadProfile();
             } else {
-                showAlert("Mablag' yechishda xatolik yuz berdi.", "error");
+                const err = await extractErrorMessage(res);
+                showAlert(`Mablag' yechishda xatolik: ${err}`, "error");
             }
         }
 
-        // USER & SERVICE: Load Transactions
         async function loadTransactions() {
-            const role = localStorage.getItem("role");
-            const res = await apiFetch("/card/transactions");
+            const res = await apiFetch("/transaction/");
             
             if (res.ok) {
                 const txs = await res.json();
                 const tbody = document.getElementById("transactionsTableBody");
-                const thead = document.querySelector("#tab-transactions table thead tr");
 
-                // Dynamic table headers based on role
-                thead.innerHTML = `
-                    <th>ID</th>
-                    <th>Summa</th>
-                    <th>Holat</th>
-                    <th>Yuboruvchi ID</th>
-                    ${role === 'service' ? '<th>Yuboruvchi F.I.Sh.</th>' : ''}
-                `;
-
-                if (txs.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="${role === 'service' ? 5 : 4}" style="text-align:center;">Tranzaksiyalar mavjud emas</td></tr>`;
+                if (!txs || txs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Tranzaksiyalar mavjud emas</td></tr>';
                     return;
                 }
 
                 tbody.innerHTML = txs.map(t => {
-                    const sender = t.sender || {};
-                    const firstName = sender.first_name || '';
-                    const lastName = sender.last_name || '';
-                    const middleName = sender.middle_name || '';
-                    
-                    const fullName = `${lastName} ${firstName} ${middleName}`.trim() || sender.username || 'Mavjud emas';
+                    const senderName = formatUserFullName(t.sender);
+                    const receiverName = formatUserFullName(t.receiver);
 
                     return `
                         <tr>
-                            <td>#${t.id}</td>
-                            <td>${t.amount}</td>
-                            <td>${t.status}</td>
-                            <td>#${t.sender_id}</td>
-                            ${role === 'service' ? `<td><strong>${fullName}</strong></td>` : ''}
+                            <td>
+                                <strong>#${t.id}</strong><br>
+                                <small style="color:var(--text-muted);">${t.created_at || ''}</small>
+                            </td>
+                            <td><strong>${t.amount} UZS</strong></td>
+                            <td>
+                                <span class="status-tag ${t.status}">
+                                    ${t.status}
+                                </span>
+                            </td>
+                            <td>
+                                <small>Yuboruvchi: ${senderName}</small><br>
+                                <small>Qabul: ${receiverName}</small>
+                            </td>
                         </tr>
                     `;
                 }).join('');
             }
         }
 
-        // Initialize App on Load
         window.onload = () => {
             if (localStorage.getItem("token")) {
                 initDashboard();

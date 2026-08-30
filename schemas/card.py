@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class CardResponse(BaseModel):
+    id: int
     holder: str | None = None
     pan: str | None = None
     expiry: str | None = None

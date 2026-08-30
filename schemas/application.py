@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 from models import PaymentFrequency
+from schemas import UserResponse
+from datetime import date
 
 class ApplicationForm(BaseModel):
     name: str
@@ -8,17 +10,24 @@ class ApplicationForm(BaseModel):
     frequency: PaymentFrequency
     pay_day: int
 
+
 class ApplicationResponse(BaseModel):
     id: int
+    name: str
     description: str
     cancellable: bool
     frequency: PaymentFrequency
+    start_date: date
+    end_date: date | None = None
     pay_day: int
     balance: int
     debt: int
     is_active: bool
     service_id: int
     payer_id: int | None = None
+
+    payer: UserResponse | None = None
+    service: UserResponse | None = None
 
     model_config = {
         "from_attributes": True

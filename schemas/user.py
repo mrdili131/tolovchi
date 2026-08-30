@@ -20,3 +20,16 @@ class UserResponse(BaseModel):
     role: UserType | None = None
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class ServiceResponse(BaseModel):
+    id: int
+    username: str | None = None
+    service_name: str | None = None
+    last_name: str | None = None
+    first_name: str | None = None
+    middle_name: str | None = None
+    role: UserType | None = None
+    balance: int
+
+    model_config = ConfigDict(from_attributes=True)

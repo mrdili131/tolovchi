@@ -4,6 +4,7 @@ from database import Session
 from services import user_dependency, service_role, user_role
 from schemas import ApplicationResponse, ApplicationForm, SuccessResponse
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 router = APIRouter()
 
@@ -11,10 +12,16 @@ router = APIRouter()
 async def get_applications(user: user_dependency, db: Session):
     match user.get("role"):
         case UserType.USER.value:
-            applications = await db.scalars(select(Application).where(Application.payer_id==user.get("id")))
+            applications = await db.scalars(select(Application).where(Application.payer_id==user.get("id")).options(
+                selectinload(Application.payer),
+                selectinload(Application.service)
+            ))
             return applications.all()
         case UserType.SERVICE.value:
-            applications = await db.scalars(select(Application).where(Application.service_id==user.get("id")))
+            applications = await db.scalars(select(Application).where(Application.service_id==user.get("id")).options(
+                selectinload(Application.payer),
+                selectinload(Application.service)
+            ))
             return applications.all()
         case _:
             raise HTTPException(status_code=404, detail="Not found")
@@ -31,6 +38,18 @@ async def create_application(db: Session, user: service_role, form: ApplicationF
     db.add(new_application)
     await db.commit()
 
+
+@router.get('/detail/{app_id}', response_model=ApplicationResponse, status_code=200, summary="Get application by app id. ROLES: [USER, SERVICE]")
+async def get_application(db: Session, user: user_dependency, app_id: int):
+    application = await db.scalar(select(Application).where(Application.id==app_id).options(
+        selectinload(Application.payer),
+        selectinload(Application.service)
+    ))
+
+    if not application:
+        raise HTTPException(status_code=404, detail="Application does not exist")
+
+    return application
 
 
 @router.post('/link/{application_id}', response_model=SuccessResponse,status_code=200,summary="For linking user to application. QR code usage. ROLES: [USER]")

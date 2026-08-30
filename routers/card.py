@@ -3,7 +3,7 @@ from models import Card, User, UserType, Transaction, TransactionStatus
 from database import Session
 from services import user_dependency, service_role, user_role, InpayAutoPayService
 from schemas import CardResponse, CardBindResponse, TransactionForm, TransactionResponse
-from sqlalchemy import select, or_
+from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 router = APIRouter()
@@ -13,6 +13,18 @@ router = APIRouter()
 async def get_cards(db: Session, user: user_role):
     cards = await db.scalars(select(Card).where(Card.user_id==user.get("id"),Card.is_active==True))
     return cards.all()
+
+
+@router.get('/detail/{card_id}', response_model=CardResponse, status_code=200,summary="Gets cards, ROLES: [USER]")
+async def get_card(db: Session, user: user_role, card_id: int):
+    card = await db.scalar(select(Card).where(Card.id==card_id).options(
+        selectinload(Card.user)
+    ))
+
+    if not card:
+        raise HTTPException(status_code=404, detail="This card does not exist")
+    
+    return card
 
 
 @router.get('/update', status_code=204,summary="Updates cards, ROLES: [USER, SERVICE]")
@@ -91,15 +103,3 @@ async def charge(db: Session, user: service_role, form: TransactionForm):
 
     return transaction
 
-
-@router.get('/transactions',response_model=list[TransactionResponse],status_code=200,summary="Get transactions, ROLES: [USER, SERVICE]")
-async def get_transactions(db: Session, user: user_dependency):
-    transactions = await db.scalars(select(Transaction).filter(
-        or_(
-            Transaction.sender_id==user.get("id"),
-            Transaction.receiver_id==user.get("id")))
-        .options(
-            selectinload(Transaction.sender),
-            selectinload(Transaction.receiver)
-        ))
-    return transactions.all()

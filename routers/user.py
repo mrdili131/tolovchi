@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from database import Session
-from schemas import RegisterSchema, LoginResponse, UserResponse
-from services import  authenticate_user, create_token, pwd_context, Annotated, OAuth2PasswordRequestForm, user_dependency
+from schemas import RegisterSchema, LoginResponse, UserResponse, ServiceResponse
+from services import  authenticate_user, create_token, pwd_context, Annotated, OAuth2PasswordRequestForm, user_dependency, service_role, user_role
 from datetime import timedelta
 from sqlalchemy import select
 from models import User
@@ -38,7 +38,16 @@ async def login(db: Session, form: Annotated[OAuth2PasswordRequestForm, Depends(
     return LoginResponse(access_token=token,token_type="bearer", role=user.role)
 
 
-@router.get('/me', response_model=UserResponse, status_code=200, summary="Get user data. ROLES: [USER, SERVICE]")
-async def return_user(db: Session, user: user_dependency):
+@router.get('/me', response_model=UserResponse, status_code=200, summary="Get user data. ROLES: [USER]")
+async def return_user(db: Session, user: user_role):
     db_user = await db.scalar(select(User).where(User.id==user.get("id")))
     return db_user
+
+@router.get('/me_service', response_model=ServiceResponse, status_code=200, summary="Get user data. ROLES: [SERVICE]")
+async def return_user(db: Session, user: service_role):
+    db_user = await db.scalar(select(User).where(User.id==user.get("id")))
+    return db_user
+
+# @router.get('/clients', response_model=list[UserResponse], status_code=200, summary="Returns clients of service. ROLES: [SERVICE]")
+# async def get_clients(db: Session, user: service_role):
+#     clients = await db.
