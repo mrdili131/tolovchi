@@ -19,8 +19,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://test-c401bb6e.fastapicloud.dev",
-        "http://magazinjon.uz",
-        "https://magazinjon.uz",
+        "http://bindin.uz",
+        "https://bindin.uz",
         "http://127.0.0.1:8000"
     ],
     allow_credentials=True,
