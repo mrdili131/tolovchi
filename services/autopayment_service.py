@@ -58,6 +58,7 @@ class InpayAutoPayService:
             body = {"customer_ref":customer_id,"return_url":return_url} # Customer ID ni to‘g‘irlang
         ).json()
 
+
         if r["success"] == False:
             raise HTTPException(status_code=400,detail="SERVICE: Cannot generate card link page")
         return r
@@ -81,7 +82,7 @@ class InpayAutoPayService:
                 raise HTTPException(status_code=400,detail="SERVICE: Imzoda xatolik")
             case _:
                 r = r.json()
-                print(r)
+
                 if r["success"] == False:
                     raise HTTPException(status_code=400,detail="SERVICE: Could not charge")
                 return r

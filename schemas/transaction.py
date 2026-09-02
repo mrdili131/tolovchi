@@ -5,8 +5,7 @@ from datetime import date
 
 class TransactionForm(BaseModel):
     amount: int = Field(ge=1000)
-    card_id: int
-    service_id: int
+    application_id: int
 
     model_config = {
         "from_attributes": True

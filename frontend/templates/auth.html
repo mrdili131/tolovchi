@@ -489,19 +489,15 @@
                 <div id="serviceChargeSection" class="card hidden">
                     <h2>Kartadan Yechish</h2>
                     <form onsubmit="handleChargeCard(event)">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                            <div class="form-group">
-                                <label>Karta ID</label>
-                                <input type="number" id="chargeCardId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Service ID</label>
-                                <input type="number" id="chargeServiceId" required>
-                            </div>
+                        <div class="form-group">
+                            <label>Arizani tanlang</label>
+                            <select id="chargeAppSelect" onchange="handleAppSelectChange(this)" required>
+                                <option value="">Arizalar yuklanmoqda...</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Summa</label>
-                            <input type="number" id="chargeAmount" min="1000" required>
+                            <label>Summa (UZS)</label>
+                            <input type="number" id="chargeAmount" min="1000" required placeholder="Masalan: 50000">
                         </div>
                         <button type="submit">Mablag'ni Yechish</button>
                     </form>
@@ -565,7 +561,7 @@
     </div>
 
     <script>
-        const API_BASE = "https://bindin.uz/api";
+        const API_BASE = "http://127.0.0.1:8000/api";
         let isRegisterMode = false;
         let html5QrCodeEngine = null;
 
@@ -803,12 +799,46 @@
             }
         }
 
+        function populateChargeAppDropdown(apps) {
+            const select = document.getElementById("chargeAppSelect");
+            if (!select) return;
+
+            const chargeableApps = apps.filter(a => a.is_active || a.payer_id || a.card_id);
+
+            if (chargeableApps.length === 0) {
+                select.innerHTML = '<option value="">Faol arizalar topilmadi</option>';
+                return;
+            }
+
+            select.innerHTML = '<option value="">-- Arizani tanlang --</option>' + 
+                chargeableApps.map(a => {
+                    const cardId = a.card_id || (a.card && a.card.id) || '';
+                    const appAmount = a.amount || 0;
+                    return `<option value="${a.id}" data-card-id="${cardId}" data-amount="${appAmount}">
+                        ${a.name || 'Nomsiz'} (#${a.id}) - ${appAmount} UZS
+                    </option>`;
+                }).join('');
+        }
+
+        function handleAppSelectChange(selectElem) {
+            const selectedOption = selectElem.options[selectElem.selectedIndex];
+            const defaultAmount = selectedOption.getAttribute("data-amount");
+            if (defaultAmount) {
+                document.getElementById("chargeAmount").value = defaultAmount;
+            }
+        }
+
         async function loadApplications() {
             const role = localStorage.getItem("role");
             const res = await apiFetch("/application/");
             if (res.ok) {
                 const apps = await res.json();
                 const container = document.getElementById("applicationsContainer");
+                
+                if (role === 'service') {
+                    populateChargeAppDropdown(apps);
+                }
+
                 if (!apps || apps.length === 0) {
                     container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Mavjud emas</p>';
                     return;
@@ -924,11 +954,28 @@
         // TRANSACTIONS & CHARGE API
         async function handleChargeCard(e) {
             e.preventDefault();
+            const select = document.getElementById("chargeAppSelect");
+            const selectedOption = select.options[select.selectedIndex];
+            
+            const applicationId = parseInt(select.value);
+            const cardIdAttr = selectedOption ? selectedOption.getAttribute("data-card-id") : null;
+            const parsedCardId = parseInt(cardIdAttr);
+            const amount = parseInt(document.getElementById("chargeAmount").value);
+
+            if (!applicationId) {
+                showAlert("Iltimos, arizani tanlang.", "error");
+                return;
+            }
+
+            // Build strictly valid integer payload fields
             const payload = {
-                card_id: parseInt(document.getElementById("chargeCardId").value),
-                service_id: parseInt(document.getElementById("chargeServiceId").value),
-                amount: parseInt(document.getElementById("chargeAmount").value)
+                application_id: applicationId,
+                amount: amount
             };
+
+            if (!isNaN(parsedCardId) && parsedCardId > 0) {
+                payload.card_id = parsedCardId;
+            }
 
             const res = await apiFetch("/card/charge", {
                 method: "POST",
@@ -939,6 +986,7 @@
             if (res.ok) {
                 showAlert("Mablag' yechildi.", "success");
                 loadTransactions();
+                loadApplications();
                 loadProfile();
             } else {
                 const err = await extractErrorMessage(res);

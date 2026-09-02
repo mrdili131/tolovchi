@@ -19,7 +19,7 @@ async def get_transactions(db: Session, user: user_dependency):
         .options(
             selectinload(Transaction.sender),
             selectinload(Transaction.receiver)
-        ))
+        ).order_by(Transaction.id.desc()))
     return transactions.all()
 
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models import Card, User, UserType, Transaction, TransactionStatus
+from models import Card, User, UserType, Transaction, TransactionStatus, Application
 from database import Session
 from services import user_dependency, service_role, user_role, InpayAutoPayService
 from schemas import CardResponse, CardBindResponse, TransactionForm, TransactionResponse
@@ -68,38 +68,48 @@ async def card_bind(db: Session, user: user_role, return_url: str):
 
 @router.post('/charge',response_model=TransactionResponse,status_code=200,summary="Charing amount, ROLES: [SERVICE]")
 async def charge(db: Session, user: service_role, form: TransactionForm):
-    service = await db.get(User,form.service_id)
-    card = await db.get(Card,form.card_id)
+    service = await db.get(User,user.get("id"))
+    application = await db.get(Application,form.application_id)
 
-    if not card or not service or service.type != UserType.SERVICE:
-        raise HTTPException(status_code=404,detail="Service or card is not valid")
+    if not service or service.role != UserType.SERVICE or not application:
+        raise HTTPException(status_code=404,detail="Service or application is not valid")
+
+    cards_res = await db.scalars(select(Card).where(Card.user_id==application.payer_id, Card.is_active==True))
+    cards = cards_res.all()
 
     inpay = InpayAutoPayService()
-    transaction = Transaction(
-        amount = form.amount,
-        sender_id = card.user_id,
-        receiver_id = form.service_id
-    )
-    db.add(transaction)
-    await db.commit()
 
-    res = inpay.charge(amount=form.amount,card_id=card.charge_id)
+    if application.service_id != user.get("id"):
+        raise HTTPException(status_code=404,detail="Cannot charge for this application")
 
-    if not res:
-        raise HTTPException(status_code=400,detail="Could not charge")
+    for card in cards:
+        transaction = Transaction(
+            amount = form.amount,
+            sender_id = card.user_id,
+            receiver_id = service.id,
+        )
 
-    service.balance += form.amount
+        db.add(transaction)
+        await db.commit()
 
-    transaction.status = TransactionStatus.PROVIDED
+        res = inpay.charge(amount=form.amount,card_id=card.charge_id)
 
-    await db.commit()
-    await db.refresh(transaction)
-    await db.refresh(service)
+        if res:
+            service.balance += form.amount
 
-    result = await db.scalar(select(Transaction).where(Transaction.id==transaction.id).options(
-        selectinload(Transaction.sender),
-        selectinload(Transaction.receiver)
-    ))
+            transaction.status = TransactionStatus.PROVIDED
+            application.balance += form.amount
 
-    return transaction
+            db.add(transaction)
+            await db.commit()
+            await db.refresh(service)
+            await db.refresh(transaction)
+            await db.refresh(application)
+
+            return await db.scalar(select(Transaction).where(Transaction.id==transaction.id).options(
+                selectinload(Transaction.sender),
+                selectinload(Transaction.receiver)
+            ))
+
+    raise HTTPException(status_code=404, detail="Could not provide transaction")
 
