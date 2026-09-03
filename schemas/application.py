@@ -23,8 +23,6 @@ class ApplicationResponse(BaseModel):
     balance: int
     debt: int
     is_active: bool
-    service_id: int
-    payer_id: int | None = None
 
     payer: UserResponse | None = None
     service: UserResponse | None = None

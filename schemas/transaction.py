@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 from models import TransactionStatus
-from schemas import UserResponse
+from schemas import UserResponse, ApplicationResponse
 from datetime import date
 
 class TransactionForm(BaseModel):
@@ -16,10 +16,10 @@ class TransactionResponse(BaseModel):
     id: int
     amount: int
     status: TransactionStatus
-    sender_id: int
-    receiver_id: int
     created_at: date
-    receiver: UserResponse
+
     sender: UserResponse
+    receiver: UserResponse
+    application: ApplicationResponse | None = None # Remove none on production db
 
     model_config = ConfigDict(from_attributes=True)

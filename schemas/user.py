@@ -3,6 +3,9 @@ from models import UserType
 
 class RegisterSchema(BaseModel):
     username: str
+    last_name: str
+    first_name: str
+    middle_name: str
     password: str
     password_confirm: str
 

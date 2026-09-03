@@ -18,6 +18,8 @@ class Transaction(Base):
 
     sender_id = Column(Integer,ForeignKey("users.id"))
     receiver_id = Column(Integer,ForeignKey("users.id"))
+    application_id = Column(Integer,ForeignKey("applications.id"))
 
     sender = relationship("User", foreign_keys=[sender_id], back_populates="transactions")
     receiver = relationship("User", foreign_keys=[receiver_id], back_populates="service_transactions")
+    application = relationship("Application", foreign_keys=[application_id], back_populates="transactions")

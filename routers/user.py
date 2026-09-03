@@ -18,7 +18,10 @@ async def register(db: Session, form: RegisterSchema):
     if form.password == form.password_confirm:
         new_user = User(
             username = form.username,
-            password_hash = pwd_context.hash(form.password)
+            password_hash = pwd_context.hash(form.password),
+            last_name = form.last_name,
+            first_name = form.first_name,
+            middle_name = form.middle_name
         )
         db.add(new_user)
         await db.commit()

@@ -18,19 +18,21 @@ async def get_transactions(db: Session, user: user_dependency):
             Transaction.receiver_id==user.get("id")))
         .options(
             selectinload(Transaction.sender),
-            selectinload(Transaction.receiver)
+            selectinload(Transaction.receiver),
+            selectinload(Transaction.application)
         ).order_by(Transaction.id.desc()))
     return transactions.all()
 
 
 @router.get('/detail/{transaction_id}', response_model=TransactionResponse, status_code=200, summary="Get transaction by id. ROLES: [USER, SERVICE]")
-async def get_application(db: Session, user: user_dependency, transaction_id: int):
-    application = await db.scalar(select(Transaction).where(Transaction.id==transaction_id).options(
+async def get_transaction(db: Session, user: user_dependency, transaction_id: int):
+    transaction = await db.scalar(select(Transaction).where(Transaction.id==transaction_id).options(
         selectinload(Transaction.sender),
-        selectinload(Transaction.receiver)
+        selectinload(Transaction.receiver),
+        selectinload(Transaction.application)
     ))
 
-    if not application:
-        raise HTTPException(status_code=404, detail="Application does not exist")
+    if not transaction:
+        raise HTTPException(status_code=404, detail="Transaction does not exist")
 
-    return application
+    return transaction

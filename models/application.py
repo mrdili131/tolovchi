@@ -29,3 +29,4 @@ class Application(Base):
 
     service = relationship("User", foreign_keys=[service_id], back_populates="service_applications")
     payer = relationship("User", foreign_keys=[payer_id], back_populates="applications")
+    transactions = relationship("Transaction", back_populates="application")
