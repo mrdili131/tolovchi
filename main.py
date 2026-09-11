@@ -2,7 +2,7 @@ import os
 import logging
 import time
 from routers import main_router
-from services import user_dependency
+from services import admin_role
 from scheduler import lifespan_scheduler
 from fastapi.responses import FileResponse
 from fastapi import FastAPI, HTTPException, Request
@@ -59,9 +59,7 @@ def health():
 
 
 @app.get('/db', summary="ADMIN ACCESS ONLY !!!")
-async def download_db(user: user_dependency):
-    if not user.get("role") == "admin":
-        raise HTTPException(status_code=404,detail="Only admin access")
+async def download_db(admin: admin_role):
     try:
         return FileResponse(
             path=os.path.join("musha.db"),
