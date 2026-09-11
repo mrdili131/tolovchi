@@ -1,18 +1,27 @@
 import os
-from database import Session
+import logging
+import time
 from routers import main_router
+from services import user_dependency
+from scheduler import lifespan_scheduler
 from fastapi.responses import FileResponse
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from frontend import router as frontend_router
 from fastapi.middleware.cors import CORSMiddleware
-from services import user_dependency, payment_checker
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from contextlib import asynccontextmanager
+logging.basicConfig(
+    level=logging.INFO,
+    format = "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
+)
 
-app = FastAPI(title="Subscription maganer", description="This api for monthly subscription manager app", version="0.0.1")
+logger = logging.getLogger(__name__)
+
+app = FastAPI(title="Subscription maganer",
+                description="This api for monthly subscription manager app",
+                version="0.0.1",
+                lifespan=lifespan_scheduler
+            )
 
 app.mount('/static', StaticFiles(directory='frontend/static'),name='static')
 
@@ -32,13 +41,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    scheduler = AsyncIOScheduler()
-
-    
-
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    response_time = time.perf_counter() - start_time
+    logger.info(f"{request.method} {request.url.path} {response.status_code} {response_time:.3f}s")
+    return response
 
 
 @app.get('/health', include_in_schema=False)
