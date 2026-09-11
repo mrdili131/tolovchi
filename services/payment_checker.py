@@ -44,6 +44,10 @@ async def payment_checker(db: Session):
                 await db.commit()
                 await db.refresh(app)
                 break
+            else:
+                app.is_paid = False
+                await db.commit()
+                await db.refresh(app)
 
 
     print("[AUTO-PAYMENT] PAYMENT CYCLE HAS BEEN DONE")
