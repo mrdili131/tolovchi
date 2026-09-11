@@ -11,5 +11,9 @@ def template(file_name: str):
     return FileResponse(file_url)
 
 @router.get('/')
-def auth():
-    return template("auth.html")
+def home():
+    return template("index.html")
+
+@router.get('/printables')
+def printables():
+    return template("printables.html")
