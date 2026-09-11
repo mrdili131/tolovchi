@@ -12,7 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 logging.basicConfig(
     level=logging.INFO,
-    format = "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
+    format = "%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    handlers=[
+        logging.FileHandler("logs/bindin.log",encoding="utf-8")
+    ]
 )
 
 logger = logging.getLogger(__name__)
