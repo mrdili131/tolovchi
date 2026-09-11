@@ -1,221 +1,219 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>Приходный кассовый ордер и Квитанция</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bindin - Kassa Hisoboti</title>
+  <link rel="icon" type="image/x-icon" href="static/favicon.ico">
   <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 15px;
-      background-color: #f4f4f4;
-      color: #000;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 24px;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto 20px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+
     .hidden { display: none !important; }
 
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-    .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; }
-    button {
-      background-color: #000;
-      color: #fff;
-      padding: 8px 16px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover { background-color: #333; }
-    .btn-print-single {
-      background-color: #0056b3;
-      color: #fff;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .btn-print-single:hover { background-color: #003d80; }
-    .error { color: red; margin-top: 10px; font-weight: bold; }
-
-    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-
-    /* HUJJAT WRAPPER */
-    .document-wrapper {
-      width: 1000px;
-      margin: 0 auto 30px;
-    }
-
-    /* HUJJAT TUZILISHI */
-    .receipt-sheet {
-      width: 1000px;
-      background: #fff;
+    /* AUTHENTICATION */
+    .login-wrapper {
       display: flex;
-      gap: 10px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      padding: 10px;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
     }
-
-    .order-box {
-      width: 58%;
-      border: 1.5px solid #000;
-      padding: 4px;
-      box-sizing: border-box;
-      font-size: 11px;
-    }
-
-    .kvit-box {
-      width: 42%;
-      border: 1.5px solid #000;
-      padding: 4px;
-      box-sizing: border-box;
-      font-size: 11px;
-    }
-
-    table.grid-table {
+    .login-card {
+      background: var(--card);
       width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 4px;
+      max-width: 380px;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
     }
-
-    table.grid-table td, table.grid-table th {
-      border: 1px solid #000;
-      padding: 3px 5px;
-      vertical-align: middle;
-      font-size: 11px;
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
     }
-
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .font-bold { font-weight: bold; }
-
-    .doc-title {
+    .brand-header img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .brand-header h2 { font-size: 22px; font-weight: 700; color: var(--primary); }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
       font-size: 14px;
-      font-weight: bold;
+      outline: none;
     }
+    .form-group input:focus { border-color: var(--accent); }
 
-    .field-row {
-      margin: 4px 0;
-      line-height: 1.3;
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      gap: 8px;
+      transition: background-color 0.2s;
     }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: #334155; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: #1d4ed8; }
+    .btn-secondary { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-block { width: 100%; }
+    .error { color: #ef4444; font-size: 13px; margin-top: 10px; text-align: center; }
 
-    .signatures-row {
-      margin-top: 15px;
+    /* DASHBOARD */
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .logo-title { display: flex; align-items: center; gap: 12px; }
+    .logo-title img { width: 32px; height: 32px; }
+    .logo-title h1 { font-size: 22px; font-weight: 700; }
+
+    .control-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 5px;
+      margin-bottom: 20px;
     }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
 
-    .stamp-space {
-      text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
+    /* DATA TABLE */
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
     }
+    table.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    table.data-table th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      border-bottom: 1px solid var(--border);
+    }
+    table.data-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    table.data-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:hover { background: #f8fafc; }
+    .badge-id { font-family: monospace; font-weight: 700; color: var(--accent); }
 
     @media print {
-      body { background: none; padding: 0; }
       .no-print { display: none !important; }
-      .receipt-sheet {
-        border: none;
-        padding: 0;
-        width: 100%;
-        page-break-after: always;
-      }
+      body { background: #fff; padding: 0; margin: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- KIRISH BO'LIMI -->
-  <div id="login-section" class="container no-print">
-    <h3>Tizimga kirish</h3>
-    <form id="login-form">
-      <div class="form-group">
-        <label>Foydalanuvchi nomi</label>
-        <input type="text" id="username" required>
+  <!-- LOGIN SECTION -->
+  <div id="login-section" class="login-wrapper no-print">
+    <div class="login-card">
+      <div class="brand-header">
+        <img src="static/favicon.ico" alt="Bindin Logo">
+        <h2>Bindin</h2>
       </div>
-      <div class="form-group">
-        <label>Parol</label>
-        <input type="password" id="password" required>
-      </div>
-      <button type="submit">Kirish</button>
-      <div id="login-error" class="error"></div>
-    </form>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Foydalanuvchi nomi</label>
+          <input type="text" id="username" placeholder="Login" required>
+        </div>
+        <div class="form-group">
+          <label>Parol</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Kirish</button>
+        <div id="login-error" class="error"></div>
+      </form>
+    </div>
   </div>
 
-  <!-- BOSHQARUV BO'LIMI -->
+  <!-- DASHBOARD SECTION -->
   <div id="dashboard-section" class="container no-print hidden">
-    <div class="toolbar">
-      <h3>Kassa orderlari reyestri</h3>
-      <div>
-        <button onclick="window.print()">Barchasini chop etish</button>
-        <button onclick="logout()" style="background-color: #666;">Chiqish</button>
+    <div class="header-bar">
+      <div class="logo-title">
+        <img src="static/favicon.ico" alt="Bindin Logo">
+        <h1>Bindin — Kassa Hisoboti</h1>
+      </div>
+      <button onclick="logout()" class="btn btn-secondary">Chiqish</button>
+    </div>
+
+    <div class="control-panel">
+      <label class="checkbox-label">
+        <input type="checkbox" id="select-all" onchange="toggleSelectAll(this)">
+        Barchasini tanlash
+      </label>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <span id="selected-count" style="font-size: 14px; font-weight: 600; color: #64748b;">Tanlandi: 0</span>
+        <button onclick="printSelectedReport()" class="btn btn-accent">📄 Hisobotni chop etish</button>
       </div>
     </div>
-    <div id="status-message">Hujjatlar yuklanmoqda...</div>
-  </div>
 
-  <!-- CHOP ETILADIGAN MAYDON -->
-  <div id="documents-render-area"></div>
+    <div id="status-message" style="margin-bottom: 12px; font-size: 14px; color: #64748b;">
+      Yuklanmoqda...
+    </div>
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 40px; text-align: center;">#</th>
+            <th>Tranzaksiya №</th>
+            <th>Sana</th>
+            <th>To'lovchi (Mijoz)</th>
+            <th>Qabul qiluvchi</th>
+            <th>Summa</th>
+          </tr>
+        </thead>
+        <tbody id="transactions-list-body"></tbody>
+      </table>
+    </div>
+  </div>
 
   <script>
     const API_BASE_URL = 'https://bindin.uz';
-
-    function numberToWordsUz(num) {
-      if (!num && num !== 0) return '';
-      const tiyin = Math.round((num % 1) * 100);
-      let mainNum = Math.floor(num);
-      
-      if (mainNum === 0) return 'Nol sum ' + (tiyin > 0 ? tiyin + ' tiyin' : '');
-      
-      const ones = ['', 'Bir', 'Ikki', 'Uch', 'To‘rt', 'Besh', 'Olti', 'Yetti', 'Sakkiz', 'To‘qqiz'];
-      const tens = ['', 'O‘n', 'Yigirma', 'O‘ttiz', 'Qirq', 'Ellik', 'Oltmish', 'Yetmish', 'Sakkosan', 'To‘qson'];
-
-      function convertGroup(n) {
-        let str = '';
-        if (n >= 100) {
-          str += ones[Math.floor(n / 100)] + ' yuz ';
-          n %= 100;
-        }
-        if (n >= 10) {
-          str += tens[Math.floor(n / 10)] + ' ';
-          n %= 10;
-        }
-        if (n > 0) {
-          str += ones[n] + ' ';
-        }
-        return str.trim();
-      }
-
-      let result = '';
-      if (mainNum >= 1000000) {
-        result += convertGroup(Math.floor(mainNum / 1000000)) + ' million ';
-        mainNum %= 1000000;
-      }
-      if (mainNum >= 1000) {
-        result += convertGroup(Math.floor(mainNum / 1000)) + ' ming ';
-        mainNum %= 1000;
-      }
-      if (mainNum > 0) {
-        result += convertGroup(mainNum);
-      }
-
-      result = result.trim() + ' sum';
-      if (tiyin > 0) {
-        result += ' ' + tiyin + ' tiyin';
-      }
-      return result;
-    }
+    let rawTransactions = [];
 
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -237,7 +235,6 @@
 
         const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
-        
         showDashboard();
       } catch (err) {
         errorDiv.textContent = err.message;
@@ -253,26 +250,25 @@
           headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        if (!response.ok) throw new Error('Tranzaksiyalarni olishda xatolik');
+        if (!response.ok) throw new Error('Tranzaksiyalarni yuklashda xatolik');
 
-        const transactions = await response.json();
+        rawTransactions = await response.json();
         
-        if (!transactions || transactions.length === 0) {
+        if (!rawTransactions || rawTransactions.length === 0) {
           statusMsg.textContent = 'Tranzaksiyalar topilmadi.';
           return;
         }
 
-        statusMsg.textContent = `${transactions.length} ta hujjat tayyorlandi.`;
-        renderDocuments(transactions);
+        statusMsg.textContent = `Jami ${rawTransactions.length} ta tranzaksiya mavjud.`;
+        renderTable(rawTransactions);
       } catch (err) {
         statusMsg.textContent = 'Xatolik: ' + err.message;
       }
     }
 
-    function renderDocuments(transactions) {
-      const renderArea = document.getElementById('documents-render-area');
-      
-      renderArea.innerHTML = transactions.map(tx => {
+    function renderTable(transactions) {
+      const tbody = document.getElementById('transactions-list-body');
+      tbody.innerHTML = transactions.map(tx => {
         const clientName = tx.sender 
           ? [tx.sender.last_name, tx.sender.first_name, tx.sender.middle_name].filter(Boolean).join(' ') || tx.sender.username || `ID #${tx.sender_id}`
           : `ID #${tx.sender_id}`;
@@ -281,208 +277,236 @@
           ? [tx.receiver.first_name, tx.receiver.last_name].filter(Boolean).join(' ') || tx.receiver.username || `ID #${tx.receiver_id}`
           : `ID #${tx.receiver_id}`;
 
-        const amountNum = tx.amount ? tx.amount : 0;
-        const formattedAmount = amountNum.toLocaleString('ru-RU', { minimumFractionDigits: 2 });
-        const amountWords = numberToWordsUz(amountNum);
-        const createdAt = tx.created_at || '';
-        const orderId = tx.id || '';
+        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2 });
 
         return `
-          <div class="document-wrapper">
-            <button class="btn-print-single no-print" onclick="printSingleOrder('${orderId}')">
-              🖨️ Faqat Order № ${orderId} ni chop etish
-            </button>
-            
-            <div class="receipt-sheet" id="order-sheet-${orderId}">
-              
-              <!-- CHAP TARAFI: ПРИХОДНЫЙ КАССОВЫЙ ОРДЕР -->
-              <div class="order-box">
-                <table class="grid-table">
-                  <tr>
-                    <td class="text-center font-bold" style="font-size: 11px;">
-                      ${receiverName.toUpperCase()}<br/>
-                      <span style="font-weight: normal; font-size: 9px;">(наименование организации)</span>
-                    </td>
-                  </tr>
-                </table>
-
-                <table class="grid-table">
-                  <tr>
-                    <td class="doc-title">Приходный кассовый ордер<br/>№</td>
-                    <td class="text-center font-bold" style="font-size: 15px; width: 30%;">${orderId}</td>
-                  </tr>
-                </table>
-
-                <table class="grid-table">
-                  <tr>
-                    <td style="width: 20%;"><strong>Дата:</strong></td>
-                    <td>${createdAt}</td>
-                  </tr>
-                </table>
-
-                <table class="grid-table">
-                  <tr>
-                    <td class="text-center font-bold">
-                      ${clientName.toUpperCase()}<br/>
-                      <span style="font-weight: normal; font-size: 9px;">Ф.И.О. (наименование юридического лица)</span>
-                    </td>
-                  </tr>
-                </table>
-
-                <table class="grid-table">
-                  <thead>
-                    <tr class="text-center font-bold">
-                      <td style="width: 60%;">Назначение</td>
-                      <td>Сумма</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Оплата по транзакции № ${orderId}</td>
-                      <td class="text-right font-bold">${formattedAmount}</td>
-                    </tr>
-                    <tr class="font-bold">
-                      <td>Итого:</td>
-                      <td class="text-right">${formattedAmount}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <div class="field-row">
-                  <strong>Основание для платежа:</strong> Транзакция № ${orderId} ${createdAt ? 'от ' + createdAt : ''}
-                </div>
-
-                <div class="field-row" style="border-top: 1px solid #000; padding-top: 2px;">
-                  <strong>Сумма цифрами:</strong> ${formattedAmount}
-                </div>
-
-                <div class="field-row" style="border-top: 1px solid #000; padding-top: 2px;">
-                  <strong>Сумма прописью:</strong> ${amountWords}
-                </div>
-
-                <div style="border-top: 1px solid #000; margin-top: 10px; padding-top: 3px;">
-                  <strong>Подписи:</strong>
-                  <div class="signatures-row">
-                    <span>Клиент</span>
-                    <span>Кассир</span>
-                    <span>Бухгалтер</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- O'NG TARAFI: КВИТАНЦИЯ -->
-              <div class="kvit-box">
-                <table class="grid-table">
-                  <tr>
-                    <td class="text-center font-bold" style="font-size: 11px;">
-                      ${receiverName.toUpperCase()}<br/>
-                      <span style="font-weight: normal; font-size: 9px;">(наименование организации)</span>
-                    </td>
-                  </tr>
-                </table>
-
-                <div class="text-center" style="margin: 4px 0;">
-                  <div class="doc-title">КВИТАНЦИЯ</div>
-                  <div style="font-size: 10px;">к приходному кассовому ордеру №</div>
-                  <div class="font-bold" style="font-size: 13px;">${orderId}</div>
-                </div>
-
-                <table class="grid-table">
-                  <tr>
-                    <td class="text-center font-bold">
-                      ${clientName.toUpperCase()}<br/>
-                      <span style="font-weight: normal; font-size: 9px;">Ф.И.О. (наименование юридического лица)</span>
-                    </td>
-                  </tr>
-                </table>
-
-                <table class="grid-table">
-                  <thead>
-                    <tr class="text-center font-bold">
-                      <td>Назначение</td>
-                      <td style="width: 35%;">Сумма</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Оплата по транзакции № ${orderId}</td>
-                      <td class="text-right font-bold">${formattedAmount}</td>
-                    </tr>
-                    <tr class="font-bold">
-                      <td>Итого:</td>
-                      <td class="text-right">${formattedAmount}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <div class="field-row">
-                  <strong>Основание для платежа:</strong> Транзакция № ${orderId} ${createdAt ? 'от ' + createdAt : ''}
-                </div>
-
-                <div class="field-row" style="border-top: 1px solid #000; padding-top: 2px;">
-                  <strong>Сумма цифрами:</strong> ${formattedAmount}
-                </div>
-
-                <div class="field-row" style="border-top: 1px solid #000; padding-top: 2px;">
-                  <strong>Сумма прописью:</strong> ${amountWords}
-                </div>
-
-                <div class="field-row font-bold" style="margin-top: 8px;">
-                  ${createdAt}
-                </div>
-
-                <div class="stamp-space">
-                  М.П.
-                </div>
-
-                <div style="margin-top: 15px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span>Бухгалтер</span>
-                  </div>
-                  <div>
-                    <span>Кассир</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+          <tr>
+            <td style="text-align: center;">
+              <input type="checkbox" class="tx-checkbox" value="${tx.id}" onchange="updateSelectedCount()">
+            </td>
+            <td class="badge-id">#${tx.id}</td>
+            <td>${tx.created_at || '-'}</td>
+            <td><strong>${clientName}</strong></td>
+            <td>${receiverName}</td>
+            <td style="font-weight: 700;">${formattedAmount} UZS</td>
+          </tr>
         `;
       }).join('');
     }
 
-    // Faqat bitta tanlangan orderni chop etish funksiyasi
-    function printSingleOrder(orderId) {
-      const orderElement = document.getElementById(`order-sheet-${orderId}`);
-      if (!orderElement) return;
+    function toggleSelectAll(master) {
+      const checkboxes = document.querySelectorAll('.tx-checkbox');
+      checkboxes.forEach(cb => cb.checked = master.checked);
+      updateSelectedCount();
+    }
+
+    function updateSelectedCount() {
+      const selected = document.querySelectorAll('.tx-checkbox:checked');
+      document.getElementById('selected-count').textContent = `Tanlandi: ${selected.length}`;
+    }
+
+    function printSelectedReport() {
+      const checkedBoxes = Array.from(document.querySelectorAll('.tx-checkbox:checked'));
+      let selectedTransactions = [];
+
+      if (checkedBoxes.length === 0) {
+        selectedTransactions = rawTransactions;
+      } else {
+        const selectedIds = checkedBoxes.map(cb => cb.value);
+        selectedTransactions = rawTransactions.filter(tx => selectedIds.includes(String(tx.id)));
+      }
+
+      if (selectedTransactions.length === 0) {
+        alert('Chop etish uchun ma\'lumot yo\'q.');
+        return;
+      }
+
+      const totalAmount = selectedTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0);
+      const formattedTotal = totalAmount.toLocaleString('ru-RU', { minimumFractionDigits: 2 });
+      const now = new Date().toLocaleString();
+
+      const tableRows = selectedTransactions.map((tx, idx) => {
+        const clientName = tx.sender 
+          ? [tx.sender.last_name, tx.sender.first_name, tx.sender.middle_name].filter(Boolean).join(' ') || tx.sender.username || `ID #${tx.sender_id}`
+          : `ID #${tx.sender_id}`;
+          
+        const receiverName = tx.receiver 
+          ? [tx.receiver.first_name, tx.receiver.last_name].filter(Boolean).join(' ') || tx.receiver.username || `ID #${tx.receiver_id}`
+          : `ID #${tx.receiver_id}`;
+
+        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2 });
+
+        return `
+          <tr>
+            <td style="text-align: center;">${idx + 1}</td>
+            <td style="font-weight: bold; font-family: monospace;">#${tx.id}</td>
+            <td>${tx.created_at || '-'}</td>
+            <td>${clientName}</td>
+            <td>${receiverName}</td>
+            <td style="text-align: right; font-weight: bold;">${formattedAmount} UZS</td>
+          </tr>
+        `;
+      }).join('');
 
       const printWindow = window.open('', '_blank');
       printWindow.document.write(`
         <html>
           <head>
-            <title>Ордер № ${orderId}</title>
+            <title>Bindin Hisoboti</title>
+            <link rel="icon" type="image/x-icon" href="static/favicon.ico">
             <style>
-              body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 10px; }
-              .receipt-sheet { width: 100%; display: flex; gap: 10px; box-sizing: border-box; }
-              .order-box { width: 58%; border: 1.5px solid #000; padding: 4px; box-sizing: border-box; font-size: 11px; }
-              .kvit-box { width: 42%; border: 1.5px solid #000; padding: 4px; box-sizing: border-box; font-size: 11px; }
-              table.grid-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
-              table.grid-table td, table.grid-table th { border: 1px solid #000; padding: 3px 5px; font-size: 11px; }
-              .text-center { text-align: center; }
-              .text-right { text-align: right; }
-              .font-bold { font-weight: bold; }
-              .doc-title { font-size: 14px; font-weight: bold; }
-              .field-row { margin: 4px 0; line-height: 1.3; }
-              .signatures-row { margin-top: 15px; display: flex; justify-content: space-between; padding: 0 5px; }
-              .stamp-space { text-align: center; margin-top: 15px; font-weight: bold; }
+              @page {
+                size: A4 portrait;
+                margin: 12mm;
+              }
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+                background: #fff;
+                color: #0f172a;
+                margin: 0;
+                padding: 10px;
+              }
+              .report-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                border-bottom: 2px solid #0f172a;
+                padding-bottom: 10px;
+                margin-bottom: 16px;
+              }
+              .brand-box {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              }
+              .brand-box img {
+                width: 28px;
+                height: 28px;
+              }
+              .report-title {
+                font-size: 18px;
+                font-weight: 800;
+                text-transform: uppercase;
+                color: #0f172a;
+              }
+              .report-meta {
+                font-size: 11px;
+                color: #475569;
+                text-align: right;
+              }
+              .stats-cards {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 20px;
+              }
+              .stat-box {
+                flex: 1;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                padding: 10px 14px;
+              }
+              .stat-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                color: #64748b;
+                font-weight: 700;
+              }
+              .stat-value {
+                font-size: 16px;
+                font-weight: 800;
+                color: #0f172a;
+                margin-top: 2px;
+              }
+              table.print-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+              }
+              table.print-table th {
+                background: #f1f5f9;
+                color: #334155;
+                font-size: 11px;
+                text-transform: uppercase;
+                padding: 8px 10px;
+                border: 1px solid #cbd5e1;
+                text-align: left;
+              }
+              table.print-table td {
+                padding: 8px 10px;
+                border: 1px solid #cbd5e1;
+                font-size: 12px;
+              }
+              table.print-table tr:nth-child(even) {
+                background: #f8fafc;
+              }
+              .total-row td {
+                background: #e2e8f0 !important;
+                font-weight: 800;
+                font-size: 13px;
+              }
+              .footer-note {
+                font-size: 10px;
+                color: #94a3b8;
+                text-align: center;
+                margin-top: 20px;
+                border-top: 1px solid #e2e8f0;
+                padding-top: 8px;
+              }
             </style>
           </head>
           <body>
-            ${orderElement.outerHTML}
+            <div class="report-header">
+              <div>
+                <div class="brand-box">
+                  <img src="static/favicon.ico" alt="Bindin Logo">
+                  <div class="report-title">BINDIN TRANSAKSIYALAR HISOBOTI</div>
+                </div>
+                <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 4px;">Kassa va Moliya Tizimi</div>
+              </div>
+              <div class="report-meta">
+                <div><strong>Vaqt:</strong> ${now}</div>
+                <div><strong>Tranzaksiyalar:</strong> ${selectedTransactions.length} ta</div>
+              </div>
+            </div>
+
+            <div class="stats-cards">
+              <div class="stat-box">
+                <div class="stat-label">Jami Operatsiyalar</div>
+                <div class="stat-value">${selectedTransactions.length} ta</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-label">Jami Aylanma Summasi</div>
+                <div class="stat-value" style="color: #2563eb;">${formattedTotal} UZS</div>
+              </div>
+            </div>
+
+            <table class="print-table">
+              <thead>
+                <tr>
+                  <th style="width: 35px; text-align: center;">№</th>
+                  <th style="width: 80px;">ID</th>
+                  <th style="width: 130px;">Sana</th>
+                  <th>To'lovchi (Mijoz)</th>
+                  <th>Qabul qiluvchi</th>
+                  <th style="text-align: right; width: 140px;">Summa</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${tableRows}
+                <tr class="total-row">
+                  <td colspan="5" style="text-align: right;">JAMI SUMMA:</td>
+                  <td style="text-align: right;">${formattedTotal} UZS</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="footer-note">
+              Ushbu hisobot Bindin avtomatlashtirilgan kassa tizimi tomonidan yaratildi.
+            </div>
           </body>
         </html>
       `);
-
       printWindow.document.close();
       printWindow.focus();
       printWindow.print();
@@ -496,7 +520,6 @@
 
     function logout() {
       localStorage.removeItem('access_token');
-      document.getElementById('documents-render-area').innerHTML = '';
       document.getElementById('dashboard-section').classList.add('hidden');
       document.getElementById('login-section').classList.remove('hidden');
     }
