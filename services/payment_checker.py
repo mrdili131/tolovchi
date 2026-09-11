@@ -1,32 +1,49 @@
-from fastapi import HTTPException
-from models import User, Transaction, TransactionStatus, Application
-from schemas import TransactionForm, TransactionResponse
+from models import TransactionStatus, Application, User, Card, Transaction
+from schemas import TransactionStatus
 from datetime import datetime
 from sqlalchemy import select
 from database import Session
-from services import service_role
-from routers.card import charge
+from services import InpayAutoPayService
+from dateutil.relativedelta import relativedelta
 
-async def payment_checker_by_application_id(db: Session, user: service_role, application_id: int):
-    current_time = datetime.utcnow().date()
 
-    payments_db = await db.scalars(select(Transaction).where(
-        Transaction.created_at < current_time,
-        Transaction.application_id == application_id,
-        Transaction.status != TransactionStatus.PROVIDED))
-    payments = payments_db.all()
+async def payment_checker(db: Session):
 
-    application = await db.scalar(select(Application).where(Application.id==application_id))
+    current_date = datetime.utcnow().date()
+    inpay = InpayAutoPayService()
 
-    if not application:
-        raise HTTPException(status_code=404, detail="SERVICE ERROR: Application does not exist")
+    applications_db = await db.scalars(select(Application).where(
+        Application.is_active == True,
+        Application.is_paid == False,
+        Application.next_payment <= current_date
+    ))
 
-    if not payments:
-        form = TransactionForm(
-            amount = application.amount + application.debt,
-            application_id = 1
-        )
-        try:
-            charge_response: TransactionResponse = charge(db,user,form)
-        except:
-            raise HTTPException(status_code=404, detail="SERVICE ERROR: Could not charge")
+    for app in applications_db.all():
+
+        service_user = await db.get(User,app.service_id)
+        client_user = await db.get(User,app.payer_id)
+        cards = await db.scalars(select(Card).where(Card.user_id==app.payer_id))
+
+
+        for card in cards.all():
+            resp = inpay.charge(card.id,app.amount,reason="BINDIN AVTO-TO‘LOV TIZIMI")
+            if resp.get("success") == True:
+
+                new_transaction = Transaction(
+                    amount = app.amount,
+                    status = TransactionStatus.PROVIDED,
+                    sender_id = client_user.id,
+                    receiver_id = service_user.id,
+                    application_id = app.id
+                )
+
+                app.is_paid = True
+                app.next_payment = current_date + relativedelta(months=1, day=app.pay_day)
+
+                db.add(new_transaction)
+                await db.commit()
+                await db.refresh(app)
+                break
+
+
+    print("[AUTO-PAYMENT] PAYMENT CYCLE HAS BEEN DONE")

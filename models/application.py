@@ -15,15 +15,21 @@ class Application(Base):
 
     name = Column(String, default="Unnamed")
     description = Column(String, default="No description")
+
     amount = Column(Integer,default=1000)
     balance = Column(Integer,default=0)
     debt = Column(Integer,default=0)
+
     cancellable = Column(Boolean, default=True)
     frequency = Column(SQLEnum(PaymentFrequency),default=PaymentFrequency.MONTHLY)
     pay_day = Column(Integer,default=1)
     start_date = Column(Date,server_default=func.current_date())
+
     end_date = Column(Date,nullable=True)
     is_active = Column(Boolean, default=False)
+    is_paid = Column(Boolean, default=False)
+    next_payment = Column(Date,nullable=True)
+    
     service_id = Column(Integer,ForeignKey("users.id"))
     payer_id = Column(Integer,ForeignKey("users.id"))
 
