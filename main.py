@@ -1,11 +1,8 @@
-import os
 import logging
 import time
 from routers import main_router
-from services import admin_role
 from scheduler import lifespan_scheduler
-from fastapi.responses import FileResponse
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from frontend import router as frontend_router
 from fastapi.middleware.cors import CORSMiddleware
@@ -57,17 +54,5 @@ async def log_requests(request: Request, call_next):
 def health():
     return {"health":"good"}
 
-
-@app.get('/db', summary="ADMIN ACCESS ONLY !!!")
-async def download_db(admin: admin_role):
-    try:
-        return FileResponse(
-            path=os.path.join("musha.db"),
-            filename="musha.db",
-            media_type="application/octet-stream",
-            content_disposition_type="attachment"
-        )
-    except:
-        raise HTTPException(status_code=404, detail="Database not found")
 
 # Dilmuhammad Abdukodirov 2026

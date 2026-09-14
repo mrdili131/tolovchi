@@ -14,6 +14,10 @@ def template(file_name: str):
 def home():
     return template("index.html")
 
+@router.get('/oferta')
+def oferta():
+    return template("oferta.html")
+
 @router.get('/printables')
 def printables():
     return template("printables.html")

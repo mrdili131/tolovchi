@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bindin — Ommaviy oferta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FBF8F2;
+    --paper-shadow: #ECE6D9;
+    --ink: #211D17;
+    --ink-soft: #625A4E;
+    --ink-faint: #948B7C;
+    --rule: #DCD3C0;
+    --accent: #1F3D38;
+    --accent-soft: #E6EDE9;
+    --gold: #9C7A3C;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: #E9E2D3;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(31,61,56,0.05), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(156,122,60,0.06), transparent 45%);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+
+  /* ---------- Shell layout ---------- */
+  .shell{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+    display: grid;
+    grid-template-columns: 250px minmax(0,1fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* ---------- Sidebar / TOC ---------- */
+  .rail{
+    position: sticky;
+    top: 40px;
+    font-family: var(--sans);
+  }
+
+  .brand{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .brand-mark{
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+    flex: none;
+  }
+  .brand-mark::after{
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  .brand-name{
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+
+  .rail-sub{
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin: 0 0 28px 30px;
+  }
+
+  .toc-label{
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .toc{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13.5px;
+  }
+  .toc li { margin: 0; }
+  .toc a{
+    display: block;
+    padding: 7px 0 7px 14px;
+    border-left: 2px solid transparent;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .toc a:hover{ color: var(--accent); border-left-color: var(--rule); }
+  .toc a.active{ color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+  .rail-note{
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 1.55;
+  }
+
+  /* ---------- Document (paper) ---------- */
+  .paper{
+    background: var(--paper);
+    box-shadow: 0 1px 2px rgba(33,29,23,0.06), 0 24px 48px -24px rgba(33,29,23,0.28);
+    border: 1px solid var(--paper-shadow);
+  }
+
+  .doc-header{
+    padding: 56px 64px 40px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .doc-eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+    margin: 0 0 20px;
+  }
+
+  .doc-title{
+    font-size: clamp(34px, 4.4vw, 50px);
+    font-weight: 500;
+    line-height: 1.08;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .doc-title em{
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .doc-dek{
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 0 26px;
+  }
+
+  .doc-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+  .doc-meta strong{
+    display: block;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  .doc-body{
+    padding: 8px 64px 64px;
+    max-width: 720px;
+  }
+
+  section.clause{
+    padding: 40px 0 8px;
+    border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 32px;
+  }
+  section.clause:last-of-type{ border-bottom: none; }
+
+  .clause-head{
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 18px;
+  }
+  .clause-num{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--gold);
+    flex: none;
+  }
+  .clause h2{
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .clause p{
+    font-size: 16.5px;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .clause p.soft{ color: var(--ink-soft); }
+
+  .clause ul{
+    margin: 0 0 16px;
+    padding-left: 22px;
+  }
+  .clause li{
+    font-size: 16.5px;
+    margin-bottom: 8px;
+  }
+
+  .highlight{
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 0 0 16px;
+    font-size: 16px;
+  }
+  .highlight strong{ color: var(--accent); }
+
+  .sub-list{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    font-family: var(--sans);
+    font-size: 14.5px;
+  }
+  .sub-list li{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .sub-list li:first-child{ border-top: none; }
+  .sub-list dt{ color: var(--ink-faint); }
+  .sub-list dd{ margin: 0; color: var(--ink); }
+
+  .req-card{
+    font-family: var(--sans);
+    background: #F4EFE3;
+    border: 1px solid var(--rule);
+    padding: 24px 26px;
+    margin-top: 6px;
+  }
+  .req-card p{
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+  .req-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    font-size: 14.5px;
+  }
+  .req-grid div{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--rule);
+  }
+  .req-grid div:first-child{ border-top: none; }
+  .req-grid span:first-child{ color: var(--ink-faint); }
+  .req-grid span:last-child{ color: var(--ink); font-weight: 500; text-align: right; }
+
+  .footnote{
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    max-width: 60ch;
+  }
+
+  .doc-footer{
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: center;
+    padding: 28px 0 0;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px){
+    .shell{ grid-template-columns: 1fr; padding: 32px 16px 64px; }
+    .rail{ position: static; order: -1; }
+    .toc{ display: flex; flex-wrap: wrap; gap: 4px 14px; }
+    .toc a{ padding: 4px 0; border-left: none; }
+    .rail-sub, .rail-note{ display: none; }
+    .doc-header, .doc-body{ padding-left: 28px; padding-right: 28px; }
+    .doc-title{ font-size: 32px; }
+    .sub-list li{ grid-template-columns: 1fr; gap: 2px; }
+    .req-grid div{ flex-direction: column; gap: 2px; }
+    .req-grid span:last-child{ text-align: left; }
+  }
+
+  @media print{
+    body{ background: #fff; }
+    .rail{ display: none; }
+    .shell{ display: block; padding: 0; max-width: none; }
+    .paper{ box-shadow: none; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <nav class="rail">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Bindin</span>
+    </div>
+    <p class="rail-sub">bindin.uz</p>
+
+    <p class="toc-label">Mundarija</p>
+    <ul class="toc">
+      <li><a href="#m1">1. Atamalar</a></li>
+      <li><a href="#m2">2. Oferta predmeti</a></li>
+      <li><a href="#m3">3. Karta va avto-to'lov</a></li>
+      <li><a href="#m4">4. Ma'lumotlarni qayta ishlash</a></li>
+      <li><a href="#m5">5. Foydalanuvchi huquqlari</a></li>
+      <li><a href="#m6">6. Xizmat huquqlari</a></li>
+      <li><a href="#m7">7. Shartlarni o'zgartirish</a></li>
+      <li><a href="#m8">8. Javobgarlik</a></li>
+      <li><a href="#m9">9. Nizolar</a></li>
+      <li><a href="#m10">10. Amal qilish muddati</a></li>
+      <li><a href="#m11">11. Aloqa va rekvizitlar</a></li>
+    </ul>
+
+    <p class="rail-note">Ushbu sahifa Bindin xizmatidan foydalanish shartlarini belgilaydigan ommaviy ofertadir. Xizmatdan foydalanish — shartlarni qabul qilish hisoblanadi.</p>
+  </nav>
+
+  <article class="paper">
+    <header class="doc-header">
+      <p class="doc-eyebrow">OMMAVIY OFERTA · BINDIN.UZ</p>
+      <h1 class="doc-title">Bindin xizmatidan<br><em>foydalanish shartlari</em></h1>
+      <p class="doc-dek">Obunalarni boshqarish va avtomatik to'lovlar bo'yicha Foydalanuvchi bilan tuziladigan ommaviy taklif hujjati.</p>
+      <div class="doc-meta">
+        <div><strong>Holati</strong>Kuchda</div>
+        <div><strong>Til</strong>O'zbek tili</div>
+        <div><strong>Xizmat egasi</strong>Jismoniy shaxs</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <p class="soft" style="font-size:16px; color:var(--ink-soft); padding-top:32px;">
+        Ushbu hujjat O'zbekiston Respublikasi Fuqarolik kodeksining 369-moddasiga muvofiq ommaviy oferta (taklif) hisoblanadi va Bindin xizmati (bundan buyon — <strong>«Xizmat»</strong>, <strong>«Bindin»</strong>) tomonidan har qanday shaxsga (bundan buyon — <strong>«Foydalanuvchi»</strong>) quyidagi shartlarda taqdim etiladi. Foydalanuvchi Bindin.uz saytida yoki ilovasida ro'yxatdan o'tish, bank kartasini ulash yoki Xizmatdan foydalanishni davom ettirish orqali ushbu shartlarni to'liq va so'zsiz qabul qiladi.
+      </p>
+
+      <section class="clause" id="m1">
+        <div class="clause-head"><span class="clause-num">01</span><h2>Atamalar va ta'riflar</h2></div>
+        <dl class="sub-list">
+          <li><dt>Xizmat / Platforma</dt><dd>Bindin.uz orqali taqdim etiladigan, foydalanuvchilarga turli ilovalarga bo'lgan obunalarini bir joydan boshqarish imkonini beruvchi dastur ta'minoti.</dd></li>
+          <li><dt>Foydalanuvchi</dt><dd>Platformada ro'yxatdan o'tgan va undan foydalanuvchi shaxs.</dd></li>
+          <li><dt>Bank kartasi</dt><dd>Foydalanuvchi tomonidan Platformaga ulangan, to'lovlarni amalga oshirish uchun ishlatiladigan to'lov kartasi.</dd></li>
+          <li><dt>Obuna</dt><dd>Foydalanuvchi tomonidan faollashtirilgan, muntazam to'lovni talab qiluvchi har qanday ilova yoki xizmat.</dd></li>
+          <li><dt>Avto-to'lov</dt><dd>Foydalanuvchining oldindan roziligi asosida, ulangan kartadan belgilangan muddatlarda mablag'ni avtomatik yechib olish jarayoni.</dd></li>
+        </dl>
+      </section>
+
+      <section class="clause" id="m2">
+        <div class="clause-head"><span class="clause-num">02</span><h2>Oferta predmeti</h2></div>
+        <p>Bindin Foydalanuvchiga turli ilova va xizmatlarga bo'lgan obunalarini boshqarish, faollashtirish, kuzatish va to'lovlarini avtomatlashtirish imkoniyatini taqdim etadi.</p>
+        <p>Platforma vositachi sifatida ishlaydi va Foydalanuvchi nomidan, uning roziligi asosida, faol obunalar bo'yicha to'lovlarni avtomatik amalga oshiradi.</p>
+      </section>
+
+      <section class="clause" id="m3">
+        <div class="clause-head"><span class="clause-num">03</span><h2>Bank kartasini ulash va avtomatik to'lovlar</h2></div>
+        <p>Foydalanuvchi bank kartasini ulash orqali, ushbu karta hisobidan Platforma orqali faollashtirilgan obunalar bo'yicha avtomatik ravishda mablag' yechib olinishiga roziligini bildiradi.</p>
+        <div class="highlight"><strong>Muhim:</strong> avtomatik yechib olish faqat Foydalanuvchi tomonidan faol holatga keltirilgan obunalar bo'yicha amalga oshiriladi. Faollashtirilmagan yoki bekor qilingan obunalar uchun kartadan hech qanday mablag' yechib olinmaydi.</div>
+        <p>Har bir avto-to'lov muvaffaqiyatli yoki muvaffaqiyatsiz amalga oshirilgani haqida Foydalanuvchiga Platforma bildirishnomasi, SMS yoki elektron pochta orqali xabar beriladi.</p>
+        <p>Karta ulangan har bir kunda, Foydalanuvchi tomonidan faol qilingan barcha obunalar bo'yicha belgilangan davriylikda avtomatik to'lov amalga oshirilishi mumkin — buning uchun qo'shimcha tasdiqlash talab qilinmaydi.</p>
+        <p>Foydalanuvchi bank kartasini istalgan vaqtda uzib qo'yish huquqiga ega. Karta uzilgandan so'ng, avtomatik to'lovlar to'xtatiladi. Shu paytgacha amalga oshirilgan to'lovlar qaytarilmaydi, agar qonunchilik yoki tegishli ilova shartlarida boshqacha ko'zda tutilmagan bo'lsa.</p>
+        <p>Foydalanuvchi istalgan obunani, karta ulangan holda qolsa ham, mustaqil o'chirish huquqiga ega — bu holatda aynan shu obuna bo'yicha keyingi to'lovlar amalga oshirilmaydi.</p>
+      </section>
+
+      <section class="clause" id="m4">
+        <div class="clause-head"><span class="clause-num">04</span><h2>Foydalanuvchi ma'lumotlarini qayta ishlash</h2></div>
+        <p>Ro'yxatdan o'tish orqali Foydalanuvchi Bindinga o'zining shaxsiy va to'lov ma'lumotlarini quyidagi maqsadlarda qayta ishlash huquqini beradi:</p>
+        <ul>
+          <li><strong>O'qish</strong> — Xizmatni ko'rsatish, obunalarni boshqarish va to'lovlarni tekshirish uchun.</li>
+          <li><strong>Qayta ishlatish</strong> — foydalanuvchi tajribasini yaxshilash, tahlil va sifatni oshirish uchun.</li>
+          <li><strong>Yangilash</strong> — ma'lumotlarning dolzarbligini ta'minlash uchun (karta holati, obuna statusi).</li>
+          <li><strong>O'chirish</strong> — Foydalanuvchi so'roviga binoan yoki qonunchilikda belgilangan hollarda.</li>
+        </ul>
+        <p>Bindin Foydalanuvchi ma'lumotlarining maxfiyligini ta'minlaydi va ularni uchinchi shaxslarga, qonunchilikda ko'zda tutilgan hollar bundan mustasno, oshkor qilmaydi. To'lov kartasi rekvizitlari (to'liq raqam, CVV) Bindin serverlarida saqlanmaydi — barcha operatsiyalar sertifikatlangan to'lov tizimlari orqali amalga oshiriladi.</p>
+        <p>Foydalanuvchi istalgan vaqtda o'z ma'lumotlarini o'chirishni yoki tuzatishni talab qilish huquqiga ega.</p>
+      </section>
+
+      <section class="clause" id="m5">
+        <div class="clause-head"><span class="clause-num">05</span><h2>Foydalanuvchining huquq va majburiyatlari</h2></div>
+        <p>Foydalanuvchi huquqqa ega: barcha faol va nofaol obunalarini ko'rish; istalgan obunani faollashtirish yoki o'chirish; kartani ulash yoki uzish; shaxsiy ma'lumotlari bilan tanishish, ularni tuzatish yoki o'chirishni talab qilish.</p>
+        <p>Foydalanuvchi majburiyatga ega: ro'yxatdan o'tishda haqiqiy ma'lumot berish; kartada yetarli mablag' bo'lishini ta'minlash; ushbu Oferta shartlariga rioya qilish.</p>
+      </section>
+
+      <section class="clause" id="m6">
+        <div class="clause-head"><span class="clause-num">06</span><h2>Xizmatning huquq va majburiyatlari</h2></div>
+        <p>Bindin faqat Foydalanuvchi tomonidan faollashtirilgan obunalar bo'yicha, belgilangan summada avtomatik to'lovlarni amalga oshirish huquqiga ega. To'lov muvaffaqiyatsiz bo'lsa, Foydalanuvchiga xabar beriladi va tegishli obuna vaqtincha to'xtatilishi mumkin. Bindin Xizmat sifatini ta'minlash va texnik nosozliklarni bartaraf etish majburiyatini oladi.</p>
+      </section>
+
+      <section class="clause" id="m7">
+        <div class="clause-head"><span class="clause-num">07</span><h2>Oferta shartlarini o'zgartirish</h2></div>
+        <p>Bindin ushbu Ofertaga istalgan vaqtda bir tomonlama o'zgartirish va qo'shimchalar kiritish huquqiga ega.</p>
+        <div class="highlight"><strong>Xabarnoma:</strong> shartlar o'zgargan taqdirda, Foydalanuvchiga bu haqida SMS, elektron pochta yoki Platformaning ichki bildirishnomalar tizimi orqali xabar beriladi.</div>
+        <p>Agar Foydalanuvchi yangi shartlar kuchga kirgandan keyin Xizmatdan foydalanishni davom ettirsa, bu ularni qabul qilgani hisoblanadi. Rozi bo'lmasa, Foydalanuvchi Xizmatdan foydalanishni to'xtatish va kartani uzish huquqiga ega.</p>
+      </section>
+
+      <section class="clause" id="m8">
+        <div class="clause-head"><span class="clause-num">08</span><h2>Javobgarlik</h2></div>
+        <p>Bindin Foydalanuvchi tomonidan noto'g'ri yoki eskirgan ma'lumot berilishi natijasida yuzaga kelgan zararlar uchun javobgar emas. Uchinchi tomon to'lov tizimlari yoki banklarning texnik nosozliklari natijasida yuzaga kelgan kechikish yoki xatoliklar uchun to'g'ridan-to'g'ri javobgarlik olinmaydi, biroq bunday holatlarni bartaraf etishda ko'maklashiladi.</p>
+      </section>
+
+      <section class="clause" id="m9">
+        <div class="clause-head"><span class="clause-num">09</span><h2>Nizolarni hal qilish</h2></div>
+        <p>Ushbu Oferta yuzasidan kelib chiqadigan barcha nizolar muzokaralar yo'li bilan hal etiladi. Kelishuvga erishilmagan taqdirda, nizolar O'zbekiston Respublikasining amaldagi qonunchiligiga muvofiq hal qilinadi.</p>
+      </section>
+
+      <section class="clause" id="m10">
+        <div class="clause-head"><span class="clause-num">10</span><h2>Oferta amal qilish muddati</h2></div>
+        <p>Ushbu Oferta Foydalanuvchi uni aksept qilgan paytdan boshlab kuchga kiradi va Foydalanuvchi Platformadan foydalanishni to'xtatgunga yoki Oferta bekor qilingunga qadar amal qiladi.</p>
+      </section>
+
+      <section class="clause" id="m11">
+        <div class="clause-head"><span class="clause-num">11</span><h2>Aloqa va rekvizitlar</h2></div>
+        <p>Bindin xizmati yuridik shaxs sifatida emas, balki jismoniy shaxs tomonidan boshqariladi.</p>
+        <div class="req-card">
+          <p>Aloqa uchun quyidagi manzillardan foydalaning:</p>
+          <div class="req-grid">
+            <div><span>F.I.Sh.</span><span>Abduqodirov Dilmuhammad Sodirjon o'g'li</span></div>
+            <div><span>Email</span><span>dizenstudios@gmail.com</span></div>
+            <div><span>Telegram</span><span>@mrdil131</span></div>
+          </div>
+        </div>
+      </section>
+
+      <p class="footnote">Ushbu hujjat huquqiy maslahat emas, balki namuna tariqasida tayyorlangan. Uni rasmiy joylashtirishdan oldin, O'zbekiston Respublikasi bank-to'lov qonunchiligi va shaxsiy ma'lumotlarni himoya qilish to'g'risidagi qonunchilikka muvofiqligini tekshirish uchun malakali yuristga ko'rsatish tavsiya etiladi — ayniqsa avtomatik to'lov va shaxsiy ma'lumotlarni qayta ishlash qismlari bo'yicha.</p>
+
+      <p class="doc-footer">Bindin.uz · Ommaviy oferta</p>
+    </div>
+  </article>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.toc a');
+  const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+  const setActive = () => {
+    let idx = 0;
+    sections.forEach((s, i) => {
+      if (s && s.getBoundingClientRect().top - 80 <= 0) idx = i;
+    });
+    links.forEach(l => l.classList.remove('active'));
+    if (links[idx]) links[idx].classList.add('active');
+  };
+  document.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+</script>
+
+</body>
+</html>

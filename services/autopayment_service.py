@@ -73,6 +73,7 @@ class InpayAutoPayService:
                 "reason":reason
             }
         )
+        print(r.json())
         match r.status_code:
             case 400:
                 raise HTTPException(status_code=400,detail="SERVICE: Summa yechishda xatolik")
@@ -86,6 +87,18 @@ class InpayAutoPayService:
                 if r["success"] == False:
                     raise HTTPException(status_code=400,detail="SERVICE: Could not charge")
                 return r
+
+    def remove(self,card_id):
+        r = self.inpay_cards(
+            action = "remove",
+            body = {
+                "card_id":card_id
+            }
+        )
+        if r.json()["success"] == True:
+            return True
+        else:
+            return False
 
 
     def list_cards(self,client_id):

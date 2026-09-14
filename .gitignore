@@ -1,5 +1,4 @@
 .env
+.fastapicloud/
 __pycache__/
-*.db
-*.sqlite3
-logs/
+alembic/

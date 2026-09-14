@@ -2,9 +2,28 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Bindin App</title>
-    
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <title>Bindin.uz — Obunalar va avtomatik to‘lovlarni boshqarish</title>
+    <meta name="description" content="Bindin.uz — O‘zbekistondagi obunalar va avtomatik to‘lovlarni boshqarish platformasi. Kartangizni ulang, xizmatlarga obuna bo‘ling va oylik to‘lovlarni avtomatik amalga oshiring. Bizneslar uchun avtomatik to‘lovlarni boshqarish imkoniyati.">
+    <meta name="keywords" content="Bindin,Bindin.uz,avtomatik to‘lov,avto to‘lov,karta orqali to‘lov,obunalar,obuna boshqarish,oylik to‘lov,automatik yechish,subscription,subscription manager,Uzbekistan,O‘zbekiston,biznes uchun to‘lov,mijoz to‘lovi">
+    <meta name="author" content="Bindin.uz">
+    <meta name="robots" content="index,follow">
+    <meta name="language" content="Uzbek">
+    <meta name="application-name" content="Bindin">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="canonical" href="https://bindin.uz/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bindin.uz">
+    <meta property="og:title" content="Bindin.uz — Obunalar va avtomatik to‘lovlar">
+    <meta property="og:description" content="Kartangizni ulang,xizmatlarga obuna bo‘ling va oylik to‘lovlarni avtomatik amalga oshiring. Bizneslar esa mijozlarning obuna va to‘lovlarini boshqarishi mumkin.">
+    <meta property="og:url" content="https://bindin.uz/">
+    <meta property="og:locale" content="uz_UZ">
+    <meta property="og:image" content="https://bindin.uz/static/og-image.jpg">
+    <meta property="og:image:alt" content="Bindin.uz — avtomatik to‘lovlar va obunalarni boshqarish platformasi">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bindin.uz — Avtomatik to‘lovlar va obunalar">
+    <meta name="twitter:description" content="O‘zbekistonda obunalar va kartadan avtomatik to‘lovlarni boshqarish platformasi.">
+    <meta name="twitter:image" content="https://bindin.uz/static/og-image.jpg">
     <meta name="description" content="Bindin.uz — Obuna va xizmatlarni boshqarish platformasi.">
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     
@@ -189,10 +208,20 @@
             opacity: 0.9;
         }
 
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
         .btn-secondary {
             background-color: transparent;
             color: var(--primary);
             border: 1px solid var(--primary);
+        }
+
+        .btn-danger {
+            color: var(--danger);
+            border-color: var(--danger);
         }
 
         .btn-sm {
@@ -264,6 +293,38 @@
         .list-item-sub {
             font-size: 0.8rem;
             color: var(--text-muted);
+        }
+
+        /* Offer / agreement checkbox row */
+        .offer-agreement {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            margin-bottom: 1rem;
+        }
+
+        .offer-agreement input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .offer-agreement label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .offer-agreement a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
         }
 
         /* Modal Overlays */
@@ -366,6 +427,57 @@
             font-weight: 700;
         }
 
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100dvh;
+            background: rgba(15, 23, 42, 0.35);
+            z-index: 4000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: bindin-spin 0.8s linear infinite;
+        }
+
+        .btn-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: bindin-spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes bindin-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Skeleton loading rows for lists */
+        .skeleton-row {
+            height: 56px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #EEF2F7 25%, #E2E8F0 37%, #EEF2F7 63%);
+            background-size: 400% 100%;
+            animation: bindin-shimmer 1.4s ease infinite;
+        }
+
+        @keyframes bindin-shimmer {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -384,6 +496,20 @@
         <div id="authBlock" class="auth-container">
             <h2 id="authTitle">Tizimga Kirish</h2>
             <form id="authForm" onsubmit="handleAuth(event)">
+                <div id="registerNameFields" class="hidden">
+                    <div class="form-group">
+                        <label>Ism</label>
+                        <input type="text" id="firstName" autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Familiya</label>
+                        <input type="text" id="lastName" autocomplete="family-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Sharif (otasining ismi)</label>
+                        <input type="text" id="middleName" autocomplete="additional-name">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Foydalanuvchi nomi</label>
                     <input type="text" id="username" required autocomplete="username">
@@ -395,6 +521,12 @@
                 <div id="confirmPasswordGroup" class="form-group hidden">
                     <label>Parolni tasdiqlash</label>
                     <input type="password" id="password_confirm" autocomplete="new-password">
+                </div>
+                <div id="offerAgreement" class="offer-agreement hidden">
+                    <input type="checkbox" id="offerAccepted" onchange="updateAuthSubmitState()">
+                    <label for="offerAccepted">
+                        Men <a href="/oferta" target="_blank" rel="noopener">ommaviy oferta</a> shartlari bilan tanishdim va roziman
+                    </label>
                 </div>
                 <button type="submit" id="authSubmitBtn" style="margin-top: 0.5rem;">Kirish</button>
                 <button type="button" class="btn-secondary" onclick="toggleAuthMode()" id="authToggleBtn" style="margin-top: 0.5rem;">Ro'yxatdan o'tish</button>
@@ -425,11 +557,11 @@
                 <div id="userCardSection" class="card hidden">
                     <h2>
                         <span>Bank Kartalari</span>
-                        <button onclick="syncCards()" class="btn-secondary btn-sm">Yangilash</button>
+                        <button onclick="syncCards()" class="btn-secondary btn-sm" id="syncCardsBtn">Yangilash</button>
                     </h2>
-                    <button onclick="bindCard()" class="btn-secondary" style="margin-bottom: 0.85rem;">+ Yangi karta biriktirish</button>
+                    <button onclick="bindCard()" class="btn-secondary" style="margin-bottom: 0.85rem;" id="bindCardBtn">+ Yangi karta biriktirish</button>
                     <div id="userCardsContainer" class="app-list">
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">Kartalar yuklanmoqda...</p>
+                        <div class="skeleton-row"></div>
                     </div>
                 </div>
 
@@ -461,7 +593,7 @@
                                 <option value="monthly">Har oy</option>
                             </select>
                         </div>
-                        <button type="submit">Arizani joylashtirish</button>
+                        <button type="submit" id="createAppBtn">Arizani joylashtirish</button>
                     </form>
                 </div>
             </div>
@@ -478,7 +610,8 @@
                 <div class="card">
                     <h2>Arizalar Ro'yxati</h2>
                     <div id="applicationsContainer" class="app-list">
-                        <p style="text-align:center; color: var(--text-muted);">Ma'lumotlar yuklanmoqda...</p>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
                     </div>
                 </div>
             </div>
@@ -499,14 +632,15 @@
                             <label>Summa (UZS)</label>
                             <input type="number" id="chargeAmount" min="1000" required placeholder="Masalan: 50000">
                         </div>
-                        <button type="submit">Mablag'ni Yechish</button>
+                        <button type="submit" id="chargeCardBtn">Mablag'ni Yechish</button>
                     </form>
                 </div>
 
                 <div class="card">
                     <h2>Tranzaksiyalar Daftari</h2>
                     <div id="transactionsContainer" class="app-list">
-                        <p style="text-align:center; color: var(--text-muted);">Ma'lumotlar yuklanmoqda...</p>
+                        <div class="skeleton-row"></div>
+                        <div class="skeleton-row"></div>
                     </div>
                 </div>
             </div>
@@ -560,10 +694,43 @@
         </div>
     </div>
 
+    <!-- Global Loading Overlay -->
+    <div id="globalLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
     <script>
         const API_BASE = "https://bindin.uz/api";
         let isRegisterMode = false;
         let html5QrCodeEngine = null;
+        let activeLoaders = 0;
+
+        // ---------- Loading indicator helpers ----------
+        function showLoader() {
+            activeLoaders++;
+            document.getElementById("globalLoader").classList.remove("hidden");
+        }
+
+        function hideLoader() {
+            activeLoaders = Math.max(0, activeLoaders - 1);
+            if (activeLoaders === 0) {
+                document.getElementById("globalLoader").classList.add("hidden");
+            }
+        }
+
+        // Puts a button into a disabled "loading" state with an inline spinner,
+        // and returns a restore function to call once the request finishes.
+        function setButtonLoading(button, loadingText) {
+            if (!button) return () => {};
+            const originalHTML = button.innerHTML;
+            const originalDisabled = button.disabled;
+            button.disabled = true;
+            button.innerHTML = `<span class="btn-spinner"></span>${loadingText ? `<span>${loadingText}</span>` : ''}`;
+            return () => {
+                button.innerHTML = originalHTML;
+                button.disabled = originalDisabled;
+            };
+        }
 
         function showAlert(message, type = 'info', title = 'Tizim Bildirishnomasi') {
             document.getElementById("govModalTitle").innerText = title;
@@ -577,12 +744,36 @@
             document.getElementById("govModal").classList.add("hidden");
         }
 
+        // Enables/disables the submit button based on mode + offer checkbox state.
+        // In register mode the offer must be accepted before the button can be used.
+        function updateAuthSubmitState() {
+            const submitBtn = document.getElementById("authSubmitBtn");
+            if (!submitBtn) return;
+            if (isRegisterMode) {
+                const accepted = document.getElementById("offerAccepted").checked;
+                submitBtn.disabled = !accepted;
+            } else {
+                submitBtn.disabled = false;
+            }
+        }
+
         function toggleAuthMode() {
             isRegisterMode = !isRegisterMode;
             document.getElementById("authTitle").innerText = isRegisterMode ? "Ro'yxatdan O'tish" : "Tizimga Kirish";
             document.getElementById("authSubmitBtn").innerText = isRegisterMode ? "Hisob Yaratish" : "Kirish";
             document.getElementById("authToggleBtn").innerText = isRegisterMode ? "Kirishga o'tish" : "Ro'yxatdan o'tish";
             document.getElementById("confirmPasswordGroup").classList.toggle("hidden", !isRegisterMode);
+            document.getElementById("registerNameFields").classList.toggle("hidden", !isRegisterMode);
+            document.getElementById("offerAgreement").classList.toggle("hidden", !isRegisterMode);
+
+            // Name fields are only required in register mode
+            document.getElementById("firstName").required = isRegisterMode;
+            document.getElementById("lastName").required = isRegisterMode;
+            document.getElementById("middleName").required = isRegisterMode;
+
+            // Reset the offer checkbox whenever the mode is switched
+            document.getElementById("offerAccepted").checked = false;
+            updateAuthSubmitState();
         }
 
         function formatUserFullName(usr) {
@@ -605,43 +796,66 @@
 
         async function handleAuth(e) {
             e.preventDefault();
+
+            // Extra safety net: even if the button was somehow enabled, never submit
+            // a registration without offer acceptance.
+            if (isRegisterMode && !document.getElementById("offerAccepted").checked) {
+                showAlert("Davom etish uchun ommaviy oferta shartlariga rozilik bildiring.", "error");
+                return;
+            }
+
+            const submitBtn = document.getElementById("authSubmitBtn");
+            const restoreBtn = setButtonLoading(submitBtn, isRegisterMode ? "Yaratilmoqda..." : "Kirilmoqda...");
+
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (isRegisterMode) {
-                const password_confirm = document.getElementById("password_confirm").value;
-                const res = await fetch(`${API_BASE}/auth/register`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password, password_confirm })
-                });
-                if (res.ok) {
-                    showAlert("Ro'yxatdan o'tish muvaffaqiyatli yakunlandi.", "success");
-                    toggleAuthMode();
-                } else {
-                    const err = await extractErrorMessage(res);
-                    showAlert(`Xatolik: ${err}`, "error");
-                }
-            } else {
-                const formData = new URLSearchParams();
-                formData.append("username", username);
-                formData.append("password", password);
+            try {
+                if (isRegisterMode) {
+                    const password_confirm = document.getElementById("password_confirm").value;
+                    const first_name = document.getElementById("firstName").value;
+                    const last_name = document.getElementById("lastName").value;
+                    const middle_name = document.getElementById("middleName").value;
+                    const offer_accepted = document.getElementById("offerAccepted").checked;
 
-                const res = await fetch(`${API_BASE}/auth/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: formData
-                });
+                    showLoader();
+                    const res = await fetch(`${API_BASE}/auth/register`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, password, password_confirm, first_name, last_name, middle_name, offer_accepted })
+                    }).finally(hideLoader);
 
-                if (res.ok) {
-                    const data = await res.json();
-                    localStorage.setItem("token", data.access_token);
-                    localStorage.setItem("role", data.role);
-                    initDashboard();
+                    if (res.ok) {
+                        showAlert("Ro'yxatdan o'tish muvaffaqiyatli yakunlandi.", "success");
+                        toggleAuthMode();
+                    } else {
+                        const err = await extractErrorMessage(res);
+                        showAlert(`Xatolik: ${err}`, "error");
+                    }
                 } else {
-                    const err = await extractErrorMessage(res);
-                    showAlert(`Kirishda xatolik: ${err}`, "error");
+                    const formData = new URLSearchParams();
+                    formData.append("username", username);
+                    formData.append("password", password);
+
+                    showLoader();
+                    const res = await fetch(`${API_BASE}/auth/login`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: formData
+                    }).finally(hideLoader);
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        localStorage.setItem("token", data.access_token);
+                        localStorage.setItem("role", data.role);
+                        initDashboard();
+                    } else {
+                        const err = await extractErrorMessage(res);
+                        showAlert(`Kirishda xatolik: ${err}`, "error");
+                    }
                 }
+            } finally {
+                restoreBtn();
             }
         }
 
@@ -651,13 +865,19 @@
             location.reload();
         }
 
+        // Every authenticated API call automatically shows/hides the global loader.
         async function apiFetch(endpoint, options = {}) {
             const token = localStorage.getItem("token");
             const headers = {
                 ...options.headers,
                 "Authorization": `Bearer ${token}`
             };
-            return fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+            showLoader();
+            try {
+                return await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+            } finally {
+                hideLoader();
+            }
         }
 
         async function loadProfile() {
@@ -668,7 +888,8 @@
                 const profile = await res.json();
                 document.getElementById("profFullName").innerText = formatUserFullName(profile);
                 document.getElementById("profUsername").innerText = profile.username || 'Mavjud emas';
-                
+
+                // Balance is a service-account concept only — regular users never see it.
                 if (role === 'service') {
                     document.getElementById("serviceBalanceRow").classList.remove("hidden");
                     document.getElementById("profBalance").innerText = `${profile.balance || 0} UZS`;
@@ -732,70 +953,125 @@
 
         // CARDS API
         async function loadCards() {
+            const container = document.getElementById("userCardsContainer");
+            container.innerHTML = '<div class="skeleton-row"></div>';
+
             const res = await apiFetch("/card/");
             if (res.ok) {
                 const cards = await res.json();
-                const container = document.getElementById("userCardsContainer");
                 if (!cards || cards.length === 0) {
                     container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Kartalar mavjud emas.</p>';
                     return;
                 }
+                // Card's internal database id is never shown to the user — only holder name and masked PAN.
+                // The id is still used internally (data attribute) so the remove button knows which card to delete.
                 container.innerHTML = cards.map(c => `
-                    <div class="list-item">
+                    <div class="list-item" data-card-id="${c.id}">
                         <div class="list-item-info">
                             <span class="list-item-title">${c.holder || 'Karta'}</span>
                             <span class="list-item-sub">${c.pan || '•••• ••••'}</span>
                         </div>
-                        <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">#${c.id}</span>
+                        <button
+                            type="button"
+                            class="btn-secondary btn-sm btn-danger"
+                            style="margin-left:0.75rem;"
+                            onclick="removeCard(${c.id}, this)"
+                        >O'chirish</button>
                     </div>
                 `).join('');
+            } else {
+                container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Kartalarni yuklab bo\'lmadi.</p>';
             }
         }
 
         async function syncCards() {
-            const res = await apiFetch("/card/update");
-            if (res.status === 204 || res.ok) {
-                showAlert("Kartalar yangilandi.", "success");
-                loadCards();
-            } else {
-                showAlert("Kartalarni yangilashda xatolik.", "error");
+            const restore = setButtonLoading(document.getElementById("syncCardsBtn"));
+            try {
+                const res = await apiFetch("/card/update");
+                if (res.status === 204 || res.ok) {
+                    showAlert("Kartalar yangilandi.", "success");
+                    await loadCards();
+                } else {
+                    showAlert("Kartalarni yangilashda xatolik.", "error");
+                }
+            } finally {
+                restore();
+            }
+        }
+
+        async function removeCard(cardId, buttonEl) {
+            const listItem = buttonEl.closest('.list-item');
+            const cardLabel = listItem ? listItem.querySelector('.list-item-title').innerText : 'karta';
+
+            const confirmed = confirm(`"${cardLabel}" kartasini olib tashlamoqchimisiz?`);
+            if (!confirmed) return;
+
+            const restore = setButtonLoading(buttonEl);
+            try {
+                const res = await apiFetch(`/card/remove/${cardId}`, { method: "POST" });
+                if (res.ok) {
+                    const data = await res.json();
+                    showAlert(data.detail || "Karta olib tashlandi.", "success");
+                    loadCards();
+                } else {
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Kartani olib tashlashda xatolik: ${err}`, "error");
+                    restore();
+                }
+            } catch (err) {
+                showAlert("Kartani olib tashlashda xatolik.", "error");
+                restore();
             }
         }
 
         async function bindCard() {
-            const returnUrl = encodeURIComponent(window.location.href);
-            const res = await apiFetch(`/card/bind?return_url=${returnUrl}`);
-            if (res.ok) {
-                const data = await res.json();
-                window.open(data.card_link_url, '_blank');
-            } else {
-                showAlert("Karta biriktirishda xatolik.", "error");
+            const restore = setButtonLoading(document.getElementById("bindCardBtn"), "Ochilmoqda...");
+            try {
+                const returnUrl = encodeURIComponent(window.location.href);
+                const res = await apiFetch(`/card/bind?return_url=${returnUrl}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    window.open(data.card_link_url, '_blank');
+                } else {
+                    showAlert("Karta biriktirishda xatolik.", "error");
+                }
+            } finally {
+                restore();
             }
         }
 
         // APPLICATION API
         async function handleCreateApp(e) {
             e.preventDefault();
-            const payload = {
-                name: document.getElementById("appName").value,
-                description: document.getElementById("appDesc").value,
-                amount: parseInt(document.getElementById("appAmount").value),
-                frequency: document.getElementById("appFrequency").value,
-                pay_day: parseInt(document.getElementById("appPayDay").value)
-            };
+            const restore = setButtonLoading(document.getElementById("createAppBtn"), "Yaratilmoqda...");
+            try {
+                const payload = {
+                    name: document.getElementById("appName").value,
+                    description: document.getElementById("appDesc").value,
+                    amount: parseInt(document.getElementById("appAmount").value),
+                    frequency: document.getElementById("appFrequency").value,
+                    pay_day: parseInt(document.getElementById("appPayDay").value)
+                };
 
-            const res = await apiFetch("/application/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
+                const res = await apiFetch("/application/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
 
-            if (res.ok) {
-                showAlert("Ariza yaratildi.", "success");
-                loadApplications();
-            } else {
-                const err = await extractErrorMessage(res);
-                showAlert(`Xatolik: ${err}`, "error");
+                if (res.ok) {
+                    showAlert("Ariza yaratildi.", "success");
+                    document.getElementById("appName").value = '';
+                    document.getElementById("appDesc").value = '';
+                    document.getElementById("appAmount").value = '';
+                    document.getElementById("appPayDay").value = '';
+                    loadApplications();
+                } else {
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Xatolik: ${err}`, "error");
+                }
+            } finally {
+                restore();
             }
         }
 
@@ -810,6 +1086,8 @@
                 return;
             }
 
+            // card_id is kept only as an internal data attribute for the charge request —
+            // it is never rendered as visible text.
             select.innerHTML = '<option value="">-- Arizani tanlang --</option>' + 
                 chargeableApps.map(a => {
                     const cardId = a.card_id || (a.card && a.card.id) || '';
@@ -830,11 +1108,13 @@
 
         async function loadApplications() {
             const role = localStorage.getItem("role");
+            const container = document.getElementById("applicationsContainer");
+            container.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
+
             const res = await apiFetch("/application/");
             if (res.ok) {
                 const apps = await res.json();
-                const container = document.getElementById("applicationsContainer");
-                
+
                 if (role === 'service') {
                     populateChargeAppDropdown(apps);
                 }
@@ -843,16 +1123,19 @@
                     container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Mavjud emas</p>';
                     return;
                 }
-                
+
+                // Regular users only see the payment schedule, not the application's balance —
+                // that figure is only meaningful to the service account managing it.
                 container.innerHTML = apps.map(a => {
                     const hasPayer = a.payer_id !== null && a.payer_id !== undefined;
                     const canShowQr = role === 'service' && (!a.is_active && !hasPayer);
+                    const balanceInfo = role === 'service' ? ` | Balans: ${a.balance || 0} UZS` : '';
 
                     return `
                         <div class="list-item">
                             <div class="list-item-info">
                                 <span class="list-item-title">${a.name || 'Nomsiz'} <small style="color:var(--text-muted)">(#${a.id})</small></span>
-                                <span class="list-item-sub">Sana: ${a.pay_day} (${a.frequency}) | Balans: ${a.balance || 0} UZS</span>
+                                <span class="list-item-sub">Sana: ${a.pay_day} (${a.frequency})${balanceInfo}</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:0.5rem;">
                                 <span class="status-tag ${a.is_active ? 'active' : 'inactive'}">
@@ -863,6 +1146,8 @@
                         </div>
                     `;
                 }).join('');
+            } else {
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Ma\'lumotlarni yuklab bo\'lmadi</p>';
             }
         }
 
@@ -927,6 +1212,7 @@
                 targetUrl = `${API_BASE}/application/link/${decodedText}`;
             }
 
+            showLoader();
             try {
                 const res = await fetch(targetUrl, {
                     method: "POST",
@@ -946,6 +1232,8 @@
                 }
             } catch (err) {
                 showAlert("QR havolani bajarishda xatolik.", "error");
+            } finally {
+                hideLoader();
             }
         }
 
@@ -954,52 +1242,60 @@
         // TRANSACTIONS & CHARGE API
         async function handleChargeCard(e) {
             e.preventDefault();
-            const select = document.getElementById("chargeAppSelect");
-            const selectedOption = select.options[select.selectedIndex];
-            
-            const applicationId = parseInt(select.value);
-            const cardIdAttr = selectedOption ? selectedOption.getAttribute("data-card-id") : null;
-            const parsedCardId = parseInt(cardIdAttr);
-            const amount = parseInt(document.getElementById("chargeAmount").value);
+            const restore = setButtonLoading(document.getElementById("chargeCardBtn"), "Yechilmoqda...");
+            try {
+                const select = document.getElementById("chargeAppSelect");
+                const selectedOption = select.options[select.selectedIndex];
 
-            if (!applicationId) {
-                showAlert("Iltimos, arizani tanlang.", "error");
-                return;
-            }
+                const applicationId = parseInt(select.value);
+                const cardIdAttr = selectedOption ? selectedOption.getAttribute("data-card-id") : null;
+                const parsedCardId = parseInt(cardIdAttr);
+                const amount = parseInt(document.getElementById("chargeAmount").value);
 
-            // Build strictly valid integer payload fields
-            const payload = {
-                application_id: applicationId,
-                amount: amount
-            };
+                if (!applicationId) {
+                    showAlert("Iltimos, arizani tanlang.", "error");
+                    return;
+                }
 
-            if (!isNaN(parsedCardId) && parsedCardId > 0) {
-                payload.card_id = parsedCardId;
-            }
+                // Build strictly valid integer payload fields
+                const payload = {
+                    application_id: applicationId,
+                    amount: amount
+                };
 
-            const res = await apiFetch("/card/charge", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
+                if (!isNaN(parsedCardId) && parsedCardId > 0) {
+                    payload.card_id = parsedCardId;
+                }
 
-            if (res.ok) {
-                showAlert("Mablag' yechildi.", "success");
-                loadTransactions();
-                loadApplications();
-                loadProfile();
-            } else {
-                const err = await extractErrorMessage(res);
-                showAlert(`Mablag' yechishda xatolik: ${err}`, "error");
+                const res = await apiFetch("/card/charge", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    showAlert("Mablag' yechildi.", "success");
+                    document.getElementById("chargeAmount").value = '';
+                    loadTransactions();
+                    loadApplications();
+                    loadProfile();
+                } else {
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Mablag' yechishda xatolik: ${err}`, "error");
+                }
+            } finally {
+                restore();
             }
         }
 
         async function loadTransactions() {
+            const container = document.getElementById("transactionsContainer");
+            container.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
+
             const res = await apiFetch("/transaction/");
-            
+
             if (res.ok) {
                 const txs = await res.json();
-                const container = document.getElementById("transactionsContainer");
 
                 if (!txs || txs.length === 0) {
                     container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Tranzaksiyalar mavjud emas</p>';
@@ -1020,6 +1316,8 @@
                         </div>
                     `;
                 }).join('');
+            } else {
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Ma\'lumotlarni yuklab bo\'lmadi</p>';
             }
         }
 

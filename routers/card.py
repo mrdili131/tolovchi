@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from models import Card, User, UserType, Transaction, TransactionStatus, Application
 from database import Session
 from services import user_dependency, service_role, user_role, InpayAutoPayService
-from schemas import CardResponse, CardBindResponse, TransactionForm, TransactionResponse
+from schemas import CardResponse, CardBindResponse, TransactionForm, TransactionResponse, SuccessResponse
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
@@ -66,6 +66,29 @@ async def card_bind(db: Session, user: user_role, return_url: str):
     return bind_resp
 
 
+@router.post('/remove/{card_id}', response_model=SuccessResponse , status_code=200, summary="Remove card from platform. ROLES: [USER]")
+async def remove_card(db: Session, user: user_role, card_id: int):
+    card = await db.scalar(select(Card).where(Card.id==card_id,Card.user_id==user.get("id")))
+    if not card:
+        raise HTTPException(status_code=404, detail="Card is not found")
+
+    inpay = InpayAutoPayService()
+
+    res = inpay.remove(card.charge_id)
+
+    if not res:
+        raise HTTPException(status_code=400, detail="Cound not remove card")
+
+    if not card.is_active:
+        raise HTTPException(status_code=400, detail="Card is already disactivated")
+
+    card.is_active = False
+    await db.commit()
+
+    return SuccessResponse(status=True, detail="Success")
+
+    
+
 @router.post('/charge',response_model=TransactionResponse,status_code=200,summary="Charing amount, ROLES: [SERVICE]")
 async def charge(db: Session, user: service_role, form: TransactionForm):
     service = await db.get(User,user.get("id"))
@@ -92,9 +115,9 @@ async def charge(db: Session, user: service_role, form: TransactionForm):
         db.add(transaction)
         await db.commit()
 
-        res = inpay.charge(amount=form.amount,card_id=card.charge_id)
+        try:
+            inpay.charge(amount=form.amount,card_id=card.charge_id)
 
-        if res:
             service.balance += form.amount
 
             transaction.status = TransactionStatus.PROVIDED
@@ -110,6 +133,8 @@ async def charge(db: Session, user: service_role, form: TransactionForm):
                 selectinload(Transaction.sender),
                 selectinload(Transaction.receiver)
             ))
+        except:
+            continue
 
     raise HTTPException(status_code=404, detail="Could not provide transaction")
 
