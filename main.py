@@ -3,6 +3,7 @@ import time
 from routers import main_router
 from scheduler import lifespan_scheduler
 from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from frontend import router as frontend_router
 from fastapi.middleware.cors import CORSMiddleware
@@ -54,5 +55,13 @@ async def log_requests(request: Request, call_next):
 def health():
     return {"health":"good"}
 
+
+@app.get('/sitemap.xml', include_in_schema=False)
+def sitemap():
+    return FileResponse("sitemap.xml")
+
+@app.get('/robots.txt', include_in_schema=False)
+def robots():
+    return FileResponse("robots.txt")
 
 # Dilmuhammad Abdukodirov 2026

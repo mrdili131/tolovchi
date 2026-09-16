@@ -12,7 +12,31 @@ def template(file_name: str):
 
 @router.get('/')
 def home():
-    return template("index.html")
+    return template("welcome.html")
+
+@router.get('/auth')
+def auth_page():
+    return template("auth.html")
+
+@router.get('/dashboard')
+def dashboard_page():
+    return template("dashboard.html")
+
+@router.get('/dashboard/cards')
+def dashboard_cards_page():
+    return template("cards.html")
+
+@router.get('/dashboard/applications')
+def dashboard_applications_page():
+    return template("applications.html")
+
+@router.get('/dashboard/transactions')
+def dashboard_transactions_page():
+    return template("transactions.html")
+
+@router.get('/info')
+def info_page():
+    return template("info.html")
 
 @router.get('/oferta')
 def oferta():

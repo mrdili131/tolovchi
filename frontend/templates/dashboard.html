@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Bindin — Boshqaruv paneli</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#1447E6">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/dashboard" class="topbar-brand">
+                <img src="/static/bindin-icon-64.png" alt="Bindin">
+                Bindin
+            </a>
+            <nav class="topbar-nav">
+                <a href="/dashboard">Asosiy</a>
+                <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
+                <a href="/dashboard/applications">Arizalar</a>
+                <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            </nav>
+            <div class="topbar-actions">
+                <span id="roleBadge" class="badge">USER</span>
+                <a href="/info" class="icon-btn" title="Yordam" aria-label="Yordam">
+                    <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                </a>
+                <button onclick="logout()" class="icon-btn" title="Chiqish" aria-label="Chiqish">
+                    <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                </button>
+                <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menyu">
+                    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileNavPanel" class="mobile-nav-panel">
+            <a href="/dashboard">Asosiy</a>
+            <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
+            <a href="/dashboard/applications">Arizalar</a>
+            <a href="/dashboard/transactions">Tranzaksiyalar</a>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="page-head">
+            <div>
+                <h1 id="greeting">Xush kelibsiz</h1>
+                <p>Hisobingiz holati va so'nggi harakatlar</p>
+            </div>
+        </div>
+
+        <div class="stack">
+            <div class="profile-hero">
+                <div class="profile-hero-top">
+                    <div class="profile-hero-avatar" id="profAvatar">--</div>
+                    <div>
+                        <div class="profile-hero-name" id="profFullName">--</div>
+                        <div class="profile-hero-sub">@<span id="profUsername">--</span></div>
+                    </div>
+                </div>
+                <div id="serviceBalanceRow" class="profile-hero-stat hidden">
+                    <span>Joriy balans</span>
+                    <strong id="profBalance">0 UZS</strong>
+                </div>
+            </div>
+
+            <div class="stat-row" id="statRow">
+                <div class="stat-tile">
+                    <div class="stat-tile-label" id="statActiveLabel">Faol arizalar</div>
+                    <div class="stat-tile-value" id="statActive">--</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-tile-label" id="statSecondLabel">Bog'langan kartalar</div>
+                    <div class="stat-tile-value" id="statSecond">--</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Jami tranzaksiya</div>
+                    <div class="stat-tile-value" id="statTx">--</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Tezkor amallar</h2>
+                <div class="quick-actions" id="quickActions"></div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <span>So'nggi tranzaksiyalar</span>
+                    <a href="/dashboard/transactions" class="btn btn-secondary btn-sm">Barchasi</a>
+                </h2>
+                <div id="recentTxContainer" class="app-list">
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Alert Modal -->
+    <div id="govModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="govModalTitle">Tizim bildirishnomasi</h3>
+            <div id="govModalBody" class="gov-alert-body">--</div>
+            <button class="btn btn-primary btn-block" onclick="closeGovAlert()">Tushundim</button>
+        </div>
+    </div>
+
+    <div id="globalLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+        function quickActionMarkup(icon, label, sub, href) {
+            return `<a class="quick-action" href="${href}">
+                <div class="list-item-icon">${icon}</div>
+                <div>
+                    <div class="quick-action-label">${label}</div>
+                    <div class="quick-action-sub">${sub}</div>
+                </div>
+            </a>`;
+        }
+
+        async function initOverview() {
+            const role = localStorage.getItem("role");
+            const profile = await loadNavProfile();
+
+            if (profile) {
+                document.getElementById("profFullName").innerText = formatUserFullName(profile);
+                document.getElementById("profUsername").innerText = profile.username || 'Mavjud emas';
+                document.getElementById("profAvatar").innerText = initials(profile.first_name, profile.last_name) || initials(profile.username, '');
+                document.getElementById("greeting").innerText = `Salom, ${profile.first_name || profile.username || ''}`;
+
+                if (role === 'service') {
+                    document.getElementById("serviceBalanceRow").classList.remove("hidden");
+                    document.getElementById("profBalance").innerText = `${(profile.balance || 0).toLocaleString('ru-RU')} UZS`;
+                }
+            }
+
+            if (role === 'service') {
+                document.getElementById("statSecondLabel").innerText = "Joriy balans";
+                document.getElementById("quickActions").innerHTML =
+                    quickActionMarkup(appIconSvg(), "Ariza yaratish", "Yangi obuna arizasi", "/dashboard/applications") +
+                    quickActionMarkup(txIconSvg(), "Mablag' yechish", "Mijozdan to'lov undirish", "/dashboard/transactions");
+            } else {
+                document.getElementById("statSecondLabel").innerText = "Bog'langan kartalar";
+                document.getElementById("quickActions").innerHTML =
+                    quickActionMarkup(cardIconSvg(), "Karta biriktirish", "Yangi bank kartasi qo'shish", "/dashboard/cards") +
+                    quickActionMarkup(appIconSvg(), "QR skanerlash", "Xizmatga obuna bo'lish", "/dashboard/applications");
+            }
+
+            const [appsRes, txRes, cardsRes] = await Promise.all([
+                apiFetch("/application/"),
+                apiFetch("/transaction/"),
+                role === 'user' ? apiFetch("/card/") : Promise.resolve(null)
+            ]);
+
+            if (appsRes.ok) {
+                const apps = await appsRes.json();
+                document.getElementById("statActive").innerText = apps.filter(a => a.is_active).length;
+            }
+
+            if (role === 'user' && cardsRes && cardsRes.ok) {
+                const cards = await cardsRes.json();
+                document.getElementById("statSecond").innerText = cards.length;
+            } else if (role === 'service' && profile) {
+                document.getElementById("statSecond").innerText = `${(profile.balance || 0).toLocaleString('ru-RU')} UZS`;
+            }
+
+            const recentContainer = document.getElementById("recentTxContainer");
+            if (txRes.ok) {
+                const txs = await txRes.json();
+                document.getElementById("statTx").innerText = txs.length;
+
+                const recent = txs.slice(0, 5);
+                if (recent.length === 0) {
+                    recentContainer.innerHTML = emptyState('Tranzaksiyalar mavjud emas.');
+                } else {
+                    recentContainer.innerHTML = recent.map(t => `
+                        <div class="list-item">
+                            <div class="list-item-main">
+                                <div class="list-item-icon">${txIconSvg()}</div>
+                                <div class="list-item-info">
+                                    <span class="list-item-title">${(t.amount || 0).toLocaleString('ru-RU')} UZS</span>
+                                    <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatUserFullName(t.receiver)}</span>
+                                </div>
+                            </div>
+                            <span class="status-tag ${t.status}">${t.status}</span>
+                        </div>
+                    `).join('');
+                }
+            } else {
+                recentContainer.innerHTML = emptyState("Ma'lumotlarni yuklab bo'lmadi.");
+            }
+        }
+
+        initOverview();
+    </script>
+</body>
+</html>

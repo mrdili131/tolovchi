@@ -1,13 +1,15 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from models import UserType
 
+NO_SPACES = r"^\S+$"
+
 class RegisterSchema(BaseModel):
-    username: str
+    username: str = Field(min_length=8,pattern=NO_SPACES)
     last_name: str
     first_name: str
     middle_name: str
-    password: str
-    password_confirm: str
+    password: str = Field(min_length=8,pattern=NO_SPACES)
+    password_confirm: str = Field(min_length=8,pattern=NO_SPACES)
 
 class LoginResponse(BaseModel):
     access_token: str

@@ -36,7 +36,7 @@ async def update_cards(db: Session, user: user_dependency):
         db_card = await db.scalar(select(Card).where(Card.charge_id==card["id"]))
         if db_card and card["status"] == "active":
             db_card.holder = card["holder"]
-            db_card.user_id = card["customer_ref"]
+            db_card.user_id = int(card["customer_ref"])
             db_card.pan = card["masked_pan"]
             db_card.expiry = card["expiry"]
             db_card.is_active = True
@@ -57,7 +57,7 @@ async def card_bind(db: Session, user: user_role, return_url: str):
     )
     card = Card(
         bind_ref = resp["data"]["bind_ref"],
-        charge_id = resp["data"]["card_id"],
+        charge_id = int(resp["data"]["card_id"]),
         user_id = user.get("id")
     )
     db.add(card)

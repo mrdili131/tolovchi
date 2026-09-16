@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Bindin — Tranzaksiyalar</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#1447E6">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/dashboard" class="topbar-brand">
+                <img src="/static/bindin-icon-64.png" alt="Bindin">
+                Bindin
+            </a>
+            <nav class="topbar-nav">
+                <a href="/dashboard">Asosiy</a>
+                <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
+                <a href="/dashboard/applications">Arizalar</a>
+                <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            </nav>
+            <div class="topbar-actions">
+                <span id="roleBadge" class="badge">USER</span>
+                <a href="/info" class="icon-btn" title="Yordam" aria-label="Yordam">
+                    <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                </a>
+                <button onclick="logout()" class="icon-btn" title="Chiqish" aria-label="Chiqish">
+                    <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                </button>
+                <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menyu">
+                    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileNavPanel" class="mobile-nav-panel">
+            <a href="/dashboard">Asosiy</a>
+            <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
+            <a href="/dashboard/applications">Arizalar</a>
+            <a href="/dashboard/transactions">Tranzaksiyalar</a>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="page-head">
+            <div>
+                <h1>Tranzaksiyalar</h1>
+                <p id="pageSub">To'lovlar tarixi</p>
+            </div>
+        </div>
+
+        <div class="stack">
+            <div id="serviceChargeSection" class="card hidden">
+                <h2>Kartadan yechish</h2>
+                <form onsubmit="handleChargeCard(event)">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Arizani tanlang</label>
+                            <select id="chargeAppSelect" onchange="handleAppSelectChange(this)" required>
+                                <option value="">Arizalar yuklanmoqda...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Summa (UZS)</label>
+                            <input type="number" id="chargeAmount" min="1000" required placeholder="Masalan: 50000">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="chargeCardBtn">Mablag'ni yechish</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Tranzaksiyalar daftari</h2>
+                <div id="transactionsContainer" class="app-list">
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="govModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="govModalTitle">Tizim bildirishnomasi</h3>
+            <div id="govModalBody" class="gov-alert-body">--</div>
+            <button class="btn btn-primary btn-block" onclick="closeGovAlert()">Tushundim</button>
+        </div>
+    </div>
+
+    <div id="globalLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+        function populateChargeAppDropdown(apps) {
+            const select = document.getElementById("chargeAppSelect");
+            if (!select) return;
+
+            const chargeableApps = apps.filter(a => a.is_active || a.payer);
+            if (chargeableApps.length === 0) {
+                select.innerHTML = '<option value="">Faol arizalar topilmadi</option>';
+                return;
+            }
+
+            select.innerHTML = '<option value="">-- Arizani tanlang --</option>' +
+                chargeableApps.map(a => {
+                    const appAmount = a.amount || 0;
+                    return `<option value="${a.id}" data-amount="${appAmount}">
+                        ${a.name || 'Nomsiz'} (#${a.id}) - ${appAmount} UZS
+                    </option>`;
+                }).join('');
+        }
+
+        function handleAppSelectChange(selectElem) {
+            const selectedOption = selectElem.options[selectElem.selectedIndex];
+            const defaultAmount = selectedOption.getAttribute("data-amount");
+            if (defaultAmount) document.getElementById("chargeAmount").value = defaultAmount;
+        }
+
+        async function handleChargeCard(e) {
+            e.preventDefault();
+            const restore = setButtonLoading(document.getElementById("chargeCardBtn"), "Yechilmoqda...");
+            try {
+                const select = document.getElementById("chargeAppSelect");
+                const applicationId = parseInt(select.value);
+                const amount = parseInt(document.getElementById("chargeAmount").value);
+
+                if (!applicationId) {
+                    showAlert("Iltimos, arizani tanlang.", "error");
+                    return;
+                }
+
+                const payload = { application_id: applicationId, amount: amount };
+
+                const res = await apiFetch("/card/charge", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    showAlert("Mablag' yechildi.", "success");
+                    document.getElementById("chargeAmount").value = '';
+                    loadTransactions();
+                    loadChargeApps();
+                } else {
+                    const err = await extractErrorMessage(res);
+                    showAlert(`Mablag' yechishda xatolik: ${err}`, "error");
+                }
+            } finally {
+                restore();
+            }
+        }
+
+        async function loadChargeApps() {
+            const res = await apiFetch("/application/");
+            if (res.ok) populateChargeAppDropdown(await res.json());
+        }
+
+        async function loadTransactions() {
+            const container = document.getElementById("transactionsContainer");
+            container.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
+
+            const res = await apiFetch("/transaction/");
+            if (res.ok) {
+                const txs = await res.json();
+                if (!txs || txs.length === 0) {
+                    container.innerHTML = emptyState('Tranzaksiyalar mavjud emas.');
+                    return;
+                }
+
+                container.innerHTML = txs.map(t => `
+                    <div class="list-item">
+                        <div class="list-item-main">
+                            <div class="list-item-icon">${txIconSvg()}</div>
+                            <div class="list-item-info">
+                                <span class="list-item-title">${(t.amount || 0).toLocaleString('ru-RU')} UZS</span>
+                                <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatUserFullName(t.receiver)}</span>
+                            </div>
+                        </div>
+                        <span class="status-tag ${t.status}">${t.status}</span>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = emptyState("Ma'lumotlarni yuklab bo'lmadi.");
+            }
+        }
+
+        (function init() {
+            const role = localStorage.getItem("role");
+            if (role === 'service') {
+                document.getElementById("serviceChargeSection").classList.remove("hidden");
+                document.getElementById("pageSub").innerText = "Mijozlardan to'lov undiring va tarixni kuzating";
+                loadChargeApps();
+            }
+            loadTransactions();
+        })();
+    </script>
+</body>
+</html>

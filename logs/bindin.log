@@ -748,3 +748,182 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-09-14 16:04:20,303 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
 2026-09-14 16:04:20,303 [apscheduler.scheduler] INFO: Scheduler started
 2026-09-14 16:08:15,633 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 08:31:28,415 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 08:31:28,418 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 08:31:28,418 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 08:31:28,570 [main] INFO: GET / 200 0.108s
+2026-09-15 08:31:28,631 [main] INFO: GET /static/favicon.ico 200 0.003s
+2026-09-15 08:31:34,477 [main] INFO: GET /robots.txt 200 0.003s
+2026-09-15 08:31:34,555 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-15 08:31:40,723 [main] INFO: GET /robots 404 0.001s
+2026-09-15 08:31:46,308 [main] INFO: GET /sitemap.xml 200 0.002s
+2026-09-15 08:31:49,487 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:42:55,193 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:42:55,199 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:42:55,199 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:43:05,204 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:45:27,780 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:45:27,781 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:45:27,781 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:45:29,781 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:45:41,267 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:45:41,269 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:45:41,269 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:45:41,817 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:49:50,746 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:49:50,747 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:49:50,747 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:49:52,209 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:49:55,160 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:49:55,162 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:49:55,163 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:49:55,284 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:49:58,073 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:49:58,074 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:49:58,074 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:12,749 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:15,785 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:15,787 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:15,787 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:19,351 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:22,781 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:22,784 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:22,808 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:23,002 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:26,926 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:26,927 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:26,928 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:27,036 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:29,556 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:29,559 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:29,559 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:36,347 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:40,317 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:40,324 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:40,325 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:42,775 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:50:46,577 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:50:46,578 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:50:46,578 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:50:46,698 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:08,451 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:08,452 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:08,452 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:08,565 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:11,246 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:11,248 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:11,248 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:15,156 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:17,721 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:17,722 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:17,722 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:21,624 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:24,240 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:24,241 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:24,241 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:42,985 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:46,008 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:46,010 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:46,010 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:48,682 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:51,388 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:51,389 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:51,389 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:51,494 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:53,833 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:53,835 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:53,835 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:53,950 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:51:56,563 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:51:56,564 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:51:56,565 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:51:56,670 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:52:00,102 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:52:00,104 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:52:00,104 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:52:00,261 [main] INFO: GET / 200 0.130s
+2026-09-15 14:52:00,362 [main] INFO: GET /static/favicon.ico 200 0.009s
+2026-09-15 14:52:06,401 [main] INFO: GET /docs 200 0.001s
+2026-09-15 14:52:06,864 [main] INFO: GET /docs 200 0.000s
+2026-09-15 14:52:07,475 [main] INFO: GET /openapi.json 200 0.138s
+2026-09-15 14:52:17,138 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-15 14:52:17,506 [main] INFO: POST /api/auth/login 200 4.583s
+2026-09-15 14:52:31,248 [main] INFO: GET /api/application/ 200 1.298s
+2026-09-15 14:52:40,029 [main] INFO: POST /api/application/unlink/2 200 1.434s
+2026-09-15 14:52:41,730 [main] INFO: GET / 200 0.004s
+2026-09-15 14:52:46,424 [main] INFO: GET / 200 0.002s
+2026-09-15 14:52:58,006 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-15 14:53:25,504 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-15 14:53:25,505 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-15 14:53:25,505 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-15 14:53:30,653 [main] INFO: POST /api/application/unlink/1 200 4.942s
+2026-09-15 14:53:32,515 [main] INFO: POST /api/application/unlink/1 404 0.465s
+2026-09-15 14:53:36,624 [main] INFO: POST /api/application/unlink/2 404 0.470s
+2026-09-15 14:53:39,205 [main] INFO: POST /api/application/unlink/123 404 0.467s
+2026-09-15 14:53:42,906 [main] INFO: GET / 200 0.092s
+2026-09-15 16:45:28,910 [main] INFO: GET / 200 0.111s
+2026-09-16 13:32:43,477 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-16 13:32:43,480 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-16 13:32:43,480 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-16 13:32:43,692 [main] INFO: GET / 200 0.109s
+2026-09-16 13:32:43,720 [main] INFO: GET /static/favicon.ico 200 0.002s
+2026-09-16 13:32:49,009 [main] INFO: GET / 200 0.004s
+2026-09-16 13:33:04,976 [main] INFO: GET / 200 0.002s
+2026-09-16 13:38:00,945 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-16 13:38:03,354 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-16 13:38:03,356 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-16 13:38:03,356 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-16 13:53:22,387 [main] INFO: GET / 200 0.114s
+2026-09-16 13:53:22,816 [main] INFO: GET /dashboard 200 0.003s
+2026-09-16 13:53:49,278 [main] INFO: GET /info 200 0.003s
+2026-09-16 13:54:14,629 [main] INFO: GET / 200 0.002s
+2026-09-16 13:54:15,788 [main] INFO: GET /auth 200 0.002s
+2026-09-16 13:54:32,221 [main] INFO: GET /info 200 0.002s
+2026-09-16 13:54:38,982 [main] INFO: GET /auth 200 0.002s
+2026-09-16 13:54:48,113 [main] INFO: GET /dashboard 200 0.002s
+2026-09-16 13:54:53,681 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-16 13:55:16,986 [main] INFO: GET / 200 0.004s
+2026-09-16 13:55:21,622 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-16 14:09:52,938 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-16 14:09:52,940 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-16 14:09:52,941 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-16 14:09:53,081 [main] INFO: GET / 200 0.109s
+2026-09-16 14:09:53,106 [main] INFO: GET /static/bindin-icon-64.png 200 0.003s
+2026-09-16 14:09:55,569 [main] INFO: GET / 200 0.002s
+2026-09-16 14:09:56,463 [main] INFO: GET /auth 200 0.002s
+2026-09-16 14:10:03,190 [main] INFO: GET /dashboard 200 0.005s
+2026-09-16 14:10:12,310 [main] INFO: GET / 200 0.002s
+2026-09-16 14:10:12,344 [main] INFO: GET /static/bindin-icon-64.png 304 0.002s
+2026-09-16 14:10:15,107 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-16 14:21:06,154 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-16 14:21:06,155 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-16 14:21:06,155 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-16 14:21:06,739 [main] INFO: GET / 200 0.116s
+2026-09-16 14:21:06,774 [main] INFO: GET /static/bindin-icon-64.png 304 0.002s
+2026-09-16 14:21:08,314 [main] INFO: GET /auth 200 0.002s
+2026-09-16 14:21:15,178 [main] INFO: GET /dashboard 200 0.004s
+2026-09-16 14:21:15,219 [main] INFO: GET /static/css/dashboard.css 200 0.002s
+2026-09-16 14:21:15,227 [main] INFO: GET /static/js/dashboard.js 200 0.002s
+2026-09-16 14:21:20,800 [main] INFO: GET /dashboard/cards 200 0.002s
+2026-09-16 14:21:22,704 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-16 14:21:34,734 [main] INFO: GET /dashboard/transactions 200 0.004s
+2026-09-16 14:22:06,247 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-16 14:22:09,840 [main] INFO: GET /dashboard/cards 200 0.004s
+2026-09-16 14:22:09,908 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-16 14:22:09,913 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-16 14:22:10,979 [main] INFO: GET /dashboard 200 0.002s
+2026-09-16 14:22:11,030 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-16 14:22:15,714 [main] INFO: GET /auth 200 0.002s
+2026-09-16 14:22:21,802 [main] INFO: GET /static/css/dashboard.css 304 0.010s
+2026-09-16 14:22:21,804 [main] INFO: GET /static/bindin-icon-64.png 304 0.008s
+2026-09-16 14:22:26,105 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-16 14:22:29,298 [main] INFO: GET /dashboard/transactions 200 0.003s
+2026-09-16 14:23:11,089 [main] INFO: GET /info 200 0.002s
+2026-09-16 14:23:14,589 [main] INFO: GET /dashboard 200 0.006s
+2026-09-16 14:23:14,640 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-16 14:23:16,616 [main] INFO: GET / 200 0.002s

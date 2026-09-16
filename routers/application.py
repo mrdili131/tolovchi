@@ -5,6 +5,7 @@ from services import user_dependency, service_role, user_role
 from schemas import ApplicationResponse, ApplicationForm, SuccessResponse
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+from datetime import datetime
 
 router = APIRouter()
 
@@ -66,3 +67,22 @@ async def link(db: Session, user: user_role, application_id: int):
     await db.refresh(application)
 
     return SuccessResponse(status=True,detail=f"User linked to {application.name}")
+
+
+@router.post('/unlink/{application_id}', response_model=SuccessResponse, status_code=200, summary="Unlinking application. ROLES: [USER]")
+async def unlink_application(db: Session, user: user_role, application_id: int):
+    app = await db.scalar(select(Application).where(
+        Application.payer_id == user.get("id"),
+        Application.is_active == True
+    ))
+
+    if not app:
+        raise HTTPException(status_code=404, detail="Could not find application")
+
+    app.is_active = False
+    app.end_date = datetime.utcnow().date()
+
+    await db.commit()
+    await db.refresh(app)
+
+    return SuccessResponse(status=True, detail="Success")

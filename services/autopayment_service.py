@@ -73,7 +73,6 @@ class InpayAutoPayService:
                 "reason":reason
             }
         )
-        print(r.json())
         match r.status_code:
             case 400:
                 raise HTTPException(status_code=400,detail="SERVICE: Summa yechishda xatolik")

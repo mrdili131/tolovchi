@@ -8,7 +8,7 @@ class Card(Base):
     holder = Column(String,default="Unnamed")
     pan = Column(String,default="")
     expiry = Column(String,default="")
-    charge_id = Column(String, nullable=False)
+    charge_id = Column(Integer, nullable=False)
     bind_ref = Column(String, nullable=False)
     is_active = Column(Boolean, default=False)
     user_id = Column(Integer,ForeignKey("users.id"))

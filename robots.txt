@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /dashboard
+Disallow: /printables
+
+Sitemap: https://bindin.uz/sitemap.xml
