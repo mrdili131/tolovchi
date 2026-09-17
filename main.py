@@ -18,7 +18,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Subscription maganer",
+app = FastAPI(title="Subscription manager",
                 description="This api for monthly subscription manager app",
                 version="0.0.1",
                 lifespan=lifespan_scheduler

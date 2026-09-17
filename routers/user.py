@@ -13,7 +13,7 @@ router = APIRouter()
 async def register(db: Session, form: RegisterSchema):
     user = await db.scalar(select(User).where(User.username==form.username))
     if user:
-         return HTTPException(status_code=204,detail="User with this username exist")
+         raise HTTPException(status_code=204,detail="User with this username exist")
     
     if form.password == form.password_confirm:
         new_user = User(
@@ -51,6 +51,3 @@ async def return_user(db: Session, user: service_role):
     db_user = await db.scalar(select(User).where(User.id==user.get("id")))
     return db_user
 
-# @router.get('/clients', response_model=list[UserResponse], status_code=200, summary="Returns clients of service. ROLES: [SERVICE]")
-# async def get_clients(db: Session, user: service_role):
-#     clients = await db.
