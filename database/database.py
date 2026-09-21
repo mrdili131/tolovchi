@@ -7,13 +7,15 @@ import os
 load_dotenv()
 
 # Supabase's session-mode pooler caps this project at 15 concurrent client
-# connections total. SQLAlchemy's defaults (pool_size=5, max_overflow=10) let
-# a single worker alone claim all 15 under load, so any second worker/replica
-# guarantees EMAXCONNSESSION. Keep this worker's ceiling well under that.
+# connections total. This app autoscales up to 3 replicas, each with its own
+# independent pool — so the per-replica ceiling here must leave real headroom
+# below 15/3, not just divide evenly, to survive rolling-deploy overlap
+# (old + new replica briefly alive together), migrations, and Supabase
+# Studio. 3 per replica x 3 replicas = 9, leaving 6 connections of slack.
 engine = create_async_engine(
     os.getenv("DB_CONTEXT"),
-    pool_size=3,
-    max_overflow=2,
+    pool_size=2,
+    max_overflow=1,
     pool_pre_ping=True,
     pool_recycle=1800,
 )
