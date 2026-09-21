@@ -6,7 +6,17 @@ import os
 
 load_dotenv()
 
-engine = create_async_engine(os.getenv("DB_CONTEXT"))
+# Supabase's session-mode pooler caps this project at 15 concurrent client
+# connections total. SQLAlchemy's defaults (pool_size=5, max_overflow=10) let
+# a single worker alone claim all 15 under load, so any second worker/replica
+# guarantees EMAXCONNSESSION. Keep this worker's ceiling well under that.
+engine = create_async_engine(
+    os.getenv("DB_CONTEXT"),
+    pool_size=3,
+    max_overflow=2,
+    pool_pre_ping=True,
+    pool_recycle=1800,
+)
 
 new_session = async_sessionmaker(engine,expire_on_commit=False)
 
