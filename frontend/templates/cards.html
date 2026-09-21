@@ -27,6 +27,8 @@
                 <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
                 <a href="/dashboard/applications">Arizalar</a>
                 <a href="/dashboard/transactions">Tranzaksiyalar</a>
+                <a href="/developer" data-role="service-only">Dasturchi</a>
+                <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
             </nav>
             <div class="topbar-actions">
                 <span id="roleBadge" class="badge">USER</span>
@@ -46,6 +48,8 @@
             <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
             <a href="/dashboard/applications">Arizalar</a>
             <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            <a href="/developer" data-role="service-only">Dasturchi</a>
+            <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
         </div>
     </header>
 
@@ -74,6 +78,7 @@
                     <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
                 </div>
+                <div id="cardsPagination"></div>
             </div>
         </div>
     </main>
@@ -92,13 +97,21 @@
 
     <script src="/static/js/dashboard.js"></script>
     <script>
-        async function loadCards() {
+        requireRole(['user', 'service']);
+
+        let cardsPage = 1;
+
+        async function loadCards(page = 1) {
+            cardsPage = page;
             const container = document.getElementById("userCardsContainer");
             container.innerHTML = '<div class="skeleton-row"></div>';
 
-            const res = await apiFetch("/card/");
+            const res = await apiFetch(`/card/?page=${page}&page_size=10`);
             if (res.ok) {
-                const cards = await res.json();
+                const paginated = await res.json();
+                const cards = paginated.items;
+                renderPagination(document.getElementById("cardsPagination"), paginated, loadCards);
+
                 if (!cards || cards.length === 0) {
                     container.innerHTML = emptyState('Hali kartalar biriktirilmagan.');
                     return;
@@ -123,10 +136,10 @@
         async function syncCards() {
             const restore = setButtonLoading(document.getElementById("syncCardsBtn"));
             try {
-                const res = await apiFetch("/card/update");
+                const res = await apiFetch("/card/update", { method: "POST" });
                 if (res.status === 204 || res.ok) {
                     showAlert("Kartalar yangilandi.", "success");
-                    await loadCards();
+                    await loadCards(cardsPage);
                 } else {
                     showAlert("Kartalarni yangilashda xatolik.", "error");
                 }
@@ -147,7 +160,7 @@
                 if (res.ok) {
                     const data = await res.json();
                     showAlert(data.detail || "Karta olib tashlandi.", "success");
-                    loadCards();
+                    loadCards(cardsPage);
                 } else {
                     const err = await extractErrorMessage(res);
                     showAlert(`Kartani olib tashlashda xatolik: ${err}`, "error");
@@ -163,7 +176,7 @@
             const restore = setButtonLoading(document.getElementById("bindCardBtn"), "Ochilmoqda...");
             try {
                 const returnUrl = encodeURIComponent(window.location.href);
-                const res = await apiFetch(`/card/bind?return_url=${returnUrl}`);
+                const res = await apiFetch(`/card/bind?return_url=${returnUrl}`, { method: "POST" });
                 if (res.ok) {
                     const data = await res.json();
                     window.open(data.card_link_url, '_blank');

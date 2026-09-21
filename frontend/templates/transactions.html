@@ -27,6 +27,8 @@
                 <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
                 <a href="/dashboard/applications">Arizalar</a>
                 <a href="/dashboard/transactions">Tranzaksiyalar</a>
+                <a href="/developer" data-role="service-only">Dasturchi</a>
+                <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
             </nav>
             <div class="topbar-actions">
                 <span id="roleBadge" class="badge">USER</span>
@@ -46,6 +48,8 @@
             <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
             <a href="/dashboard/applications">Arizalar</a>
             <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            <a href="/developer" data-role="service-only">Dasturchi</a>
+            <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
         </div>
     </header>
 
@@ -83,6 +87,7 @@
                     <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
                 </div>
+                <div id="transactionsPagination"></div>
             </div>
         </div>
     </main>
@@ -148,9 +153,11 @@
                 });
 
                 if (res.ok) {
-                    showAlert("Mablag' yechildi.", "success");
+                    const tx = await res.json();
+                    const feeNote = tx.fee_amount ? ` (mijozdan ${(tx.amount + tx.fee_amount).toLocaleString('ru-RU')} UZS yechildi, ${tx.fee_amount.toLocaleString('ru-RU')} UZS to'lov tizimi ulushi)` : '';
+                    showAlert(`Mablag' yechildi: ${tx.amount.toLocaleString('ru-RU')} UZS balansingizga qo'shildi.${feeNote}`, "success");
                     document.getElementById("chargeAmount").value = '';
-                    loadTransactions();
+                    loadTransactions(transactionsPage);
                     loadChargeApps();
                 } else {
                     const err = await extractErrorMessage(res);
@@ -162,38 +169,49 @@
         }
 
         async function loadChargeApps() {
-            const res = await apiFetch("/application/");
-            if (res.ok) populateChargeAppDropdown(await res.json());
+            const res = await apiFetch("/application/?page_size=100");
+            if (res.ok) populateChargeAppDropdown((await res.json()).items);
         }
 
-        async function loadTransactions() {
+        let transactionsPage = 1;
+
+        async function loadTransactions(page = 1) {
+            transactionsPage = page;
             const container = document.getElementById("transactionsContainer");
             container.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
 
-            const res = await apiFetch("/transaction/");
+            const res = await apiFetch(`/transaction/?page=${page}&page_size=10`);
             if (res.ok) {
-                const txs = await res.json();
+                const paginated = await res.json();
+                const txs = paginated.items;
+                renderPagination(document.getElementById("transactionsPagination"), paginated, loadTransactions);
+
                 if (!txs || txs.length === 0) {
                     container.innerHTML = emptyState('Tranzaksiyalar mavjud emas.');
                     return;
                 }
 
-                container.innerHTML = txs.map(t => `
+                container.innerHTML = txs.map(t => {
+                    const feeInfo = t.fee_amount ? ` · to'lov tizimi ulushi: ${t.fee_amount.toLocaleString('ru-RU')} UZS` : '';
+                    return `
                     <div class="list-item">
                         <div class="list-item-main">
                             <div class="list-item-icon">${txIconSvg()}</div>
                             <div class="list-item-info">
                                 <span class="list-item-title">${(t.amount || 0).toLocaleString('ru-RU')} UZS</span>
-                                <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatUserFullName(t.receiver)}</span>
+                                <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatServiceName(t.receiver)}${feeInfo}</span>
                             </div>
                         </div>
                         <span class="status-tag ${t.status}">${t.status}</span>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             } else {
                 container.innerHTML = emptyState("Ma'lumotlarni yuklab bo'lmadi.");
             }
         }
+
+        requireRole(['user', 'service']);
 
         (function init() {
             const role = localStorage.getItem("role");

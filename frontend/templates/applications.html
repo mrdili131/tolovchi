@@ -30,6 +30,8 @@
                 <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
                 <a href="/dashboard/applications">Arizalar</a>
                 <a href="/dashboard/transactions">Tranzaksiyalar</a>
+                <a href="/developer" data-role="service-only">Dasturchi</a>
+                <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
             </nav>
             <div class="topbar-actions">
                 <span id="roleBadge" class="badge">USER</span>
@@ -49,6 +51,8 @@
             <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
             <a href="/dashboard/applications">Arizalar</a>
             <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            <a href="/developer" data-role="service-only">Dasturchi</a>
+            <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
         </div>
     </header>
 
@@ -104,6 +108,7 @@
                     <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
                 </div>
+                <div id="applicationsPagination"></div>
             </div>
         </div>
     </main>
@@ -139,7 +144,10 @@
 
     <script src="/static/js/dashboard.js"></script>
     <script>
+        requireRole(['user', 'service']);
+
         let html5QrCodeEngine = null;
+        let applicationsPage = 1;
 
         async function handleCreateApp(e) {
             e.preventDefault();
@@ -175,14 +183,17 @@
             }
         }
 
-        async function loadApplications() {
+        async function loadApplications(page = 1) {
+            applicationsPage = page;
             const role = localStorage.getItem("role");
             const container = document.getElementById("applicationsContainer");
             container.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
 
-            const res = await apiFetch("/application/");
+            const res = await apiFetch(`/application/?page=${page}&page_size=10`);
             if (res.ok) {
-                const apps = await res.json();
+                const paginated = await res.json();
+                const apps = paginated.items;
+                renderPagination(document.getElementById("applicationsPagination"), paginated, loadApplications);
 
                 if (!apps || apps.length === 0) {
                     container.innerHTML = emptyState('Hozircha arizalar mavjud emas.');
@@ -192,6 +203,9 @@
                 container.innerHTML = apps.map(a => {
                     const hasPayer = !!a.payer;
                     const canShowQr = role === 'service' && (!a.is_active && !hasPayer);
+                    const canStop = role === 'service' && !a.end_date && (a.is_active || hasPayer);
+                    const canCharge = role === 'service' && !a.end_date && hasPayer;
+                    const canUnlink = role === 'user' && !a.end_date && hasPayer;
                     const balanceInfo = role === 'service' ? ` · Balans: ${a.balance || 0} UZS` : '';
 
                     return `
@@ -204,14 +218,50 @@
                                 </div>
                             </div>
                             <div class="list-item-side">
-                                <span class="status-tag ${a.is_active ? 'active' : 'inactive'}">${a.is_active ? 'Faol' : 'Nofaol'}</span>
+                                <span class="status-tag ${appStatusClass(a)}">${appStatusLabel(a)}</span>
                                 ${canShowQr ? `<button onclick="generateQrModal('${a.id}', '${encodeURIComponent(a.name || a.description)}')" class="btn btn-secondary btn-sm">QR</button>` : ''}
+                                ${canCharge ? `<button onclick="chargeApplicationNow(${a.id})" class="btn btn-secondary btn-sm">Hoziroq yechish</button>` : ''}
+                                ${canStop ? `<button onclick="stopApplication(${a.id})" class="btn btn-danger btn-sm">To'xtatish</button>` : ''}
+                                ${canUnlink ? `<button onclick="unlinkApplication(${a.id})" class="btn btn-danger btn-sm">To'xtatish</button>` : ''}
                             </div>
                         </div>
                     `;
                 }).join('');
             } else {
                 container.innerHTML = emptyState("Ma'lumotlarni yuklab bo'lmadi.");
+            }
+        }
+
+        async function stopApplication(appId) {
+            if (!confirm("Bu arizani to'xtatmoqchimisiz? Mijoz endi to'lov qilmaydi.")) return;
+            const res = await apiFetch(`/application/stop/${appId}`, { method: "POST" });
+            if (res.ok) {
+                showAlert("Ariza to'xtatildi.", "success");
+                loadApplications(applicationsPage);
+            } else {
+                showAlert(await extractErrorMessage(res), "error");
+            }
+        }
+
+        async function chargeApplicationNow(appId) {
+            const res = await apiFetch(`/application/${appId}/charge`, { method: "POST" });
+            if (res.ok) {
+                const data = await res.json();
+                showAlert(data.detail, data.status ? "success" : "error");
+                loadApplications(applicationsPage);
+            } else {
+                showAlert(await extractErrorMessage(res), "error");
+            }
+        }
+
+        async function unlinkApplication(appId) {
+            if (!confirm("Bu obunani bekor qilmoqchimisiz?")) return;
+            const res = await apiFetch(`/application/unlink/${appId}`, { method: "POST" });
+            if (res.ok) {
+                showAlert("Obuna bekor qilindi.", "success");
+                loadApplications(applicationsPage);
+            } else {
+                showAlert(await extractErrorMessage(res), "error");
             }
         }
 
@@ -280,7 +330,7 @@
 
                 if (res.ok) {
                     const data = await res.json();
-                    showAlert(`Ariza ulandi!\nHolati: ${data.status ? 'Muvaffaqiyatli' : 'Muvaffaqiyatsiz'}\nTafsilot: ${data.detail}`, "success");
+                    showAlert(data.detail, data.status ? "success" : "error");
                     loadApplications();
                 } else {
                     const err = await extractErrorMessage(res);

@@ -1142,3 +1142,953 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-09-16 16:03:20,057 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
 2026-09-16 16:03:20,059 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
 2026-09-16 16:03:20,059 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 08:59:26,537 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 08:59:26,540 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 08:59:26,540 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 08:59:26,653 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 08:59:29,526 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 08:59:29,527 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 08:59:29,527 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 08:59:29,687 [main] INFO: GET / 200 0.122s
+2026-09-17 08:59:29,723 [main] INFO: GET /static/bindin-icon-64.png 304 0.002s
+2026-09-17 08:59:32,275 [main] INFO: GET /auth 200 0.003s
+2026-09-17 08:59:32,757 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 08:59:35,057 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 08:59:35,058 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 08:59:35,058 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 08:59:41,254 [main] INFO: GET /dashboard 200 0.112s
+2026-09-17 08:59:41,283 [main] INFO: GET /static/css/dashboard.css 304 0.004s
+2026-09-17 08:59:41,284 [main] INFO: GET /static/js/dashboard.js 304 0.004s
+2026-09-17 08:59:46,108 [main] INFO: GET /docs 200 0.001s
+2026-09-17 08:59:46,528 [main] INFO: GET /openapi.json 200 0.104s
+2026-09-17 08:59:50,088 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 08:59:52,556 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 08:59:52,558 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 08:59:52,558 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 08:59:58,583 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:05:57,297 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:05:57,299 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:05:57,299 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:06:06,942 [main] INFO: GET /health 200 0.123s
+2026-09-17 09:06:53,102 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:06:53,103 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:06:53,103 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:06:53,106 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:07:21,142 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:07:21,144 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:07:21,144 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:07:21,543 [main] INFO: GET /health 200 0.126s
+2026-09-17 09:07:43,945 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 09:07:44,330 [main] INFO: POST /api/auth/register 201 0.498s
+2026-09-17 09:07:44,749 [main] INFO: POST /api/auth/register 201 0.357s
+2026-09-17 09:07:44,815 [main] INFO: POST /api/auth/register 409 0.004s
+2026-09-17 09:07:45,216 [main] INFO: POST /api/auth/login 401 0.337s
+2026-09-17 09:07:45,643 [main] INFO: POST /api/auth/login 200 0.360s
+2026-09-17 09:07:46,072 [main] INFO: POST /api/auth/login 200 0.359s
+2026-09-17 09:08:09,969 [main] INFO: POST /api/auth/login 200 0.373s
+2026-09-17 09:08:10,473 [main] INFO: POST /api/auth/login 200 0.367s
+2026-09-17 09:08:10,977 [main] INFO: POST /api/auth/login 200 0.370s
+2026-09-17 09:08:22,620 [main] INFO: POST /api/application/ 201 0.074s
+2026-09-17 09:08:23,151 [main] INFO: POST /api/application/link/1 200 0.048s
+2026-09-17 09:08:23,321 [main] INFO: GET /api/application/ 200 0.101s
+2026-09-17 09:08:39,525 [main] INFO: POST /api/card/charge 400 0.030s
+2026-09-17 09:08:39,621 [main] INFO: POST /api/card/charge 404 0.031s
+2026-09-17 09:08:58,171 [main] INFO: POST /api/card/charge 400 0.028s
+2026-09-17 09:09:09,518 [main] INFO: GET /api/admin/stats 403 0.023s
+2026-09-17 09:09:09,610 [main] INFO: GET /api/admin/stats 200 0.039s
+2026-09-17 09:09:09,692 [main] INFO: GET /api/admin/users 200 0.028s
+2026-09-17 09:09:09,832 [main] INFO: PATCH /api/admin/users/1/status 200 0.086s
+2026-09-17 09:09:09,890 [main] INFO: GET /api/auth/me 401 0.004s
+2026-09-17 09:09:10,281 [main] INFO: POST /api/auth/login 401 0.337s
+2026-09-17 09:09:22,147 [main] INFO: PATCH /api/admin/users/1/status 200 0.064s
+2026-09-17 09:09:22,632 [main] INFO: POST /api/auth/login 200 0.373s
+2026-09-17 09:09:22,756 [main] INFO: GET /api/admin/sessions 200 0.036s
+2026-09-17 09:09:22,855 [main] INFO: GET /api/admin/audit-log 200 0.033s
+2026-09-17 09:09:38,792 [main] INFO: POST /api/developer/keys 201 0.049s
+2026-09-17 09:09:39,284 [main] INFO: GET /api/developer/keys 200 0.021s
+2026-09-17 09:09:39,355 [main] INFO: GET /api/auth/me_service 200 0.020s
+2026-09-17 09:09:39,428 [main] INFO: POST /api/application/ 201 0.024s
+2026-09-17 09:09:39,484 [main] INFO: GET /api/auth/me_service 401 0.003s
+2026-09-17 09:09:43,300 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:09:43,301 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:09:43,301 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:09:43,491 [main] INFO: GET /docs 200 0.001s
+2026-09-17 09:09:44,201 [main] INFO: GET /openapi.json 200 0.578s
+2026-09-17 09:10:21,358 [main] INFO: POST /api/admin/applications/1/retry-charge 200 0.076s
+2026-09-17 09:10:21,483 [main] INFO: POST /api/admin/applications/1/retry-charge 200 0.073s
+2026-09-17 09:10:21,558 [main] INFO: POST /api/admin/applications/1/retry-charge 400 0.023s
+2026-09-17 09:10:21,638 [main] INFO: GET /api/admin/payment-attempts 200 0.027s
+2026-09-17 09:10:32,463 [main] INFO: PATCH /api/admin/applications/1/reactivate 200 0.063s
+2026-09-17 09:10:32,542 [main] INFO: PATCH /api/admin/transactions/999 404 0.025s
+2026-09-17 09:10:32,625 [main] INFO: GET /api/admin/applications 200 0.030s
+2026-09-17 09:10:35,393 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:11:29,867 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:11:29,869 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:11:29,869 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:11:30,492 [main] INFO: GET /health 200 0.099s
+2026-09-17 09:11:37,374 [main] INFO: GET /api/auth/me 200 0.082s
+2026-09-17 09:20:34,006 [main] INFO: GET / 200 0.152s
+2026-09-17 09:20:34,025 [main] INFO: GET /static/bindin-icon-64.png 200 0.003s
+2026-09-17 09:20:34,780 [main] INFO: GET /static/bindin-icon-32.png 200 0.002s
+2026-09-17 09:21:26,342 [main] INFO: GET /admin 404 0.002s
+2026-09-17 09:21:26,380 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 09:21:54,605 [main] INFO: GET / 200 0.004s
+2026-09-17 09:21:54,643 [main] INFO: GET /static/bindin-icon-64.png 200 0.003s
+2026-09-17 09:21:54,928 [main] INFO: GET /static/favicon.ico 200 0.007s
+2026-09-17 09:21:57,927 [main] INFO: GET /docs 200 0.000s
+2026-09-17 09:21:58,362 [main] INFO: GET /openapi.json 200 0.306s
+2026-09-17 09:22:09,551 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:22:09,553 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:22:09,553 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:22:10,289 [main] INFO: GET /auth 200 0.446s
+2026-09-17 09:22:10,316 [main] INFO: GET /admin 200 0.336s
+2026-09-17 09:22:17,257 [main] INFO: GET /admin 200 0.003s
+2026-09-17 09:22:17,290 [main] INFO: GET /static/css/dashboard.css 200 0.006s
+2026-09-17 09:22:17,291 [main] INFO: GET /static/js/dashboard.js 200 0.005s
+2026-09-17 09:22:29,673 [main] INFO: GET /auth 200 0.005s
+2026-09-17 09:22:30,698 [main] INFO: GET /auth 200 0.003s
+2026-09-17 09:22:30,844 [main] INFO: GET /auth 200 0.002s
+2026-09-17 09:22:41,886 [main] INFO: GET /admin/users 200 0.003s
+2026-09-17 09:22:41,947 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 09:23:06,670 [main] INFO: GET /admin/applications 200 0.004s
+2026-09-17 09:23:06,736 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 09:23:32,461 [main] INFO: GET /admin/logs 200 0.003s
+2026-09-17 09:23:32,492 [main] INFO: GET /static/css/dashboard.css 304 0.008s
+2026-09-17 09:23:32,494 [main] INFO: GET /static/js/dashboard.js 304 0.007s
+2026-09-17 09:23:32,546 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 09:24:07,007 [main] INFO: GET /developer 200 0.002s
+2026-09-17 09:24:07,334 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 09:24:31,019 [main] INFO: GET / 200 0.002s
+2026-09-17 09:24:34,137 [main] INFO: GET /auth 200 0.003s
+2026-09-17 09:24:39,914 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:25:12,623 [main] INFO: GET /api/developer/keys 200 0.097s
+2026-09-17 09:26:57,249 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:26:57,250 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:26:57,250 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:26:57,983 [main] INFO: GET /docs 200 0.001s
+2026-09-17 09:26:58,644 [main] INFO: GET /openapi.json 200 0.475s
+2026-09-17 09:27:12,469 [main] INFO: GET /docs 200 0.001s
+2026-09-17 09:27:12,603 [main] INFO: GET /openapi.json 200 0.007s
+2026-09-17 09:28:29,557 [main] INFO: GET /docs 200 0.001s
+2026-09-17 09:28:29,675 [main] INFO: GET /openapi.json 200 0.003s
+2026-09-17 09:29:43,634 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:29:43,635 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:29:43,635 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:29:44,895 [main] INFO: GET /docs 200 0.001s
+2026-09-17 09:29:45,417 [main] INFO: GET /openapi.json 200 0.377s
+2026-09-17 09:30:01,306 [main] INFO: POST /api/auth/login 401 3.748s
+2026-09-17 09:35:37,646 [main] INFO: GET /docs 200 0.002s
+2026-09-17 09:35:37,657 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.012s
+2026-09-17 09:35:37,826 [main] INFO: GET /dashboard 200 0.180s
+2026-09-17 09:35:37,827 [main] INFO: GET /dashboard 200 0.181s
+2026-09-17 09:35:37,830 [main] INFO: GET /dashboard/applications 200 0.184s
+2026-09-17 09:35:38,139 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 09:35:41,926 [sqlalchemy.pool.impl.AsyncAdaptedQueuePool] ERROR: Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x000002DABF66B110>>
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 2046, in _run_once
+    handle._run()
+    ~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\server.py", line 80, in serve
+    with self.capture_signals():
+         ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\server.py", line 340, in capture_signals
+    signal.raise_signal(captured_signal)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 166, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\pool\base.py", line 373, in _close_connection
+    self._dialect.do_terminate(connection)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1131, in do_terminate
+    dbapi_connection.terminate()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError: Cancelled via cancel scope 2dabf617ed0 by <Task cancelling name='Task-22' coro=<RequestResponseCycle.run_asgi() running at C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py:422> cb=[set.discard(), gather.<locals>._done_callback() at C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\tasks.py:810]>
+2026-09-17 09:35:41,971 [sqlalchemy.pool.impl.AsyncAdaptedQueuePool] ERROR: Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x000002DABF66AF30>>
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\base_events.py", line 2046, in _run_once
+    handle._run()
+    ~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\server.py", line 80, in serve
+    with self.capture_signals():
+         ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\server.py", line 340, in capture_signals
+    signal.raise_signal(captured_signal)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\runners.py", line 166, in _on_sigint
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\pool\base.py", line 373, in _close_connection
+    self._dialect.do_terminate(connection)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1131, in do_terminate
+    dbapi_connection.terminate()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 402, in terminate
+    self.await_(asyncio.shield(self._terminate_graceful_close()))  # type: ignore[attr-defined] # noqa: E501
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError: Cancelled via cancel scope 2dabf63c5f0 by <Task cancelling name='Task-26' coro=<RequestResponseCycle.run_asgi() running at C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py:422> cb=[set.discard(), gather.<locals>._done_callback() at C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\tasks.py:810]>
+2026-09-17 09:35:42,098 [sqlalchemy.pool.impl.AsyncAdaptedQueuePool] ERROR: Exception terminating connection <AdaptedConnection <asyncpg.connection.Connection object at 0x000002DABF6427B0>>
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\pool\base.py", line 373, in _close_connection
+    self._dialect.do_terminate(connection)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 1131, in do_terminate
+    dbapi_connection.terminate()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 398, in terminate
+    if in_greenlet():
+       ~~~~~~~~~~~^^
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 105, in in_greenlet
+    current = getcurrent()
+RuntimeError: greenlet is being finalized
+2026-09-17 09:35:42,100 [sqlalchemy.pool.impl.AsyncAdaptedQueuePool] ERROR: The garbage collector is trying to clean up non-checked-in connection <AdaptedConnection <asyncpg.connection.Connection object at 0x000002DABF6427B0>>, which will be terminated.  Please ensure that SQLAlchemy pooled connections are returned to the pool explicitly, either by calling ``close()`` or by using appropriate context managers to manage their lifecycle.
+2026-09-17 09:46:38,231 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:46:38,233 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:46:38,233 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:46:38,286 [main] INFO: GET /docs 200 0.000s
+2026-09-17 09:46:38,954 [main] INFO: GET /openapi.json 200 0.475s
+2026-09-17 09:46:40,035 [main] INFO: GET /dashboard 200 0.101s
+2026-09-17 09:46:43,046 [main] INFO: GET /auth 200 0.002s
+2026-09-17 09:46:49,991 [main] INFO: GET /admin 200 0.003s
+2026-09-17 09:46:56,600 [main] INFO: GET /admin/users 200 0.003s
+2026-09-17 09:50:08,250 [main] INFO: GET /admin 200 0.005s
+2026-09-17 09:50:13,295 [main] INFO: GET /admin 200 0.003s
+2026-09-17 09:50:13,333 [main] INFO: GET /static/css/dashboard.css 200 0.007s
+2026-09-17 09:50:13,334 [main] INFO: GET /static/js/dashboard.js 200 0.007s
+2026-09-17 09:50:13,335 [main] INFO: GET /static/bindin-icon-64.png 200 0.009s
+2026-09-17 09:50:13,705 [main] INFO: GET /static/favicon.ico 200 0.006s
+2026-09-17 09:50:15,357 [main] INFO: GET /admin 200 0.003s
+2026-09-17 09:50:15,393 [main] INFO: GET /static/bindin-icon-64.png 200 0.004s
+2026-09-17 09:50:15,393 [main] INFO: GET /static/js/dashboard.js 200 0.004s
+2026-09-17 09:50:15,394 [main] INFO: GET /static/css/dashboard.css 200 0.006s
+2026-09-17 09:50:15,745 [main] INFO: GET /static/favicon.ico 200 0.008s
+2026-09-17 09:50:17,977 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:50:19,964 [main] INFO: GET /admin 200 0.003s
+2026-09-17 09:50:20,035 [main] INFO: GET /static/js/dashboard.js 200 0.005s
+2026-09-17 09:50:20,036 [main] INFO: GET /static/css/dashboard.css 200 0.006s
+2026-09-17 09:50:20,038 [main] INFO: GET /static/bindin-icon-64.png 200 0.008s
+2026-09-17 09:50:20,130 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:50:20,383 [main] INFO: GET /static/favicon.ico 200 0.005s
+2026-09-17 09:51:14,696 [main] INFO: GET /admin 200 0.004s
+2026-09-17 09:51:14,913 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.002s
+2026-09-17 09:51:16,453 [main] INFO: GET /admin 200 0.004s
+2026-09-17 09:51:16,712 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:51:27,982 [main] INFO: GET /admin 200 0.005s
+2026-09-17 09:51:28,058 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:51:28,110 [main] INFO: GET /auth 200 0.002s
+2026-09-17 09:51:28,207 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:51:38,131 [main] INFO: GET /admin/logs 200 0.002s
+2026-09-17 09:51:42,324 [main] INFO: GET /admin/users 200 0.002s
+2026-09-17 09:51:43,181 [main] INFO: GET /admin/applications 200 0.003s
+2026-09-17 09:51:43,932 [main] INFO: GET /admin/transactions 200 0.002s
+2026-09-17 09:51:44,739 [main] INFO: GET /admin/cards 200 0.002s
+2026-09-17 09:51:56,367 [main] INFO: GET /dashboard 200 0.003s
+2026-09-17 09:52:00,388 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-17 09:52:06,916 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:52:09,050 [main] INFO: GET /dashboard 200 0.003s
+2026-09-17 09:52:09,189 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 09:53:06,433 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:53:09,758 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:53:09,759 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:53:09,759 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:53:10,134 [main] INFO: GET /admin 200 0.168s
+2026-09-17 09:53:12,048 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:53:47,035 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:53:47,037 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:53:47,037 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:53:47,439 [main] INFO: GET /admin 200 0.208s
+2026-09-17 09:53:48,856 [main] INFO: GET /admin 200 0.004s
+2026-09-17 09:53:48,902 [main] INFO: GET /static/js/dashboard.js 200 0.003s
+2026-09-17 09:53:48,904 [main] INFO: GET /static/css/dashboard.css 200 0.007s
+2026-09-17 09:53:48,909 [main] INFO: GET /static/bindin-icon-64.png 200 0.011s
+2026-09-17 09:53:49,311 [main] INFO: GET /static/favicon.ico 200 0.006s
+2026-09-17 09:54:48,749 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:54:48,751 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:54:48,751 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:54:49,012 [main] INFO: GET /admin 200 0.170s
+2026-09-17 09:55:02,230 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 09:55:27,405 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 09:55:27,406 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 09:55:27,407 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 09:55:27,581 [main] INFO: GET /admin 200 0.156s
+2026-09-17 09:55:29,831 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.002s
+2026-09-17 09:55:31,629 [main] INFO: GET /admin 200 0.007s
+2026-09-17 09:55:31,857 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 10:01:16,746 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 10:01:16,749 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 10:01:16,749 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 10:01:17,245 [main] INFO: GET / 200 0.211s
+2026-09-17 10:01:17,285 [main] INFO: GET /static/bindin-icon-64.png 200 0.003s
+2026-09-17 10:01:23,386 [main] INFO: GET /admin 200 0.006s
+2026-09-17 10:01:23,448 [main] INFO: GET /static/css/dashboard.css 200 0.003s
+2026-09-17 10:01:23,450 [main] INFO: GET /static/js/dashboard.js 200 0.004s
+2026-09-17 10:02:14,390 [main] INFO: GET /admin 200 0.005s
+2026-09-17 10:02:17,916 [main] INFO: GET /static/favicon.ico 200 0.002s
+2026-09-17 10:03:48,717 [main] INFO: GET /admin 200 0.003s
+2026-09-17 10:05:04,287 [main] INFO: GET /admin 200 0.006s
+2026-09-17 10:05:04,338 [main] INFO: GET /static/css/dashboard.css 200 0.008s
+2026-09-17 10:05:04,340 [main] INFO: GET /static/bindin-icon-64.png 200 0.006s
+2026-09-17 10:05:04,341 [main] INFO: GET /static/js/dashboard.js 200 0.005s
+2026-09-17 10:05:06,763 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.001s
+2026-09-17 10:05:08,887 [main] INFO: GET /static/favicon.ico 200 0.002s
+2026-09-17 10:05:09,342 [main] INFO: GET /admin 200 0.002s
+2026-09-17 10:05:09,619 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.004s
+2026-09-17 10:06:05,765 [main] INFO: GET /api/v1/client 404 0.001s
+2026-09-17 10:06:05,873 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 10:06:09,441 [main] INFO: GET / 200 0.010s
+2026-09-17 10:06:09,626 [main] INFO: GET /docs 200 0.005s
+2026-09-17 10:06:10,357 [main] INFO: GET /docs 200 0.000s
+2026-09-17 10:06:11,057 [main] INFO: GET /openapi.json 200 0.332s
+2026-09-17 10:06:27,541 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 10:06:34,691 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.002s
+2026-09-17 10:07:44,818 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 10:08:25,845 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 10:08:25,847 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 10:08:25,847 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 10:08:26,197 [main] INFO: GET /admin 200 0.184s
+2026-09-17 10:08:26,354 [main] INFO: GET /.well-known/appspecific/com.chrome.devtools.json 404 0.002s
+2026-09-17 10:08:29,793 [main] INFO: GET /auth 200 0.002s
+2026-09-17 10:08:37,801 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 10:11:33,163 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 10:11:33,164 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 10:11:33,165 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 10:11:33,497 [main] INFO: GET /auth 200 0.175s
+2026-09-17 10:11:33,556 [main] INFO: GET /auth 200 0.003s
+2026-09-17 10:11:33,581 [main] INFO: GET /static/favicon.ico 200 0.016s
+2026-09-17 10:11:33,634 [main] INFO: GET /static/bindin-icon-64.png 200 0.002s
+2026-09-17 10:11:34,042 [main] INFO: GET /static/favicon.ico 200 0.002s
+2026-09-17 10:11:41,771 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 10:11:42,711 [main] INFO: POST /api/auth/login 200 5.460s
+2026-09-17 10:11:42,785 [main] INFO: GET /static/css/dashboard.css 304 0.003s
+2026-09-17 10:11:42,786 [main] INFO: GET /static/js/dashboard.js 200 0.004s
+2026-09-17 10:11:47,839 [main] INFO: GET /api/admin/stats 200 5.019s
+2026-09-17 10:11:49,681 [main] INFO: POST /api/auth/login 200 1.090s
+2026-09-17 10:11:53,119 [main] INFO: GET /admin/users 200 0.003s
+2026-09-17 10:11:55,053 [main] INFO: GET /api/admin/users 200 1.893s
+2026-09-17 10:12:00,055 [main] INFO: GET /admin/applications 200 0.002s
+2026-09-17 10:12:02,966 [main] INFO: GET /api/admin/applications 200 2.884s
+2026-09-17 10:12:05,927 [main] INFO: GET /admin/transactions 200 0.002s
+2026-09-17 10:12:08,218 [main] INFO: GET /api/admin/transactions 200 2.256s
+2026-09-17 10:12:22,447 [main] INFO: GET /admin/cards 200 0.003s
+2026-09-17 10:12:22,472 [main] INFO: GET /static/js/dashboard.js 304 0.003s
+2026-09-17 10:12:24,554 [main] INFO: GET /api/admin/cards 200 2.063s
+2026-09-17 10:12:28,974 [main] INFO: GET /admin/logs 200 0.002s
+2026-09-17 10:12:30,872 [main] INFO: GET /api/admin/payment-attempts 200 1.864s
+2026-09-17 10:12:33,964 [main] INFO: GET /api/admin/audit-log 200 1.871s
+2026-09-17 10:12:36,438 [main] INFO: GET /api/admin/sessions 200 2.057s
+2026-09-17 10:12:40,719 [main] INFO: GET /api/admin/payment-attempts 200 1.490s
+2026-09-17 10:12:43,952 [main] INFO: GET /api/admin/stats 200 2.789s
+2026-09-17 10:12:57,146 [main] INFO: GET /api/admin/users 200 1.491s
+2026-09-17 10:13:15,827 [main] INFO: PATCH /api/admin/users/4/role 200 2.988s
+2026-09-17 10:13:17,325 [main] INFO: GET /api/admin/users 200 1.487s
+2026-09-17 10:13:23,232 [main] INFO: PATCH /api/admin/users/4/role 200 2.402s
+2026-09-17 10:13:24,728 [main] INFO: GET /api/admin/users 200 1.487s
+2026-09-17 10:13:26,381 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 10:13:29,218 [main] INFO: GET /api/admin/stats 200 2.787s
+2026-09-17 10:13:34,663 [main] INFO: GET / 200 0.002s
+2026-09-17 10:13:36,014 [main] INFO: GET /auth 200 0.002s
+2026-09-17 10:13:41,317 [main] INFO: POST /api/auth/login 200 1.091s
+2026-09-17 10:13:41,344 [main] INFO: GET /dashboard 200 0.004s
+2026-09-17 10:13:42,741 [main] INFO: GET /api/auth/me_service 200 1.297s
+2026-09-17 10:13:47,453 [main] INFO: GET /api/transaction/ 200 4.700s
+2026-09-17 10:13:48,179 [main] INFO: GET /api/application/ 200 5.432s
+2026-09-17 10:13:52,814 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-17 10:13:55,448 [main] INFO: GET /api/application/ 200 2.254s
+2026-09-17 10:13:58,190 [main] INFO: GET /dashboard/transactions 200 0.002s
+2026-09-17 10:14:00,079 [main] INFO: GET /api/application/ 200 1.854s
+2026-09-17 10:14:01,000 [main] INFO: GET /api/transaction/ 200 2.745s
+2026-09-17 10:14:05,377 [main] INFO: GET /api/transaction/ 200 1.885s
+2026-09-17 10:14:09,516 [main] INFO: GET /api/transaction/ 200 2.824s
+2026-09-17 10:14:11,167 [main] INFO: GET /developer 200 0.003s
+2026-09-17 10:14:11,194 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 10:14:13,079 [main] INFO: GET /api/developer/keys 200 1.857s
+2026-09-17 10:14:20,235 [main] INFO: GET /docs 200 0.001s
+2026-09-17 10:14:20,925 [main] INFO: GET /openapi.json 200 0.302s
+2026-09-17 10:14:26,371 [main] INFO: GET /docs 200 0.001s
+2026-09-17 10:14:26,556 [main] INFO: GET /openapi.json 200 0.003s
+2026-09-17 10:15:18,041 [main] INFO: GET /static/js/dashboard.js 304 0.005s
+2026-09-17 10:15:19,981 [main] INFO: GET /api/transaction/ 200 1.898s
+2026-09-17 10:15:20,176 [main] INFO: GET /api/application/ 200 2.096s
+2026-09-17 10:15:37,397 [main] INFO: POST /api/card/charge 400 8.633s
+2026-09-17 10:15:44,540 [main] INFO: GET /api/application/ 200 2.718s
+2026-09-17 10:15:54,350 [main] INFO: GET /api/auth/me_service 200 1.322s
+2026-09-17 10:15:56,449 [main] INFO: GET /api/application/ 200 2.090s
+2026-09-17 10:15:56,644 [main] INFO: GET /api/transaction/ 200 2.281s
+2026-09-17 10:22:35,419 [main] INFO: GET /dashboard/applications 200 0.003s
+2026-09-17 10:22:35,452 [main] INFO: GET /static/css/dashboard.css 304 0.002s
+2026-09-17 10:22:35,458 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 10:22:37,370 [main] INFO: GET /api/application/ 200 1.903s
+2026-09-17 10:22:38,603 [main] INFO: GET /dashboard 200 0.002s
+2026-09-17 10:22:40,603 [main] INFO: GET /api/auth/me_service 200 1.961s
+2026-09-17 10:22:42,693 [main] INFO: GET /api/application/ 200 2.084s
+2026-09-17 10:22:42,905 [main] INFO: GET /api/transaction/ 200 2.294s
+2026-09-17 10:22:53,108 [main] INFO: GET /api/application/ 200 1.966s
+2026-09-17 10:23:06,828 [main] INFO: GET /dashboard/transactions 200 0.002s
+2026-09-17 10:23:08,984 [main] INFO: GET /api/application/ 200 2.105s
+2026-09-17 10:23:08,989 [main] INFO: GET /api/transaction/ 200 2.093s
+2026-09-17 10:23:09,435 [main] INFO: GET /developer 200 0.002s
+2026-09-17 10:23:10,996 [main] INFO: GET /api/developer/keys 200 1.528s
+2026-09-17 10:23:34,868 [main] INFO: GET / 200 0.002s
+2026-09-17 10:23:36,540 [main] INFO: GET /auth 200 0.002s
+2026-09-17 10:23:45,095 [main] INFO: POST /api/auth/login 200 1.115s
+2026-09-17 10:23:45,122 [main] INFO: GET /admin 200 0.005s
+2026-09-17 10:23:49,837 [main] INFO: GET /api/admin/stats 200 4.667s
+2026-09-17 10:23:50,347 [main] INFO: GET /admin/cards 200 0.002s
+2026-09-17 10:23:52,505 [main] INFO: GET /api/admin/cards 200 2.124s
+2026-09-17 10:24:02,299 [main] INFO: GET /admin/transactions 200 0.002s
+2026-09-17 10:24:04,424 [main] INFO: GET /api/admin/transactions 200 2.088s
+2026-09-17 10:24:51,338 [main] INFO: GET /api/admin/transactions 200 2.681s
+2026-09-17 10:24:55,560 [main] INFO: GET /static/js/dashboard.js 304 0.004s
+2026-09-17 10:24:57,312 [main] INFO: GET /api/admin/cards 200 1.725s
+2026-09-17 10:24:58,027 [main] INFO: GET /admin/logs 200 0.002s
+2026-09-17 10:24:59,583 [main] INFO: GET /api/admin/payment-attempts 200 1.516s
+2026-09-17 10:25:02,125 [main] INFO: GET /api/admin/audit-log 200 1.932s
+2026-09-17 10:25:05,013 [main] INFO: GET /api/admin/sessions 200 2.332s
+2026-09-17 10:25:07,154 [main] INFO: GET /admin/users 200 0.002s
+2026-09-17 10:25:08,721 [main] INFO: GET /api/admin/users 200 1.534s
+2026-09-17 10:25:12,216 [main] INFO: GET /api/admin/stats 200 2.879s
+2026-09-17 10:25:14,763 [main] INFO: GET /api/admin/users 200 1.924s
+2026-09-17 10:25:24,287 [main] INFO: GET /api/admin/stats 200 2.862s
+2026-09-17 10:25:29,163 [main] INFO: GET /auth 200 0.002s
+2026-09-17 10:25:36,047 [main] INFO: POST /api/auth/login 200 1.495s
+2026-09-17 10:25:37,434 [main] INFO: GET /api/auth/me_service 200 1.330s
+2026-09-17 10:25:39,538 [main] INFO: GET /api/application/ 200 2.098s
+2026-09-17 10:25:39,539 [main] INFO: GET /api/transaction/ 200 2.097s
+2026-09-17 10:25:47,670 [main] INFO: GET /api/application/ 200 1.920s
+2026-09-17 10:25:50,355 [main] INFO: GET /api/application/ 200 1.890s
+2026-09-17 10:25:50,740 [main] INFO: GET /api/transaction/ 200 2.272s
+2026-09-17 10:27:35,546 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 10:27:37,519 [main] INFO: GET /api/application/ 200 1.934s
+2026-09-17 10:27:46,775 [main] INFO: GET /api/auth/me_service 200 1.752s
+2026-09-17 10:27:49,047 [main] INFO: GET /api/application/ 200 2.227s
+2026-09-17 10:27:49,841 [main] INFO: GET /api/transaction/ 200 3.018s
+2026-09-17 10:27:52,995 [main] INFO: GET /api/developer/keys 200 2.571s
+2026-09-17 10:27:56,541 [main] INFO: GET /api/application/ 200 2.533s
+2026-09-17 10:27:57,669 [main] INFO: GET /api/transaction/ 200 3.658s
+2026-09-17 10:29:50,914 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-17 10:29:50,946 [main] INFO: GET /static/css/dashboard.css 304 0.003s
+2026-09-17 10:29:50,958 [main] INFO: GET /static/js/dashboard.js 304 0.004s
+2026-09-17 10:29:53,691 [main] INFO: GET /api/application/ 200 2.718s
+2026-09-17 10:29:54,216 [main] INFO: GET /dashboard 200 0.002s
+2026-09-17 10:29:56,262 [main] INFO: GET /api/auth/me_service 200 1.998s
+2026-09-17 10:29:59,108 [main] INFO: GET /api/application/ 200 2.836s
+2026-09-17 10:29:59,716 [main] INFO: GET /api/transaction/ 200 3.440s
+2026-09-17 10:30:45,744 [main] INFO: GET /info 200 0.002s
+2026-09-17 10:32:38,167 [main] INFO: GET /auth 200 0.003s
+2026-09-17 10:33:02,766 [main] INFO: POST /api/auth/register 422 0.006s
+2026-09-17 10:33:08,657 [main] INFO: POST /api/auth/register 422 0.002s
+2026-09-17 10:33:36,538 [main] INFO: POST /api/auth/register 201 2.240s
+2026-09-17 10:33:39,051 [main] INFO: POST /api/auth/login 200 1.110s
+2026-09-17 10:33:39,109 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 10:33:40,942 [main] INFO: GET /api/auth/me 200 1.821s
+2026-09-17 10:33:43,048 [main] INFO: GET /api/application/ 200 2.096s
+2026-09-17 10:33:43,516 [main] INFO: GET /api/card/ 200 2.561s
+2026-09-17 10:33:45,336 [main] INFO: GET /api/transaction/ 200 4.375s
+2026-09-17 10:33:46,791 [main] INFO: GET /dashboard/cards 200 0.002s
+2026-09-17 10:33:48,359 [main] INFO: GET /api/card/ 200 1.531s
+2026-09-17 10:33:52,627 [main] INFO: POST /api/card/bind 200 3.278s
+2026-09-17 10:33:57,304 [main] INFO: GET /api/application/ 200 1.880s
+2026-09-17 10:33:58,175 [main] INFO: GET /dashboard/transactions 200 0.002s
+2026-09-17 10:33:59,737 [main] INFO: GET /api/transaction/ 200 1.527s
+2026-09-17 10:34:01,689 [main] INFO: GET /api/auth/me 200 1.314s
+2026-09-17 10:34:03,206 [main] INFO: GET /api/card/ 200 1.505s
+2026-09-17 10:34:03,392 [main] INFO: GET /api/application/ 200 1.696s
+2026-09-17 10:34:04,353 [main] INFO: GET /api/transaction/ 200 2.655s
+2026-09-17 10:34:42,291 [main] INFO: GET /api/application/ 200 1.537s
+2026-09-17 10:34:46,616 [main] INFO: GET /api/transaction/ 200 1.523s
+2026-09-17 10:34:48,461 [main] INFO: GET /api/auth/me 200 1.339s
+2026-09-17 10:34:49,977 [main] INFO: GET /api/application/ 200 1.508s
+2026-09-17 10:34:50,163 [main] INFO: GET /api/transaction/ 200 1.690s
+2026-09-17 10:34:50,733 [main] INFO: GET /api/card/ 200 2.256s
+2026-09-17 10:34:51,358 [main] INFO: GET / 200 0.002s
+2026-09-17 10:42:09,422 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 10:54:44,599 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 10:54:44,601 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 10:54:44,601 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 10:55:01,977 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 10:56:10,529 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 10:56:10,531 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 10:56:10,531 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 11:23:29,972 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 11:23:29,974 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 11:23:29,974 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 11:23:30,552 [main] INFO: GET /health 200 0.151s
+2026-09-17 11:23:41,089 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 11:23:41,516 [main] INFO: POST /api/auth/register 201 0.547s
+2026-09-17 11:23:41,583 [main] INFO: POST /api/auth/register 422 0.002s
+2026-09-17 11:23:42,013 [main] INFO: POST /api/auth/register 201 0.368s
+2026-09-17 11:23:42,485 [main] INFO: POST /api/auth/login 200 0.373s
+2026-09-17 11:24:05,485 [main] INFO: POST /api/auth/login 200 0.370s
+2026-09-17 11:24:05,973 [main] INFO: POST /api/auth/login 200 0.366s
+2026-09-17 11:24:06,211 [main] INFO: PATCH /api/admin/users/1 200 0.078s
+2026-09-17 11:24:06,359 [main] INFO: POST /api/application/ 201 0.081s
+2026-09-17 11:24:06,791 [main] INFO: POST /api/application/link/1 200 0.046s
+2026-09-17 11:24:53,682 [main] INFO: POST /api/developer/payouts 400 0.034s
+2026-09-17 11:24:53,776 [main] INFO: POST /api/developer/payouts 400 0.027s
+2026-09-17 11:24:53,901 [main] INFO: POST /api/developer/payouts 201 0.058s
+2026-09-17 11:24:54,327 [main] INFO: POST /api/developer/payouts 400 0.029s
+2026-09-17 11:25:10,167 [main] INFO: PATCH /api/admin/payouts/1/pay 200 0.108s
+2026-09-17 11:25:10,269 [main] INFO: GET /api/auth/me_service 200 0.032s
+2026-09-17 11:25:10,370 [main] INFO: POST /api/developer/payouts 400 0.032s
+2026-09-17 11:25:10,463 [main] INFO: PATCH /api/admin/payouts/1/pay 400 0.025s
+2026-09-17 11:25:23,382 [main] INFO: POST /api/application/ 201 0.052s
+2026-09-17 11:25:23,830 [main] INFO: POST /api/application/link/2 200 0.047s
+2026-09-17 11:25:23,949 [main] INFO: POST /api/application/stop/2 200 0.053s
+2026-09-17 11:25:24,037 [main] INFO: POST /api/application/stop/2 404 0.026s
+2026-09-17 11:25:24,126 [main] INFO: POST /api/application/unlink/99999 404 0.026s
+2026-09-17 11:25:34,474 [main] INFO: POST /api/developer/payouts 400 0.029s
+2026-09-17 11:25:34,561 [main] INFO: PATCH /api/admin/payouts/2/reject 404 0.026s
+2026-09-17 11:25:34,657 [main] INFO: GET /api/admin/payouts 200 0.036s
+2026-09-17 11:25:50,950 [main] INFO: POST /api/developer/payouts 400 0.038s
+2026-09-17 11:26:13,538 [main] INFO: POST /api/auth/register 201 0.355s
+2026-09-17 11:26:14,174 [main] INFO: POST /api/auth/login 200 0.368s
+2026-09-17 11:26:14,347 [main] INFO: POST /api/developer/payouts 201 0.050s
+2026-09-17 11:26:14,737 [main] INFO: PATCH /api/admin/payouts/2/reject 422 0.001s
+2026-09-17 11:26:14,825 [main] INFO: GET /api/auth/me_service 200 0.026s
+2026-09-17 11:26:24,328 [main] INFO: PATCH /api/admin/payouts/2/reject 200 0.071s
+2026-09-17 11:27:01,475 [main] INFO: GET / 200 0.189s
+2026-09-17 11:27:01,507 [main] INFO: GET /static/bindin-icon-64.png 200 0.007s
+2026-09-17 11:27:01,886 [main] INFO: GET /static/bindin-icon-32.png 200 0.034s
+2026-09-17 11:27:09,402 [main] INFO: GET /auth 200 0.003s
+2026-09-17 11:27:09,509 [main] INFO: GET /favicon.ico 404 0.002s
+2026-09-17 11:27:13,650 [main] INFO: POST /api/auth/login 401 0.005s
+2026-09-17 11:27:15,085 [main] INFO: POST /api/auth/login 401 0.005s
+2026-09-17 11:27:36,351 [main] INFO: POST /api/auth/login 200 0.378s
+2026-09-17 11:27:36,370 [main] INFO: GET /dashboard 200 0.005s
+2026-09-17 11:27:36,423 [main] INFO: GET /static/css/dashboard.css 200 0.003s
+2026-09-17 11:27:36,424 [main] INFO: GET /static/js/dashboard.js 200 0.003s
+2026-09-17 11:27:36,493 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 11:27:36,494 [main] INFO: GET /api/auth/me_service 200 0.030s
+2026-09-17 11:27:36,561 [main] INFO: GET /api/application/ 200 0.045s
+2026-09-17 11:27:36,593 [main] INFO: GET /api/transaction/ 200 0.074s
+2026-09-17 11:27:45,440 [main] INFO: GET /dashboard/payouts 200 0.003s
+2026-09-17 11:27:45,490 [main] INFO: GET /favicon.ico 404 0.002s
+2026-09-17 11:27:45,496 [main] INFO: GET /api/auth/me_service 200 0.031s
+2026-09-17 11:27:45,523 [main] INFO: GET /api/developer/payouts 200 0.056s
+2026-09-17 11:28:01,652 [main] INFO: GET /dashboard/applications 200 0.003s
+2026-09-17 11:28:01,799 [main] INFO: GET /api/application/ 200 0.041s
+2026-09-17 11:28:01,823 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 11:28:14,787 [main] INFO: GET /api-docs 200 0.002s
+2026-09-17 11:28:14,966 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 11:28:35,712 [main] INFO: GET /auth 200 0.002s
+2026-09-17 11:28:35,810 [main] INFO: GET /favicon.ico 404 0.002s
+2026-09-17 11:28:46,140 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 11:29:30,407 [main] INFO: POST /api/auth/register 422 0.015s
+2026-09-17 11:29:48,225 [main] INFO: POST /api/auth/register 422 0.002s
+2026-09-17 11:31:29,755 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 11:31:29,757 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 11:31:29,757 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 11:31:35,852 [main] INFO: GET / 200 0.204s
+2026-09-17 11:31:41,335 [main] INFO: GET /printables 200 0.004s
+2026-09-17 11:31:41,361 [main] INFO: GET /static/css/dashboard.css 304 0.003s
+2026-09-17 11:31:41,363 [main] INFO: GET /static/js/dashboard.js 200 0.004s
+2026-09-17 11:31:41,384 [main] INFO: GET /auth 200 0.003s
+2026-09-17 11:32:34,540 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 11:32:35,464 [main] INFO: POST /api/auth/login 200 5.460s
+2026-09-17 11:32:35,495 [main] INFO: GET /admin 200 0.007s
+2026-09-17 11:32:40,511 [main] INFO: GET /api/admin/stats 200 4.971s
+2026-09-17 11:32:46,474 [main] INFO: GET /api/admin/transactions 200 3.157s
+2026-09-17 11:34:11,840 [main] INFO: GET /admin/transactions 200 0.002s
+2026-09-17 11:34:13,898 [main] INFO: GET /api/admin/transactions 200 2.025s
+2026-09-17 11:34:20,246 [main] INFO: GET /admin/cards 200 0.002s
+2026-09-17 11:34:22,510 [main] INFO: GET /api/admin/cards 200 2.220s
+2026-09-17 11:34:24,830 [main] INFO: GET /admin/logs 200 0.002s
+2026-09-17 11:34:26,734 [main] INFO: GET /api/admin/payment-attempts 200 1.868s
+2026-09-17 11:34:29,667 [main] INFO: GET /api/admin/sessions 200 2.215s
+2026-09-17 11:34:35,037 [main] INFO: POST /api/admin/sessions/1/revoke 200 2.777s
+2026-09-17 11:34:36,703 [main] INFO: GET /api/admin/sessions 200 1.655s
+2026-09-17 11:34:43,756 [main] INFO: POST /api/admin/sessions/2/revoke 200 2.204s
+2026-09-17 11:34:45,410 [main] INFO: GET /api/admin/sessions 200 1.646s
+2026-09-17 11:34:46,951 [main] INFO: GET /admin/applications 200 0.003s
+2026-09-17 11:34:49,214 [main] INFO: GET /api/admin/applications 200 2.229s
+2026-09-17 11:34:49,806 [main] INFO: GET /admin/users 200 0.002s
+2026-09-17 11:34:51,686 [main] INFO: GET /api/admin/users 200 1.849s
+2026-09-17 11:34:56,446 [main] INFO: GET /api/admin/users 200 1.850s
+2026-09-17 11:35:02,820 [main] INFO: GET /api/admin/users 200 1.457s
+2026-09-17 11:35:10,985 [main] INFO: GET /api/admin/users 200 1.461s
+2026-09-17 11:35:20,286 [main] INFO: GET /api/admin/applications 200 1.838s
+2026-09-17 11:35:27,842 [main] INFO: GET /api/admin/transactions 200 2.036s
+2026-09-17 11:35:31,024 [main] INFO: GET /api/admin/cards 200 1.674s
+2026-09-17 11:35:31,933 [main] INFO: GET /admin/payouts 200 0.002s
+2026-09-17 11:35:31,967 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 11:35:33,817 [main] INFO: GET /api/admin/payouts 200 1.840s
+2026-09-17 11:35:40,487 [main] INFO: GET /admin 200 0.002s
+2026-09-17 11:35:43,254 [main] INFO: GET /api/admin/stats 200 2.731s
+2026-09-17 11:35:46,374 [main] INFO: GET /printables 200 0.002s
+2026-09-17 11:35:48,414 [main] INFO: GET /api/admin/transactions 200 2.007s
+2026-09-17 11:35:51,788 [main] INFO: GET /api/admin/stats 200 2.726s
+2026-09-17 11:35:53,813 [main] INFO: GET / 200 0.002s
+2026-09-17 11:35:55,022 [main] INFO: GET /auth 200 0.002s
+2026-09-17 11:36:02,035 [main] INFO: POST /api/auth/login 200 1.058s
+2026-09-17 11:36:02,062 [main] INFO: GET /dashboard 200 0.004s
+2026-09-17 11:36:03,561 [main] INFO: GET /api/auth/me_service 200 1.453s
+2026-09-17 11:36:07,965 [main] INFO: GET /api/application/ 200 4.396s
+2026-09-17 11:36:09,228 [main] INFO: GET /api/transaction/ 200 5.651s
+2026-09-17 11:36:12,717 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-17 11:36:14,542 [main] INFO: GET /api/application/ 200 1.773s
+2026-09-17 11:36:20,854 [main] INFO: GET /dashboard/transactions 200 0.003s
+2026-09-17 11:36:22,651 [main] INFO: GET /api/application/ 200 1.761s
+2026-09-17 11:36:22,938 [main] INFO: GET /api/transaction/ 200 2.043s
+2026-09-17 11:36:23,437 [main] INFO: GET /developer 200 0.002s
+2026-09-17 11:36:25,273 [main] INFO: GET /api/developer/keys 200 1.799s
+2026-09-17 11:36:26,282 [main] INFO: GET /api-docs 200 0.003s
+2026-09-17 11:37:08,390 [main] INFO: GET /dashboard/payouts 200 0.002s
+2026-09-17 11:37:10,035 [main] INFO: GET /api/auth/me_service 200 1.577s
+2026-09-17 11:37:10,237 [main] INFO: GET /api/developer/payouts 200 1.782s
+2026-09-17 11:37:26,421 [main] INFO: POST /api/developer/payouts 400 1.446s
+2026-09-17 11:37:31,857 [main] INFO: GET /api/auth/me_service 200 1.477s
+2026-09-17 11:37:33,976 [main] INFO: GET /api/transaction/ 200 2.105s
+2026-09-17 11:37:34,600 [main] INFO: GET /api/application/ 200 2.733s
+2026-09-17 11:37:43,986 [main] INFO: GET /api/application/ 200 2.273s
+2026-09-17 11:37:44,638 [main] INFO: GET /api/transaction/ 200 2.923s
+2026-09-17 14:29:33,001 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 14:29:33,003 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 14:29:33,003 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 14:29:33,778 [main] INFO: GET /health 200 0.135s
+2026-09-17 14:29:47,625 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 14:29:48,026 [main] INFO: POST /api/auth/register 201 0.508s
+2026-09-17 14:29:48,437 [main] INFO: POST /api/auth/register 201 0.354s
+2026-09-17 14:29:49,035 [main] INFO: POST /api/auth/login 200 0.370s
+2026-09-17 14:29:49,497 [main] INFO: POST /api/auth/login 200 0.361s
+2026-09-17 14:29:49,658 [main] INFO: POST /api/application/ 201 0.074s
+2026-09-17 14:29:50,082 [main] INFO: POST /api/application/link/1 200 0.089s
+2026-09-17 14:29:50,166 [main] INFO: GET /api/application/detail/1 200 0.027s
+2026-09-17 14:30:02,422 [main] INFO: POST /api/auth/login 200 0.361s
+2026-09-17 14:30:02,521 [main] INFO: GET /api/admin/applications/1 200 0.029s
+2026-09-17 14:30:02,606 [main] INFO: GET /api/admin/payment-attempts 200 0.029s
+2026-09-17 14:30:16,819 [main] INFO: POST /api/auth/login 200 0.361s
+2026-09-17 14:30:16,924 [main] INFO: POST /api/application/link/1 403 0.020s
+2026-09-17 14:30:16,999 [main] INFO: POST /api/application/unlink/1 403 0.021s
+2026-09-17 14:30:17,080 [main] INFO: GET /api/application/detail/1 200 0.026s
+2026-09-17 14:30:28,230 [main] INFO: POST /api/auth/register 201 0.355s
+2026-09-17 14:30:28,682 [main] INFO: POST /api/auth/login 200 0.363s
+2026-09-17 14:30:28,779 [main] INFO: POST /api/application/link/1 400 0.024s
+2026-09-17 14:30:40,507 [main] INFO: POST /api/auth/login 200 0.363s
+2026-09-17 14:30:40,625 [main] INFO: POST /api/application/unlink/1 200 0.044s
+2026-09-17 14:30:40,707 [main] INFO: GET /api/application/detail/1 200 0.027s
+2026-09-17 14:30:52,966 [main] INFO: POST /api/auth/login 200 0.363s
+2026-09-17 14:30:53,439 [main] INFO: POST /api/auth/login 200 0.362s
+2026-09-17 14:30:53,568 [main] INFO: POST /api/application/ 201 0.045s
+2026-09-17 14:30:53,986 [main] INFO: POST /api/application/link/2 200 0.082s
+2026-09-17 15:06:15,616 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 15:06:15,617 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 15:06:15,617 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 15:06:16,070 [main] INFO: GET /health 200 0.142s
+2026-09-17 15:06:29,185 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 15:06:29,571 [main] INFO: POST /api/auth/register 201 0.453s
+2026-09-17 15:06:30,012 [main] INFO: POST /api/auth/register 201 0.380s
+2026-09-17 15:06:52,929 [main] INFO: POST /api/auth/login 200 0.365s
+2026-09-17 15:07:13,083 [main] INFO: POST /api/auth/login 200 0.861s
+2026-09-17 15:07:14,118 [main] INFO: POST /api/auth/login 200 0.821s
+2026-09-17 15:07:14,334 [main] INFO: PATCH /api/auth/me 200 0.070s
+2026-09-17 15:07:14,645 [main] INFO: PATCH /api/auth/me 422 0.076s
+2026-09-17 15:07:14,959 [main] INFO: PATCH /api/auth/me 422 0.030s
+2026-09-17 15:07:25,373 [main] INFO: POST /api/auth/login 200 0.467s
+2026-09-17 15:07:25,892 [main] INFO: POST /api/auth/login 200 0.395s
+2026-09-17 15:07:26,200 [main] INFO: POST /api/application/ 201 0.068s
+2026-09-17 15:07:26,879 [main] INFO: POST /api/application/link/1 200 0.105s
+2026-09-17 15:07:36,974 [main] INFO: POST /api/auth/register 201 0.384s
+2026-09-17 15:07:46,774 [main] INFO: POST /api/auth/login 200 0.385s
+2026-09-17 15:07:47,296 [main] INFO: POST /api/auth/login 200 0.388s
+2026-09-17 15:07:47,418 [main] INFO: GET /api/admin/applications/1 200 0.037s
+2026-09-17 15:07:47,550 [main] INFO: POST /api/application/1/charge 200 0.061s
+2026-09-17 15:07:47,658 [main] INFO: GET /api/admin/applications/1 200 0.036s
+2026-09-17 15:07:47,794 [main] INFO: POST /api/application/1/charge 200 0.062s
+2026-09-17 15:07:47,902 [main] INFO: GET /api/admin/applications/1 200 0.034s
+2026-09-17 15:07:59,950 [main] INFO: POST /api/auth/login 200 0.384s
+2026-09-17 15:08:00,079 [main] INFO: POST /api/application/1/charge 400 0.026s
+2026-09-17 15:08:00,817 [main] INFO: POST /api/auth/login 200 0.530s
+2026-09-17 15:08:00,959 [main] INFO: POST /api/admin/run-billing-cycle 200 0.048s
+2026-09-17 15:08:01,083 [main] INFO: PATCH /api/developer/webhook 200 0.049s
+2026-09-17 15:08:12,215 [main] INFO: POST /api/auth/login 200 0.441s
+2026-09-17 15:08:12,676 [main] INFO: POST /api/auth/login 200 0.356s
+2026-09-17 15:08:13,262 [main] INFO: POST /api/auth/login 200 0.494s
+2026-09-17 15:08:13,431 [main] INFO: POST /api/admin/notifications 201 0.066s
+2026-09-17 15:08:13,565 [main] INFO: POST /api/admin/notifications 201 0.064s
+2026-09-17 15:08:13,670 [main] INFO: GET /api/notifications/unread-count 200 0.033s
+2026-09-17 15:08:13,777 [main] INFO: GET /api/notifications/unread-count 200 0.032s
+2026-09-17 15:08:13,885 [main] INFO: GET /api/notifications/ 200 0.037s
+2026-09-17 15:09:12,783 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 15:09:12,786 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 15:09:12,786 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 15:09:13,166 [main] INFO: GET /health 200 0.139s
+2026-09-17 15:09:24,904 [main] INFO: POST /api/auth/register 422 0.004s
+2026-09-17 15:09:24,980 [main] INFO: POST /api/auth/register 422 0.003s
+2026-09-17 15:09:25,359 [main] INFO: POST /api/auth/login 401 0.083s
+2026-09-17 15:09:25,749 [main] INFO: POST /api/auth/login 401 0.006s
+2026-09-17 15:09:26,161 [main] INFO: POST /api/admin/notifications 401 0.004s
+2026-09-17 15:09:26,232 [main] INFO: GET /api/notifications/ 401 0.003s
+2026-09-17 15:09:26,309 [main] INFO: POST /api/notifications/1/read 401 0.002s
+2026-09-17 15:09:26,381 [main] INFO: GET /api/notifications/unread-count 401 0.002s
+2026-09-17 15:09:26,449 [main] INFO: POST /api/auth/sessions/revoke-all 401 0.002s
+2026-09-17 15:09:26,518 [main] INFO: GET /api/auth/me 401 0.002s
+2026-09-17 15:09:35,137 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 15:09:35,530 [main] INFO: POST /api/auth/register 201 0.402s
+2026-09-17 15:09:35,957 [main] INFO: POST /api/auth/register 201 0.360s
+2026-09-17 15:09:46,904 [main] INFO: POST /api/auth/login 200 0.379s
+2026-09-17 15:09:47,403 [main] INFO: POST /api/auth/login 200 0.371s
+2026-09-17 15:09:47,563 [main] INFO: POST /api/admin/notifications 201 0.076s
+2026-09-17 15:09:47,670 [main] INFO: GET /api/notifications/ 200 0.038s
+2026-09-17 15:09:47,798 [main] INFO: POST /api/notifications/1/read 200 0.053s
+2026-09-17 15:09:47,894 [main] INFO: GET /api/notifications/unread-count 200 0.028s
+2026-09-17 15:09:48,009 [main] INFO: POST /api/auth/sessions/revoke-all 200 0.044s
+2026-09-17 15:09:48,083 [main] INFO: GET /api/auth/me 401 0.007s
+2026-09-17 15:09:58,786 [main] INFO: POST /api/auth/register 201 0.362s
+2026-09-17 15:10:06,082 [main] INFO: POST /api/auth/login 200 0.380s
+2026-09-17 15:10:06,226 [main] INFO: GET /api/transaction/ 200 0.051s
+2026-09-17 15:10:25,508 [main] INFO: GET /auth 200 0.150s
+2026-09-17 15:10:25,527 [main] INFO: GET /static/bindin-icon-64.png 200 0.003s
+2026-09-17 15:10:25,673 [main] INFO: GET /static/bindin-icon-32.png 200 0.002s
+2026-09-17 15:10:32,020 [main] INFO: GET /favicon.ico 404 0.002s
+2026-09-17 15:11:09,626 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 15:11:35,053 [main] INFO: POST /api/auth/login 200 0.360s
+2026-09-17 15:11:35,067 [main] INFO: GET /dashboard 200 0.002s
+2026-09-17 15:11:35,087 [main] INFO: GET /static/css/dashboard.css 200 0.002s
+2026-09-17 15:11:35,094 [main] INFO: GET /static/js/dashboard.js 200 0.002s
+2026-09-17 15:11:35,145 [main] INFO: GET /api/auth/me 200 0.045s
+2026-09-17 15:11:35,167 [main] INFO: GET /api/notifications/unread-count 200 0.060s
+2026-09-17 15:11:35,174 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 15:11:35,270 [main] INFO: GET /api/application/ 200 0.081s
+2026-09-17 15:11:35,304 [main] INFO: GET /api/transaction/ 200 0.112s
+2026-09-17 15:11:35,307 [main] INFO: GET /api/card/ 200 0.113s
+2026-09-17 15:12:10,747 [main] INFO: PATCH /api/auth/me 200 0.050s
+2026-09-17 15:12:10,780 [main] INFO: GET /api/auth/me 200 0.023s
+2026-09-17 15:12:10,811 [main] INFO: GET /api/auth/me 200 0.025s
+2026-09-17 15:12:10,854 [main] INFO: GET /api/card/ 200 0.031s
+2026-09-17 15:12:10,905 [main] INFO: GET /api/application/ 200 0.088s
+2026-09-17 15:12:10,918 [main] INFO: GET /api/transaction/ 200 0.102s
+2026-09-17 15:12:25,410 [main] INFO: GET /notifications 200 0.002s
+2026-09-17 15:12:25,460 [main] INFO: GET /favicon.ico 404 0.010s
+2026-09-17 15:12:25,503 [main] INFO: GET /api/notifications/unread-count 200 0.059s
+2026-09-17 15:12:25,516 [main] INFO: GET /api/notifications/ 200 0.077s
+2026-09-17 15:12:25,930 [main] INFO: GET /api/notifications/unread-count 200 0.026s
+2026-09-17 15:12:35,609 [main] INFO: GET /dashboard 200 0.005s
+2026-09-17 15:12:35,630 [main] INFO: GET /static/css/dashboard.css 304 0.003s
+2026-09-17 15:12:35,632 [main] INFO: GET /static/js/dashboard.js 304 0.004s
+2026-09-17 15:12:35,665 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 15:12:35,674 [main] INFO: GET /api/auth/me 200 0.035s
+2026-09-17 15:12:35,694 [main] INFO: GET /api/notifications/unread-count 200 0.053s
+2026-09-17 15:12:35,765 [main] INFO: GET /api/transaction/ 200 0.040s
+2026-09-17 15:12:35,790 [main] INFO: GET /api/application/ 200 0.067s
+2026-09-17 15:12:35,817 [main] INFO: GET /api/card/ 200 0.089s
+2026-09-17 15:12:49,130 [main] INFO: GET /favicon.ico 404 0.002s
+2026-09-17 15:12:59,210 [main] INFO: POST /api/auth/login 200 0.391s
+2026-09-17 15:12:59,225 [main] INFO: GET /admin 200 0.002s
+2026-09-17 15:12:59,294 [main] INFO: GET /favicon.ico 404 0.001s
+2026-09-17 15:12:59,306 [main] INFO: GET /api/notifications/unread-count 200 0.048s
+2026-09-17 15:12:59,338 [main] INFO: GET /api/admin/stats 200 0.086s
+2026-09-17 15:13:25,450 [main] INFO: POST /api/admin/notifications 201 0.073s
+2026-09-17 15:15:13,782 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 15:15:13,786 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 15:15:13,786 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 15:15:14,857 [main] INFO: GET / 200 0.213s
+2026-09-17 15:15:14,885 [main] INFO: GET /static/bindin-icon-64.png 304 0.002s
+2026-09-17 15:15:14,914 [main] INFO: GET /dashboard 200 0.002s
+2026-09-17 15:15:15,097 [main] INFO: GET /static/css/dashboard.css 200 0.004s
+2026-09-17 15:15:15,098 [main] INFO: GET /static/js/dashboard.js 200 0.005s
+2026-09-17 15:15:26,372 [main] INFO: GET /static/downloads/bindin-1.2.apk 200 0.002s
+2026-09-17 15:15:34,462 [main] INFO: GET /auth 200 0.003s
+2026-09-17 15:15:53,025 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-09-17 15:16:33,968 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-17 15:16:33,970 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-17 15:16:33,970 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-17 15:16:38,284 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\Pictures\subscription-manager\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-17 15:16:38,835 [main] INFO: POST /api/auth/login 401 4.634s
+2026-09-17 15:16:43,868 [main] INFO: POST /api/auth/login 401 0.848s
+2026-09-17 15:16:46,650 [main] INFO: GET /auth 200 0.191s
+2026-09-17 15:16:51,599 [main] INFO: POST /api/auth/login 200 1.178s
+2026-09-17 15:16:51,618 [main] INFO: GET /dashboard 200 0.005s
+2026-09-17 15:16:51,669 [main] INFO: GET /static/css/dashboard.css 304 0.006s
+2026-09-17 15:16:51,674 [main] INFO: GET /static/js/dashboard.js 304 0.002s
+2026-09-17 15:16:53,580 [main] INFO: GET /api/auth/me 200 1.863s
+2026-09-17 15:16:55,687 [main] INFO: GET /api/notifications/unread-count 200 3.961s
+2026-09-17 15:16:57,745 [main] INFO: GET /api/card/ 200 4.148s
+2026-09-17 15:16:58,785 [main] INFO: GET /api/application/ 200 5.197s
+2026-09-17 15:16:59,283 [main] INFO: GET /api/transaction/ 200 5.688s
+2026-09-17 15:17:02,131 [main] INFO: GET /notifications 200 0.003s
+2026-09-17 15:17:03,740 [main] INFO: GET /api/notifications/unread-count 200 1.532s
+2026-09-17 15:17:03,885 [main] INFO: GET /api/notifications/ 200 1.724s
+2026-09-17 15:17:10,004 [main] INFO: GET /dashboard/cards 200 0.002s
+2026-09-17 15:17:11,447 [main] INFO: GET /api/notifications/unread-count 200 1.366s
+2026-09-17 15:17:11,867 [main] INFO: GET /api/card/ 200 1.831s
+2026-09-17 15:17:13,290 [main] INFO: GET /dashboard/applications 200 0.002s
+2026-09-17 15:17:14,715 [main] INFO: GET /api/notifications/unread-count 200 1.377s
+2026-09-17 15:17:15,952 [main] INFO: GET /api/application/ 200 2.616s
+2026-09-17 15:17:21,005 [main] INFO: GET /dashboard/transactions 200 0.003s
+2026-09-17 15:17:22,464 [main] INFO: GET /api/notifications/unread-count 200 1.384s
+2026-09-17 15:17:23,977 [main] INFO: GET /api/transaction/ 200 2.899s
+2026-09-17 15:17:47,029 [main] INFO: GET / 200 0.003s
+2026-09-17 15:17:57,382 [main] INFO: POST /api/auth/login 200 1.401s
+2026-09-17 15:17:57,399 [main] INFO: GET /admin 200 0.003s
+2026-09-17 15:17:58,820 [main] INFO: GET /api/notifications/unread-count 200 1.377s
+2026-09-17 15:18:01,388 [main] INFO: GET /api/admin/stats 200 3.955s
+2026-09-17 15:18:09,321 [main] INFO: POST /api/admin/run-billing-cycle 200 2.258s
+2026-09-17 15:18:13,097 [main] INFO: GET /api/admin/stats 200 3.771s
+2026-09-17 15:18:17,035 [main] INFO: GET /admin/transactions 200 0.003s
+2026-09-17 15:18:18,299 [main] INFO: GET /api/notifications/unread-count 200 1.217s
+2026-09-17 15:18:20,762 [main] INFO: GET /api/admin/transactions 200 3.689s
+2026-09-17 15:18:34,142 [main] INFO: GET /admin/applications 200 0.003s
+2026-09-17 15:18:34,172 [main] INFO: GET /static/css/dashboard.css 304 0.004s
+2026-09-17 15:18:34,176 [main] INFO: GET /static/js/dashboard.js 304 0.003s
+2026-09-17 15:18:35,550 [main] INFO: GET /api/notifications/unread-count 200 1.361s
+2026-09-17 15:18:36,314 [main] INFO: GET /api/admin/applications 200 2.128s
+2026-09-17 15:18:47,894 [main] INFO: PATCH /api/admin/applications/4/deactivate 200 3.858s
+2026-09-17 15:18:50,110 [main] INFO: GET /api/admin/applications 200 2.208s
+2026-09-17 15:18:52,221 [main] INFO: GET /admin/users 200 0.004s
+2026-09-17 15:18:53,653 [main] INFO: GET /api/notifications/unread-count 200 1.384s
+2026-09-17 15:18:53,951 [main] INFO: GET /api/admin/users 200 1.691s
+2026-09-17 15:18:58,018 [main] INFO: GET /api/notifications/unread-count 200 1.369s
+2026-09-17 15:18:59,513 [main] INFO: GET /api/admin/stats 200 2.877s
+2026-09-17 15:19:14,895 [main] INFO: POST /api/admin/notifications 201 2.630s
+2026-09-17 15:19:17,322 [main] INFO: GET /notifications 200 0.002s
+2026-09-17 15:19:18,771 [main] INFO: GET /api/notifications/unread-count 200 1.401s
+2026-09-17 15:19:19,081 [main] INFO: GET /api/notifications/ 200 1.719s
+2026-09-17 15:19:20,363 [main] INFO: GET /api/notifications/unread-count 200 1.273s
+2026-09-17 15:19:23,147 [main] INFO: POST /api/notifications/1/read 200 2.253s
+2026-09-17 15:19:24,550 [main] INFO: GET /api/notifications/unread-count 200 1.398s
+2026-09-17 15:19:28,125 [main] INFO: GET /api/notifications/unread-count 200 1.398s
+2026-09-17 15:19:29,286 [main] INFO: GET /api/admin/stats 200 2.568s
+2026-09-17 15:19:34,466 [main] INFO: GET /printables 200 0.003s
+2026-09-17 15:19:35,749 [main] INFO: GET /api/notifications/unread-count 200 1.245s
+2026-09-17 15:19:37,434 [main] INFO: GET /api/admin/transactions 200 2.934s
+2026-09-21 10:51:07,474 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-21 10:51:07,475 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-21 10:51:07,476 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-21 10:51:07,992 [main] INFO: GET /health 200 0.125s
+2026-09-21 10:51:14,781 [passlib.handlers.bcrypt] WARNING: (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\bindin_venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2026-09-21 10:51:15,211 [main] INFO: POST /api/auth/register 201 0.602s
+2026-09-21 10:51:15,678 [main] INFO: POST /api/auth/register 201 0.414s
+2026-09-21 10:51:26,987 [main] INFO: POST /api/auth/login 200 0.511s
+2026-09-21 10:51:27,530 [main] INFO: POST /api/auth/login 200 0.432s
+2026-09-21 10:51:27,679 [main] INFO: POST /api/application/ 201 0.064s
+2026-09-21 10:51:28,127 [main] INFO: POST /api/application/link/1 200 0.090s
+2026-09-21 10:51:38,211 [main] INFO: POST /api/auth/login 200 0.356s
+2026-09-21 10:51:38,324 [main] INFO: POST /api/application/1/charge 400 0.029s
+2026-09-21 10:51:48,337 [main] INFO: POST /api/auth/register 201 0.347s
+2026-09-21 10:51:48,913 [main] INFO: POST /api/auth/login 200 0.357s
+2026-09-21 10:51:49,008 [main] INFO: POST /api/admin/applications/1/retry-charge 400 0.025s
+2026-09-21 11:35:41,710 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-09-21 11:35:41,712 [apscheduler.scheduler] INFO: Added job "schedule_wrapper" to job store "default"
+2026-09-21 11:35:41,712 [apscheduler.scheduler] INFO: Scheduler started
+2026-09-21 11:35:42,198 [main] INFO: GET /health 200 0.141s
+2026-09-21 11:35:49,136 [main] INFO: POST /api/auth/login 401 0.062s

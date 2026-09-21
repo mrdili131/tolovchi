@@ -1,4 +1,4 @@
-const API_BASE = "https://bindin.uz/api";
+const API_BASE = "/api";
 let activeLoaders = 0;
 
 // Guard: every dashboard page requires an authenticated session.
@@ -67,10 +67,62 @@ function formatUserFullName(usr) {
     return parts.length > 0 ? parts.join(' ') : (usr.username || 'Mavjud emas');
 }
 
+// A transaction's receiver is always a service account — show its business
+// name, not the (unused) personal name fields.
+function formatServiceName(usr) {
+    if (!usr) return 'Mavjud emas';
+    if (usr.service_name && usr.service_name !== 'This is not a service account') return usr.service_name;
+    return usr.username || 'Mavjud emas';
+}
+
+const FIELD_LABELS_UZ = {
+    username: "Foydalanuvchi nomi",
+    password: "Parol",
+    password_confirm: "Parolni tasdiqlash",
+    phone_number: "Telefon raqami",
+    first_name: "Ism",
+    last_name: "Familiya",
+    middle_name: "Sharif",
+    amount: "Summa",
+    card_number: "Karta raqami",
+    name: "Nomi",
+    description: "Tavsif",
+    pay_day: "To'lov kuni",
+};
+
+// Translates a single FastAPI/Pydantic validation message into Uzbek where we
+// recognize the pattern; falls back to the raw message so nothing disappears.
+function translateValidationMessage(msg) {
+    if (/at least (\d+) character/i.test(msg)) {
+        const n = msg.match(/at least (\d+) character/i)[1];
+        return `Kamida ${n} ta belgidan iborat bo'lishi kerak`;
+    }
+    if (/at most (\d+) character/i.test(msg)) {
+        const n = msg.match(/at most (\d+) character/i)[1];
+        return `Ko'pi bilan ${n} ta belgidan iborat bo'lishi kerak`;
+    }
+    if (/field required/i.test(msg)) return "Bu maydon to'ldirilishi shart";
+    if (/string should match pattern/i.test(msg)) return "Noto'g'ri formatda kiritildi";
+    if (/value is not a valid/i.test(msg)) return "Noto'g'ri qiymat kiritildi";
+    if (/input should be a valid/i.test(msg)) return "Noto'g'ri qiymat kiritildi";
+    if (/greater than or equal to (\d+)/i.test(msg)) {
+        const n = msg.match(/greater than or equal to (\d+)/i)[1];
+        return `Kamida ${Number(n).toLocaleString('ru-RU')} bo'lishi kerak`;
+    }
+    return msg;
+}
+
 async function extractErrorMessage(res) {
     try {
         const data = await res.json();
-        if (data.detail && Array.isArray(data.detail)) return data.detail.map(e => e.msg).join(', ');
+        if (data.detail && Array.isArray(data.detail)) {
+            return data.detail.map(e => {
+                const field = Array.isArray(e.loc) ? e.loc[e.loc.length - 1] : null;
+                const label = FIELD_LABELS_UZ[field];
+                const message = translateValidationMessage(e.msg || '');
+                return label ? `${label}: ${message}` : message;
+            }).join('; ');
+        }
         return data.detail || "Xatolik yuz berdi.";
     } catch {
         return "Noma'lum xatolik yuz berdi.";
@@ -98,6 +150,20 @@ async function apiFetch(endpoint, options = {}) {
     }
 }
 
+// An application is "pending" once a customer has scanned/claimed it (payer set)
+// but the first charge hasn't succeeded yet (is_active still false) and it
+// hasn't been permanently closed (end_date still unset).
+function appStatusLabel(a) {
+    if (a.is_active) return 'Faol';
+    if (a.payer && !a.end_date) return 'Kutilmoqda';
+    return 'Nofaol';
+}
+function appStatusClass(a) {
+    if (a.is_active) return 'active';
+    if (a.payer && !a.end_date) return 'pending';
+    return 'inactive';
+}
+
 function cardIconSvg() {
     return `<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>`;
 }
@@ -114,14 +180,17 @@ function toggleMobileNav() {
     if (panel) panel.classList.toggle("open");
 }
 
+const ROLE_BADGE_LABEL = { admin: 'ADMIN', service: 'BIZNES', user: 'FOYDALANUVCHI' };
+
 function initNavbar() {
     const role = localStorage.getItem("role");
     const roleBadge = document.getElementById("roleBadge");
-    if (roleBadge) roleBadge.innerText = role === 'service' ? 'BIZNES' : 'FOYDALANUVCHI';
+    if (roleBadge) roleBadge.innerText = ROLE_BADGE_LABEL[role] || 'FOYDALANUVCHI';
 
-    // Cards are a user-only concept — services manage applications/transactions instead.
-    document.querySelectorAll('[data-role="user-only"]').forEach(el => {
-        el.classList.toggle('hidden', role !== 'user');
+    // Nav items/sections can be restricted to one role via data-role="admin-only|service-only|user-only".
+    document.querySelectorAll('[data-role]').forEach(el => {
+        const required = el.getAttribute('data-role').replace('-only', '');
+        el.classList.toggle('hidden', required !== role);
     });
 
     const path = window.location.pathname.replace(/\/$/, '') || '/dashboard';
@@ -129,6 +198,136 @@ function initNavbar() {
         const linkPath = link.getAttribute('href').replace(/\/$/, '') || '/dashboard';
         link.classList.toggle('active', linkPath === path);
     });
+
+    ensureSharedWidgets();
+}
+
+// ---------- Shared bell + profile-edit widgets ----------
+// Injected once into every dashboard/admin page's topbar so we don't have to
+// hand-edit the markup of every template that includes this script.
+function ensureSharedWidgets() {
+    const actions = document.querySelector('.topbar-actions');
+    if (!actions || document.getElementById('notifBellBtn')) return;
+
+    const bell = document.createElement('a');
+    bell.href = '/notifications';
+    bell.id = 'notifBellBtn';
+    bell.className = 'icon-btn notif-bell';
+    bell.title = 'Bildirishnomalar';
+    bell.setAttribute('aria-label', 'Bildirishnomalar');
+    bell.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><span id="notifBellDot" class="notif-dot hidden"></span>`;
+
+    const profileBtn = document.createElement('button');
+    profileBtn.type = 'button';
+    profileBtn.className = 'icon-btn';
+    profileBtn.title = 'Profilni tahrirlash';
+    profileBtn.setAttribute('aria-label', 'Profilni tahrirlash');
+    profileBtn.onclick = openProfileEditModal;
+    profileBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+
+    const roleBadge = actions.querySelector('#roleBadge');
+    if (roleBadge) {
+        roleBadge.insertAdjacentElement('afterend', profileBtn);
+        roleBadge.insertAdjacentElement('afterend', bell);
+    } else {
+        actions.prepend(profileBtn);
+        actions.prepend(bell);
+    }
+
+    ensureProfileEditModal();
+    updateNotifBadge();
+}
+
+async function updateNotifBadge() {
+    try {
+        const res = await apiFetch('/notifications/unread-count');
+        if (!res.ok) return;
+        const data = await res.json();
+        const dot = document.getElementById('notifBellDot');
+        if (dot) dot.classList.toggle('hidden', !data.unread_count);
+    } catch (e) {}
+}
+
+function ensureProfileEditModal() {
+    if (document.getElementById('profileEditModal')) return;
+    const modal = document.createElement('div');
+    modal.id = 'profileEditModal';
+    modal.className = 'modal hidden';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Profilni tahrirlash</h3>
+            <div class="form-group">
+                <label>Familiya</label>
+                <input type="text" id="profileEditLastName" required>
+            </div>
+            <div class="form-group">
+                <label>Ism</label>
+                <input type="text" id="profileEditFirstName" required>
+            </div>
+            <div class="form-group">
+                <label>Sharif</label>
+                <input type="text" id="profileEditMiddleName" required>
+            </div>
+            <div class="form-group">
+                <label>Telefon raqami</label>
+                <input type="tel" id="profileEditPhone" placeholder="998941234567" required>
+            </div>
+            <button class="btn btn-primary btn-block" id="profileEditSubmitBtn" onclick="submitProfileEdit()">Saqlash</button>
+            <button class="btn btn-outline btn-block" style="margin-top:0.6rem;" onclick="closeProfileEditModal()">Bekor qilish</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+async function openProfileEditModal() {
+    ensureProfileEditModal();
+    const profile = window.__bindinProfile || await loadNavProfile();
+    if (profile) {
+        document.getElementById('profileEditLastName').value = profile.last_name || '';
+        document.getElementById('profileEditFirstName').value = profile.first_name || '';
+        document.getElementById('profileEditMiddleName').value = profile.middle_name || '';
+        document.getElementById('profileEditPhone').value = profile.phone_number || '';
+    }
+    document.getElementById('profileEditModal').classList.remove('hidden');
+}
+
+function closeProfileEditModal() {
+    const el = document.getElementById('profileEditModal');
+    if (el) el.classList.add('hidden');
+}
+
+async function submitProfileEdit() {
+    const restore = setButtonLoading(document.getElementById('profileEditSubmitBtn'), 'Saqlanmoqda...');
+    try {
+        const payload = {
+            last_name: document.getElementById('profileEditLastName').value.trim(),
+            first_name: document.getElementById('profileEditFirstName').value.trim(),
+            middle_name: document.getElementById('profileEditMiddleName').value.trim(),
+            phone_number: document.getElementById('profileEditPhone').value.trim().replace(/\s+/g, ''),
+        };
+        const res = await apiFetch('/auth/me', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            closeProfileEditModal();
+            showAlert("Profil yangilandi.", "success");
+            await loadNavProfile();
+            if (typeof initOverview === 'function') initOverview();
+        } else {
+            showAlert(await extractErrorMessage(res), "error");
+        }
+    } finally {
+        restore();
+    }
+}
+
+function requireRole(allowedRoles) {
+    const role = localStorage.getItem("role");
+    if (!allowedRoles.includes(role)) {
+        window.location.href = role === 'admin' ? '/admin' : (role === 'service' ? '/dashboard' : '/dashboard');
+    }
 }
 
 async function loadNavProfile() {
@@ -142,6 +341,30 @@ async function loadNavProfile() {
         return profile;
     }
     return null;
+}
+
+// ---------- Pagination ----------
+// Renders Prev/Next controls for a PaginatedResponse ({items,total,page,page_size,total_pages,has_next,has_previous})
+// and calls onPageChange(nextPage) when the viewer navigates.
+function renderPagination(container, paginated, onPageChange) {
+    if (!container) return;
+    if (!paginated || paginated.total_pages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="pagination">
+            <button type="button" class="btn btn-secondary btn-sm" id="paginationPrev" ${paginated.has_previous ? '' : 'disabled'}>← Oldingi</button>
+            <span class="pagination-info">${paginated.page} / ${paginated.total_pages} (jami ${paginated.total})</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="paginationNext" ${paginated.has_next ? '' : 'disabled'}>Keyingi →</button>
+        </div>
+    `;
+
+    const prevBtn = container.querySelector('#paginationPrev');
+    const nextBtn = container.querySelector('#paginationNext');
+    if (prevBtn) prevBtn.addEventListener('click', () => onPageChange(paginated.page - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => onPageChange(paginated.page + 1));
 }
 
 document.addEventListener('DOMContentLoaded', initNavbar);

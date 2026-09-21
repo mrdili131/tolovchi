@@ -30,3 +30,20 @@ class ApplicationResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+
+class AdminApplicationResponse(ApplicationResponse):
+    service_id: int | None = None
+    payer_id: int | None = None
+    failed_attempts: int
+    last_checked_at: date | None = None
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class AdminApplicationUpdateForm(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    pay_day: int | None = Field(default=None, ge=1, le=31)

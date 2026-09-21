@@ -1,7 +1,6 @@
 import time, json, hmac, hashlib, secrets, requests
 from dotenv import load_dotenv
 import os
-import random
 from fastapi import HTTPException
 from schemas import CardBindResponse
 
@@ -63,13 +62,13 @@ class InpayAutoPayService:
             raise HTTPException(status_code=400,detail="SERVICE: Cannot generate card link page")
         return r
 
-    def charge(self,card_id,amount,reason="Avto-to‘lov"):
+    def charge(self,card_id,amount,idem_key,reason="Avto-to‘lov"):
         r = self.inpay_cards(
             action = "charge",
             body = {
                 "card_id":card_id,
                 "amount":amount,
-                "idem_key":random.randint(1000,9999), # Memorial order [NEEDS TO BE CHANGED]
+                "idem_key":idem_key,
                 "reason":reason
             }
         )

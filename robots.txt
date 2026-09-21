@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /auth
 Disallow: /dashboard
+Disallow: /admin
+Disallow: /developer
 Disallow: /printables
 
 Sitemap: https://bindin.uz/sitemap.xml

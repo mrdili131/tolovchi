@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Bindin Admin — Foydalanuvchilar</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#1447E6">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/admin" class="topbar-brand">
+                <img src="/static/bindin-icon-64.png" alt="Bindin">
+                Bindin Admin
+            </a>
+            <nav class="topbar-nav">
+                <a href="/admin">Umumiy</a>
+                <a href="/admin/users">Foydalanuvchilar</a>
+                <a href="/admin/applications">Arizalar</a>
+                <a href="/admin/transactions">Tranzaksiyalar</a>
+                <a href="/admin/cards">Kartalar</a>
+                <a href="/admin/payouts">To'lovlar</a>
+                <a href="/admin/logs">Loglar</a>
+            </nav>
+            <div class="topbar-actions">
+                <span id="roleBadge" class="badge">ADMIN</span>
+                <button onclick="logout()" class="icon-btn" title="Chiqish" aria-label="Chiqish">
+                    <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                </button>
+                <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menyu">
+                    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileNavPanel" class="mobile-nav-panel">
+            <a href="/admin">Umumiy</a>
+            <a href="/admin/users">Foydalanuvchilar</a>
+            <a href="/admin/applications">Arizalar</a>
+            <a href="/admin/transactions">Tranzaksiyalar</a>
+            <a href="/admin/cards">Kartalar</a>
+            <a href="/admin/payouts">To'lovlar</a>
+            <a href="/admin/logs">Loglar</a>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="page-head">
+            <div>
+                <h1>Foydalanuvchilar</h1>
+                <p>Barcha hisoblarni boshqaring: rol o'zgartirish, faollashtirish/to'xtatish</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="filter-bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="Username, ism yoki familiya bo'yicha qidirish...">
+                <select id="roleFilter">
+                    <option value="">Barcha rollar</option>
+                    <option value="user">Foydalanuvchi</option>
+                    <option value="service">Biznes</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="">Barcha holatlar</option>
+                    <option value="true">Faol</option>
+                    <option value="false">To'xtatilgan</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" onclick="usersPage=1;loadUsers()">Filtrlash</button>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>F.I.Sh</th>
+                            <th>Rol</th>
+                            <th>Holat</th>
+                            <th>Ro'yxatdan o'tgan</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="7">Yuklanmoqda...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="usersPagination"></div>
+        </div>
+    </main>
+
+    <div id="editUserModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Foydalanuvchini tahrirlash</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Ism</label>
+                    <input type="text" id="editFirstName">
+                </div>
+                <div class="form-group">
+                    <label>Familiya</label>
+                    <input type="text" id="editLastName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Sharif</label>
+                <input type="text" id="editMiddleName">
+            </div>
+            <div class="form-group">
+                <label>Telefon raqami</label>
+                <input type="tel" id="editPhoneNumber" placeholder="998941234567">
+            </div>
+            <div class="form-group" id="editServiceNameGroup">
+                <label>Biznes nomi</label>
+                <input type="text" id="editServiceName">
+            </div>
+            <button class="btn btn-primary btn-block" id="editSubmitBtn" onclick="submitEditUser()">Saqlash</button>
+            <button class="btn btn-outline btn-block" style="margin-top:0.6rem;" onclick="closeEditModal()">Bekor qilish</button>
+        </div>
+    </div>
+
+    <div id="govModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="govModalTitle">Tizim bildirishnomasi</h3>
+            <div id="govModalBody" class="gov-alert-body">--</div>
+            <button class="btn btn-primary btn-block" onclick="closeGovAlert()">Tushundim</button>
+        </div>
+    </div>
+
+    <div id="globalLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+        requireRole(['admin']);
+
+        let usersPage = 1;
+        let currentUsers = [];
+        let activeEditUserId = null;
+        const ROLE_LABELS = { user: "Foydalanuvchi", service: "Biznes", admin: "Admin" };
+
+        function userQueryString(page) {
+            const params = new URLSearchParams({ page, page_size: 20 });
+            const search = document.getElementById("searchInput").value.trim();
+            const role = document.getElementById("roleFilter").value;
+            const status = document.getElementById("statusFilter").value;
+            if (search) params.set("search", search);
+            if (role) params.set("role", role);
+            if (status) params.set("is_active", status);
+            return params.toString();
+        }
+
+        async function loadUsers(page = 1) {
+            usersPage = page;
+            const tbody = document.getElementById("usersTableBody");
+            tbody.innerHTML = '<tr><td colspan="7">Yuklanmoqda...</td></tr>';
+
+            const res = await apiFetch(`/admin/users?${userQueryString(page)}`);
+            if (!res.ok) {
+                tbody.innerHTML = `<tr><td colspan="7">Ma'lumotlarni yuklab bo'lmadi.</td></tr>`;
+                return;
+            }
+
+            const paginated = await res.json();
+            renderPagination(document.getElementById("usersPagination"), paginated, loadUsers);
+
+            if (paginated.items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">Hech narsa topilmadi.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = paginated.items.map(u => `
+                <tr>
+                    <td>#${u.id}</td>
+                    <td>${u.username}</td>
+                    <td>${formatUserFullName(u)}</td>
+                    <td>
+                        <select onchange="changeRole(${u.id}, this.value)" class="btn-sm" style="height:32px; padding:0 0.5rem;">
+                            <option value="user" ${u.role === 'user' ? 'selected' : ''}>Foydalanuvchi</option>
+                            <option value="service" ${u.role === 'service' ? 'selected' : ''}>Biznes</option>
+                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                        </select>
+                    </td>
+                    <td><span class="status-tag ${u.is_active ? 'active' : 'inactive'}">${u.is_active ? "Faol" : "To'xtatilgan"}</span></td>
+                    <td>${u.created_at || '--'}</td>
+                    <td class="actions-cell">
+                        <button class="btn btn-secondary btn-sm" onclick="openEditModal(${u.id})">Tahrirlash</button>
+                        <button class="btn btn-sm ${u.is_active ? 'btn-danger' : 'btn-secondary'}" onclick="toggleStatus(${u.id}, ${!u.is_active})">${u.is_active ? "To'xtatish" : "Faollashtirish"}</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            currentUsers = paginated.items;
+        }
+
+        async function changeRole(userId, role) {
+            const res = await apiFetch(`/admin/users/${userId}/role`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ role })
+            });
+            if (res.ok) {
+                showAlert("Rol yangilandi.", "success");
+                loadUsers(usersPage);
+            } else {
+                const err = await extractErrorMessage(res);
+                showAlert(`Xatolik: ${err}`, "error");
+                loadUsers(usersPage);
+            }
+        }
+
+        function openEditModal(userId) {
+            const u = currentUsers.find(u => u.id === userId);
+            if (!u) return;
+            activeEditUserId = userId;
+            document.getElementById("editFirstName").value = u.first_name || '';
+            document.getElementById("editLastName").value = u.last_name || '';
+            document.getElementById("editMiddleName").value = u.middle_name || '';
+            document.getElementById("editPhoneNumber").value = u.phone_number || '';
+            document.getElementById("editServiceName").value = u.service_name || '';
+            document.getElementById("editServiceNameGroup").classList.toggle("hidden", u.role !== 'service');
+            document.getElementById("editUserModal").classList.remove("hidden");
+        }
+
+        function closeEditModal() {
+            document.getElementById("editUserModal").classList.add("hidden");
+            activeEditUserId = null;
+        }
+
+        async function submitEditUser() {
+            const restore = setButtonLoading(document.getElementById("editSubmitBtn"), "Saqlanmoqda...");
+            try {
+                const payload = {
+                    first_name: document.getElementById("editFirstName").value,
+                    last_name: document.getElementById("editLastName").value,
+                    middle_name: document.getElementById("editMiddleName").value,
+                    phone_number: document.getElementById("editPhoneNumber").value.replace(/\s+/g, '') || null,
+                    service_name: document.getElementById("editServiceName").value,
+                };
+                const res = await apiFetch(`/admin/users/${activeEditUserId}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    closeEditModal();
+                    showAlert("Ma'lumotlar yangilandi.", "success");
+                    loadUsers(usersPage);
+                } else {
+                    showAlert(await extractErrorMessage(res), "error");
+                }
+            } finally {
+                restore();
+            }
+        }
+
+        async function toggleStatus(userId, makeActive) {
+            const confirmed = confirm(makeActive ? "Bu hisobni faollashtirmoqchimisiz?" : "Bu hisobni to'xtatmoqchimisiz? Uning barcha faol seanslari yopiladi.");
+            if (!confirmed) return;
+
+            const res = await apiFetch(`/admin/users/${userId}/status`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ is_active: makeActive })
+            });
+            if (res.ok) {
+                showAlert("Holat yangilandi.", "success");
+                loadUsers(usersPage);
+            } else {
+                const err = await extractErrorMessage(res);
+                showAlert(`Xatolik: ${err}`, "error");
+            }
+        }
+
+        loadUsers();
+    </script>
+</body>
+</html>

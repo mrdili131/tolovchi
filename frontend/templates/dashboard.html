@@ -27,6 +27,8 @@
                 <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
                 <a href="/dashboard/applications">Arizalar</a>
                 <a href="/dashboard/transactions">Tranzaksiyalar</a>
+                <a href="/developer" data-role="service-only">Dasturchi</a>
+                <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
             </nav>
             <div class="topbar-actions">
                 <span id="roleBadge" class="badge">USER</span>
@@ -46,6 +48,8 @@
             <a href="/dashboard/cards" data-role="user-only">Kartalar</a>
             <a href="/dashboard/applications">Arizalar</a>
             <a href="/dashboard/transactions">Tranzaksiyalar</a>
+            <a href="/developer" data-role="service-only">Dasturchi</a>
+            <a href="/dashboard/payouts" data-role="service-only">Pul yechish</a>
         </div>
     </header>
 
@@ -120,6 +124,8 @@
 
     <script src="/static/js/dashboard.js"></script>
     <script>
+        requireRole(['user', 'service']);
+
         function quickActionMarkup(icon, label, sub, href) {
             return `<a class="quick-action" href="${href}">
                 <div class="list-item-icon">${icon}</div>
@@ -159,29 +165,29 @@
             }
 
             const [appsRes, txRes, cardsRes] = await Promise.all([
-                apiFetch("/application/"),
-                apiFetch("/transaction/"),
-                role === 'user' ? apiFetch("/card/") : Promise.resolve(null)
+                apiFetch("/application/?page_size=100"),
+                apiFetch("/transaction/?page_size=5"),
+                role === 'user' ? apiFetch("/card/?page_size=1") : Promise.resolve(null)
             ]);
 
             if (appsRes.ok) {
-                const apps = await appsRes.json();
+                const apps = (await appsRes.json()).items;
                 document.getElementById("statActive").innerText = apps.filter(a => a.is_active).length;
             }
 
             if (role === 'user' && cardsRes && cardsRes.ok) {
-                const cards = await cardsRes.json();
-                document.getElementById("statSecond").innerText = cards.length;
+                const cardsPage = await cardsRes.json();
+                document.getElementById("statSecond").innerText = cardsPage.total;
             } else if (role === 'service' && profile) {
                 document.getElementById("statSecond").innerText = `${(profile.balance || 0).toLocaleString('ru-RU')} UZS`;
             }
 
             const recentContainer = document.getElementById("recentTxContainer");
             if (txRes.ok) {
-                const txs = await txRes.json();
-                document.getElementById("statTx").innerText = txs.length;
+                const txPage = await txRes.json();
+                document.getElementById("statTx").innerText = txPage.total;
 
-                const recent = txs.slice(0, 5);
+                const recent = txPage.items;
                 if (recent.length === 0) {
                     recentContainer.innerHTML = emptyState('Tranzaksiyalar mavjud emas.');
                 } else {
@@ -191,7 +197,7 @@
                                 <div class="list-item-icon">${txIconSvg()}</div>
                                 <div class="list-item-info">
                                     <span class="list-item-title">${(t.amount || 0).toLocaleString('ru-RU')} UZS</span>
-                                    <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatUserFullName(t.receiver)}</span>
+                                    <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatServiceName(t.receiver)}</span>
                                 </div>
                             </div>
                             <span class="status-tag ${t.status}">${t.status}</span>

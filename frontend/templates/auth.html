@@ -280,6 +280,10 @@
                         <label>Sharif (otasining ismi)</label>
                         <input type="text" id="middleName" autocomplete="additional-name">
                     </div>
+                    <div class="form-group">
+                        <label>Telefon raqami</label>
+                        <input type="tel" id="phoneNumber" placeholder="998 94 123 45 67" autocomplete="tel">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Foydalanuvchi nomi</label>
@@ -309,7 +313,7 @@
     </div>
 
     <script>
-        const API_BASE = "https://bindin.uz/api";
+        const API_BASE = "/api";
         let isRegisterMode = false;
 
         function showLoader() { document.getElementById("globalLoader").classList.remove("hidden"); }
@@ -356,6 +360,7 @@
             document.getElementById("firstName").required = isRegisterMode;
             document.getElementById("lastName").required = isRegisterMode;
             document.getElementById("middleName").required = isRegisterMode;
+            document.getElementById("phoneNumber").required = isRegisterMode;
             document.getElementById("offerAccepted").checked = false;
             updateAuthSubmitState();
 
@@ -364,11 +369,38 @@
             window.history.replaceState({}, '', url);
         }
 
+        const FIELD_LABELS_UZ = {
+            username: "Foydalanuvchi nomi",
+            password: "Parol",
+            password_confirm: "Parolni tasdiqlash",
+            phone_number: "Telefon raqami",
+            first_name: "Ism",
+            last_name: "Familiya",
+            middle_name: "Sharif",
+        };
+
+        function translateValidationMessage(msg) {
+            if (/at least (\d+) character/i.test(msg)) {
+                const n = msg.match(/at least (\d+) character/i)[1];
+                return `Kamida ${n} ta belgidan iborat bo'lishi kerak`;
+            }
+            if (/field required/i.test(msg)) return "Bu maydon to'ldirilishi shart";
+            if (/string should match pattern/i.test(msg)) return "Noto'g'ri formatda kiritildi";
+            if (/value is not a valid/i.test(msg)) return "Noto'g'ri qiymat kiritildi";
+            if (/input should be a valid/i.test(msg)) return "Noto'g'ri qiymat kiritildi";
+            return msg;
+        }
+
         async function extractErrorMessage(res) {
             try {
                 const data = await res.json();
                 if (data.detail && Array.isArray(data.detail)) {
-                    return data.detail.map(e => e.msg).join(', ');
+                    return data.detail.map(e => {
+                        const field = Array.isArray(e.loc) ? e.loc[e.loc.length - 1] : null;
+                        const label = FIELD_LABELS_UZ[field];
+                        const message = translateValidationMessage(e.msg || '');
+                        return label ? `${label}: ${message}` : message;
+                    }).join('; ');
                 }
                 return data.detail || "Xatolik yuz berdi.";
             } catch {
@@ -396,13 +428,14 @@
                     const first_name = document.getElementById("firstName").value;
                     const last_name = document.getElementById("lastName").value;
                     const middle_name = document.getElementById("middleName").value;
+                    const phone_number = document.getElementById("phoneNumber").value.replace(/\s+/g, '');
                     const offer_accepted = document.getElementById("offerAccepted").checked;
 
                     showLoader();
                     const res = await fetch(`${API_BASE}/auth/register`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ username, password, password_confirm, first_name, last_name, middle_name, offer_accepted })
+                        body: JSON.stringify({ username, password, password_confirm, first_name, last_name, middle_name, phone_number, offer_accepted })
                     }).finally(hideLoader);
 
                     if (res.ok) {
@@ -428,7 +461,7 @@
                         const data = await res.json();
                         localStorage.setItem("token", data.access_token);
                         localStorage.setItem("role", data.role);
-                        window.location.href = "/dashboard";
+                        window.location.href = data.role === "admin" ? "/admin" : "/dashboard";
                     } else {
                         const err = await extractErrorMessage(res);
                         showToast(`Kirishda xatolik: ${err}`, "error");
@@ -442,7 +475,7 @@
         (function init() {
             try {
                 if (localStorage.getItem("token")) {
-                    window.location.href = "/dashboard";
+                    window.location.href = localStorage.getItem("role") === "admin" ? "/admin" : "/dashboard";
                     return;
                 }
             } catch (e) {}

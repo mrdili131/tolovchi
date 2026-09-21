@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from schemas import UserResponse
 
 
 class CardResponse(BaseModel):
@@ -14,6 +15,16 @@ class CardResponse(BaseModel):
 
 class CardBindResponse(BaseModel):
     card_link_url: str
+
+    model_config = {
+        "from_attributes": True
+    }
+
+
+class AdminCardResponse(CardResponse):
+    is_active: bool
+    user_id: int | None = None
+    user: UserResponse | None = None
 
     model_config = {
         "from_attributes": True

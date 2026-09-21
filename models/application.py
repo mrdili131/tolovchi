@@ -29,10 +29,14 @@ class Application(Base):
     is_active = Column(Boolean, default=False)
     is_paid = Column(Boolean, default=False)
     next_payment = Column(Date,nullable=True)
-    
+
+    failed_attempts = Column(Integer, default=0)
+    last_checked_at = Column(Date, nullable=True)
+
     service_id = Column(Integer,ForeignKey("users.id"))
     payer_id = Column(Integer,ForeignKey("users.id"))
 
     service = relationship("User", foreign_keys=[service_id], back_populates="service_applications")
     payer = relationship("User", foreign_keys=[payer_id], back_populates="applications")
     transactions = relationship("Transaction", back_populates="application")
+    payment_attempts = relationship("PaymentAttempt", back_populates="application")

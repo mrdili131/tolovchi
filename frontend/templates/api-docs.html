@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Bindin API — Hujjatlar</title>
+    <meta name="description" content="Bindin API to'liq hujjati — endpointlar, so'rov va javob namunalari, autentifikatsiya usullari. Servislar uchun integratsiya qo'llanmasi.">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#1447E6">
+    <link rel="canonical" href="https://bindin.uz/api-docs">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1447E6; --primary-dark: #0B2F9E; --violet: #7C5CFC;
+            --ink: #0B1220; --ink-soft: #4B5567; --ink-faint: #8891A3;
+            --line: #E6E9F1; --bg: #F6F8FC; --surface: #FFFFFF;
+            --success: #10B981; --success-bg: #ECFDF5;
+            --danger: #EF4444; --danger-bg: #FEF2F2;
+            --code-bg: #0B1220;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; }
+        a { color: inherit; text-decoration: none; }
+        code { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
+
+        .nav { position: sticky; top: 0; z-index: 200; background: var(--bg); border-bottom: 1px solid var(--line); }
+        .nav-inner { max-width: 1180px; margin: 0 auto; padding: 0.9rem 24px; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.1rem; }
+        .brand img { width: 28px; height: 28px; }
+        .nav-cta { display: flex; gap: 0.6rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; border-radius: 9px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--violet)); color: #fff; }
+        .btn-outline { background: #fff; border: 1.5px solid var(--line); color: var(--ink); }
+
+        .shell { max-width: 1180px; margin: 0 auto; padding: 2rem 24px 5rem; display: grid; grid-template-columns: 230px minmax(0,1fr); gap: 2.5rem; }
+        .sidebar { position: sticky; top: 70px; align-self: start; max-height: calc(100vh - 90px); overflow-y: auto; }
+        .sidebar h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); margin: 1.1rem 0 0.5rem; }
+        .sidebar h4:first-child { margin-top: 0; }
+        .sidebar a { display: block; padding: 0.35rem 0; font-size: 0.85rem; color: var(--ink-soft); font-weight: 600; }
+        .sidebar a:hover { color: var(--primary); }
+
+        .intro h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+        .intro p { color: var(--ink-soft); max-width: 640px; margin-bottom: 1rem; }
+        .base-url { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 2rem; font-size: 0.9rem; }
+        .base-url code { color: var(--primary); font-weight: 700; }
+
+        section.group { margin-bottom: 2.5rem; }
+        section.group h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; padding-top: 0.5rem; }
+        section.group > p { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 1.2rem; }
+
+        .endpoint { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.3rem 1.4rem; margin-bottom: 1.1rem; }
+        .endpoint-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+        .method { font-weight: 800; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 6px; }
+        .method.get { background: #EAF0FE; color: var(--primary); }
+        .method.post { background: var(--success-bg); color: #047857; }
+        .method.patch { background: #FFFBEB; color: #B45309; }
+        .method.delete { background: var(--danger-bg); color: #B91C1C; }
+        .endpoint-path { font-weight: 700; font-size: 0.95rem; }
+        .auth-badge { margin-left: auto; font-size: 0.72rem; font-weight: 700; color: var(--ink-faint); background: var(--bg); padding: 0.2rem 0.6rem; border-radius: 999px; }
+        .endpoint-desc { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 0.9rem; }
+
+        .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .cols h5 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin-bottom: 0.4rem; }
+        pre.code { background: var(--code-bg); color: #E6E9F1; border-radius: 10px; padding: 0.9rem 1rem; overflow-x: auto; font-size: 0.78rem; line-height: 1.55; }
+
+        @media (max-width: 860px) {
+            .shell { grid-template-columns: 1fr; }
+            .sidebar { position: static; max-height: none; display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+            .sidebar h4 { display: none; }
+            .cols { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="brand"><img src="/static/bindin-icon-64.png" alt="Bindin"> Bindin API</a>
+            <div class="nav-cta">
+                <a href="/" class="btn btn-outline">Bosh sahifa</a>
+                <a href="/auth?mode=register" class="btn btn-primary">Ro'yxatdan o'tish</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="shell">
+        <aside class="sidebar">
+            <h4>Boshlash</h4>
+            <a href="#intro">Kirish</a>
+            <a href="#auth-methods">Autentifikatsiya</a>
+            <h4>Hisob</h4>
+            <a href="#auth-login">Login</a>
+            <a href="#auth-me">Profil</a>
+            <h4>Arizalar</h4>
+            <a href="#app-list">Ro'yxat</a>
+            <a href="#app-create">Yaratish</a>
+            <a href="#app-detail">Bitta ariza</a>
+            <a href="#app-stop">To'xtatish</a>
+            <h4>To'lovlar</h4>
+            <a href="#card-charge">Kartadan yechish</a>
+            <a href="#tx-list">Tranzaksiyalar</a>
+            <h4>Dasturchi</h4>
+            <a href="#dev-keys">API kalitlar</a>
+            <a href="#dev-payouts">Pul yechish</a>
+            <h4>Boshqa</h4>
+            <a href="#pagination">Paginatsiya</a>
+            <a href="#errors">Xatoliklar</a>
+        </aside>
+
+        <main>
+            <div class="intro" id="intro">
+                <h1>Bindin API hujjatlari</h1>
+                <p>Bindin API orqali servisingizni bizning obuna va avtomatik to'lov tizimimizga ulashingiz mumkin: arizalar yaratish, mijozlarni QR orqali ulash, kartalardan mablag' yechish va tranzaksiyalar tarixini kuzatish.</p>
+            </div>
+
+            <div class="base-url">Barcha so'rovlar uchun asosiy manzil: <code>https://bindin.uz/api</code></div>
+
+            <section class="group" id="auth-methods">
+                <h2>Autentifikatsiya</h2>
+                <p>Ikki usuldan birini tanlashingiz mumkin:</p>
+                <div class="cols">
+                    <div>
+                        <h5>1. Bearer token (login orqali)</h5>
+                        <pre class="code">Authorization: Bearer &lt;access_token&gt;</pre>
+                    </div>
+                    <div>
+                        <h5>2. API kalit (server-serverga integratsiya)</h5>
+                        <pre class="code">X-API-Key: bnd_live_...</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="group">
+                <h2>Hisob</h2>
+
+                <div class="endpoint" id="auth-login">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/auth/login</span>
+                        <span class="auth-badge">Ochiq</span>
+                    </div>
+                    <p class="endpoint-desc">Login qilib access token oling. <code>application/x-www-form-urlencoded</code> formatida yuboriladi.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov</h5>
+                            <pre class="code">curl -X POST https://bindin.uz/api/auth/login \
+  -d "username=your_service&password=your_password"</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 200</h5>
+                            <pre class="code">{
+  "access_token": "eyJhbGciOi...",
+  "token_type": "bearer",
+  "role": "service"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="auth-me">
+                    <div class="endpoint-head">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/auth/me_service</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">O'z profilingiz va joriy balansingizni olish.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov</h5>
+                            <pre class="code">curl https://bindin.uz/api/auth/me_service \
+  -H "X-API-Key: bnd_live_..."</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 200</h5>
+                            <pre class="code">{
+  "id": 2,
+  "username": "netflix_uz",
+  "service_name": "Netflix Uzbekistan",
+  "balance": 4500000,
+  "role": "service"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="group">
+                <h2>Arizalar (obunalar)</h2>
+
+                <div class="endpoint" id="app-list">
+                    <div class="endpoint-head">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/application/?page=1&amp;page_size=20</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">O'zingizga tegishli arizalar ro'yxati, paginatsiya bilan.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov</h5>
+                            <pre class="code">curl "https://bindin.uz/api/application/?page=1&page_size=20" \
+  -H "X-API-Key: bnd_live_..."</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 200</h5>
+                            <pre class="code">{
+  "items": [{
+    "id": 12, "name": "Netflix obunasi",
+    "amount": 45000, "is_active": true,
+    "pay_day": 5, "frequency": "monthly",
+    "payer": { "id": 7, "username": "vali_a" }
+  }],
+  "total": 1, "page": 1, "page_size": 20,
+  "total_pages": 1, "has_next": false, "has_previous": false
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="app-create">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/application/</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">Yangi obuna arizasi yaratish. Mijoz uni QR kod orqali skanerlab ulanadi.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov tanasi</h5>
+                            <pre class="code">{
+  "name": "Netflix obunasi",
+  "description": "Oylik reja",
+  "amount": 45000,
+  "frequency": "monthly",
+  "pay_day": 5
+}</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 201</h5>
+                            <pre class="code">{
+  "id": 12, "name": "Netflix obunasi",
+  "amount": 45000, "is_active": false,
+  "payer": null
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="app-detail">
+                    <div class="endpoint-head">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/application/detail/{id}</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">Bitta arizani olish — <code>is_active</code> va <code>is_paid</code> orqali holatini tekshiring.</p>
+                </div>
+
+                <div class="endpoint" id="app-stop">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/application/stop/{id}</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">O'zingizga tegishli arizani to'xtatish (faqat servis o'z arizasini to'xtata oladi).</p>
+                    <div class="cols">
+                        <div>
+                            <h5>Javob 200</h5>
+                            <pre class="code">{ "status": true, "detail": "Success" }</pre>
+                        </div>
+                        <div>
+                            <h5>Xatolik 404</h5>
+                            <pre class="code">{ "detail": "Could not find application" }</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="group">
+                <h2>To'lovlar</h2>
+
+                <div class="endpoint" id="card-charge">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/card/charge</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">Mijozning bog'langan kartasidan ariza summasini yechish. <code>amount</code> ariza summasidan (<code>application.amount</code>) oshmasligi va ariza shu davr uchun to'lanmagan bo'lishi kerak.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov tanasi</h5>
+                            <pre class="code">{
+  "application_id": 12,
+  "amount": 45000
+}</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 200</h5>
+                            <pre class="code">{
+  "id": 88, "amount": 45000, "fee_amount": 2872,
+  "status": "provided", "sender": {...}, "receiver": {...}
+}</pre>
+                        </div>
+                    </div>
+                    <p class="endpoint-desc" style="margin-top:0.8rem;">Eslatma: to'lov tizimi (InPay) har bir tranzaksiyadan 6% komissiya oladi. Mijozdan haqiqatda yechiladigan summa <code>amount + fee_amount</code> ga teng — servis balansiga esa to'liq <code>amount</code> qo'shiladi.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>Xatolik 400 — allaqachon to'langan</h5>
+                            <pre class="code">{ "detail": "Application is already paid for this cycle" }</pre>
+                        </div>
+                        <div>
+                            <h5>Xatolik 400 — summa oshib ketgan</h5>
+                            <pre class="code">{ "detail": "Cannot charge more than the agreed application amount" }</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="tx-list">
+                    <div class="endpoint-head">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/transaction/?page=1&amp;page_size=20</span>
+                        <span class="auth-badge">Bearer yoki API kalit</span>
+                    </div>
+                    <p class="endpoint-desc">Tranzaksiyalar tarixi, paginatsiya bilan (eng yangisi birinchi).</p>
+                </div>
+            </section>
+
+            <section class="group">
+                <h2>Dasturchi</h2>
+
+                <div class="endpoint" id="dev-keys">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/developer/keys</span>
+                        <span class="auth-badge">Faqat Bearer</span>
+                    </div>
+                    <p class="endpoint-desc">Yangi API kalit yaratish. To'liq kalit faqat shu javobda bir marta ko'rsatiladi.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov tanasi</h5>
+                            <pre class="code">{ "name": "Production server" }</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 201</h5>
+                            <pre class="code">{
+  "id": 1, "name": "Production server",
+  "key_prefix": "bnd_live_1i7_1epN",
+  "key": "bnd_live_1i7_1epNioJJ...",
+  "is_active": true
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="dev-payouts">
+                    <div class="endpoint-head">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/developer/payouts</span>
+                        <span class="auth-badge">Faqat Bearer</span>
+                    </div>
+                    <p class="endpoint-desc">Balansingizdan bank kartangizga pul yechish so'rovi yuborish. Minimal summa 100 000 so'm, oyiga bitta so'rov. Admin so'rovni 3 ish kuni ichida ko'rib chiqib, qo'lda pul o'tkazadi.</p>
+                    <div class="cols">
+                        <div>
+                            <h5>So'rov tanasi</h5>
+                            <pre class="code">{
+  "amount": 500000,
+  "card_number": "8600123456789012"
+}</pre>
+                        </div>
+                        <div>
+                            <h5>Javob 201</h5>
+                            <pre class="code">{
+  "id": 4, "amount": 500000,
+  "card_number": "8600123456789012",
+  "status": "pending"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="group" id="pagination">
+                <h2>Paginatsiya</h2>
+                <p>Ro'yxat qaytaradigan barcha endpointlar <code>page</code> (standart: 1) va <code>page_size</code> (standart: 20, maksimal: 100) parametrlarini qabul qiladi va quyidagi formatda javob beradi:</p>
+                <pre class="code">{
+  "items": [...],
+  "total": 42,
+  "page": 1,
+  "page_size": 20,
+  "total_pages": 3,
+  "has_next": true,
+  "has_previous": false
+}</pre>
+            </section>
+
+            <section class="group" id="errors">
+                <h2>Xatoliklar</h2>
+                <p>Xatoliklar standart FastAPI formatida qaytariladi:</p>
+                <pre class="code">{ "detail": "Xatolik haqida qisqacha ma'lumot" }</pre>
+                <p style="margin-top:0.8rem;">Eng ko'p uchraydigan status kodlar: <code>401</code> — autentifikatsiya xato, <code>403</code> — ruxsat yo'q, <code>404</code> — topilmadi, <code>400</code> — validatsiya/biznes qoidasi xatosi, <code>422</code> — so'rov formati noto'g'ri.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

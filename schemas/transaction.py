@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 from models import TransactionStatus
-from schemas import UserResponse, ApplicationResponse
+from schemas import UserResponse, TransactionPartyResponse, ApplicationResponse
 from datetime import date
 
 class TransactionForm(BaseModel):
@@ -15,11 +15,22 @@ class TransactionForm(BaseModel):
 class TransactionResponse(BaseModel):
     id: int
     amount: int
+    fee_amount: int
     status: TransactionStatus
     created_at: date
 
     sender: UserResponse
-    receiver: UserResponse
+    receiver: TransactionPartyResponse
     application: ApplicationResponse | None = None # Remove none on production db
 
+    is_flagged: bool
+    admin_note: str | None = None
+    refunded_at: date | None = None
+
     model_config = ConfigDict(from_attributes=True)
+
+
+class AdminTransactionUpdateForm(BaseModel):
+    is_flagged: bool | None = None
+    admin_note: str | None = None
+    mark_refunded: bool = False

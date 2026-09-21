@@ -3,180 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bindin - Kassa Hisoboti</title>
-  <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+  <title>Bindin — Kassa Hisoboti</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
   <style>
-    :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --border: #e2e8f0;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 24px;
-    }
-
-    .hidden { display: none !important; }
-
-    /* AUTHENTICATION */
-    .login-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 80vh;
-    }
-    .login-card {
-      background: var(--card);
-      width: 100%;
-      max-width: 380px;
-      padding: 32px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
-    }
-    .brand-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .brand-header img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
-    .brand-header h2 { font-size: 22px; font-weight: 700; color: var(--primary); }
-    
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-    .form-group input {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-    }
-    .form-group input:focus { border-color: var(--accent); }
-
-    /* BUTTONS */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 16px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      gap: 8px;
-      transition: background-color 0.2s;
-    }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: #334155; }
-    .btn-accent { background: var(--accent); color: #fff; }
-    .btn-accent:hover { background: #1d4ed8; }
-    .btn-secondary { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { background: #e2e8f0; }
-    .btn-block { width: 100%; }
-    .error { color: #ef4444; font-size: 13px; margin-top: 10px; text-align: center; }
-
-    /* DASHBOARD */
-    .container { max-width: 1100px; margin: 0 auto; }
-    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .logo-title { display: flex; align-items: center; gap: 12px; }
-    .logo-title img { width: 32px; height: 32px; }
-    .logo-title h1 { font-size: 22px; font-weight: 700; }
-
     .control-panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.25rem;
     }
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-    }
+    .checkbox-label { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
     .checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
-
-    /* DATA TABLE */
-    .table-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    table.data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-    table.data-table th {
-      background: #f8fafc;
-      padding: 12px 16px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #64748b;
-      border-bottom: 1px solid var(--border);
-    }
-    table.data-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    table.data-table tr:last-child td { border-bottom: none; }
-    table.data-table tr:hover { background: #f8fafc; }
-    .badge-id { font-family: monospace; font-weight: 700; color: var(--accent); }
-
-    @media print {
-      .no-print { display: none !important; }
-      body { background: #fff; padding: 0; margin: 0; }
-    }
+    .badge-id { font-family: ui-monospace, monospace; font-weight: 700; color: var(--primary); }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN SECTION -->
-  <div id="login-section" class="login-wrapper no-print">
-    <div class="login-card">
-      <div class="brand-header">
-        <img src="static/favicon.ico" alt="Bindin Logo">
-        <h2>Bindin</h2>
+  <header class="topbar">
+      <div class="topbar-inner">
+          <a href="/admin" class="topbar-brand">
+              <img src="/static/bindin-icon-64.png" alt="Bindin">
+              Bindin Admin
+          </a>
+          <nav class="topbar-nav">
+              <a href="/admin">Umumiy</a>
+              <a href="/admin/transactions">Tranzaksiyalar</a>
+              <a href="/printables">Kassa hisoboti</a>
+          </nav>
+          <div class="topbar-actions">
+              <span class="badge">ADMIN</span>
+              <button onclick="logout()" class="icon-btn" title="Chiqish" aria-label="Chiqish">
+                  <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+              </button>
+          </div>
       </div>
-      <form id="login-form">
-        <div class="form-group">
-          <label>Foydalanuvchi nomi</label>
-          <input type="text" id="username" placeholder="Login" required>
-        </div>
-        <div class="form-group">
-          <label>Parol</label>
-          <input type="password" id="password" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Kirish</button>
-        <div id="login-error" class="error"></div>
-      </form>
-    </div>
-  </div>
+  </header>
 
-  <!-- DASHBOARD SECTION -->
-  <div id="dashboard-section" class="container no-print hidden">
-    <div class="header-bar">
-      <div class="logo-title">
-        <img src="static/favicon.ico" alt="Bindin Logo">
-        <h1>Bindin — Kassa Hisoboti</h1>
-      </div>
-      <button onclick="logout()" class="btn btn-secondary">Chiqish</button>
+  <main class="page">
+    <div class="page-head">
+        <div>
+            <h1>Kassa hisoboti</h1>
+            <p>Tekshiruvlar uchun tranzaksiyalarni tanlab yoki to'liq chop eting</p>
+        </div>
     </div>
 
     <div class="control-panel">
@@ -185,81 +56,71 @@
         Barchasini tanlash
       </label>
       <div style="display: flex; align-items: center; gap: 15px;">
-        <span id="selected-count" style="font-size: 14px; font-weight: 600; color: #64748b;">Tanlandi: 0</span>
-        <button onclick="printSelectedReport()" class="btn btn-accent">📄 Hisobotni chop etish</button>
+        <span id="selected-count" style="font-size: 0.85rem; font-weight: 700; color: var(--ink-soft);">Tanlandi: 0</span>
+        <button onclick="printSelectedReport()" class="btn btn-primary" style="width:auto;">📄 Hisobotni chop etish</button>
       </div>
     </div>
 
-    <div id="status-message" style="margin-bottom: 12px; font-size: 14px; color: #64748b;">
+    <div id="status-message" style="margin-bottom: 12px; font-size: 0.85rem; color: var(--ink-soft);">
       Yuklanmoqda...
     </div>
 
-    <div class="table-card">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="width: 40px; text-align: center;">#</th>
-            <th>Tranzaksiya №</th>
-            <th>Sana</th>
-            <th>To'lovchi (Mijoz)</th>
-            <th>Qabul qiluvchi</th>
-            <th>Summa</th>
-          </tr>
-        </thead>
-        <tbody id="transactions-list-body"></tbody>
-      </table>
+    <div class="card" style="padding:0;">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align: center;">#</th>
+              <th>Tranzaksiya №</th>
+              <th>Sana</th>
+              <th>To'lovchi (Mijoz)</th>
+              <th>Qabul qiluvchi (Servis)</th>
+              <th>Summa</th>
+              <th>Komissiya</th>
+              <th>Holat</th>
+            </tr>
+          </thead>
+          <tbody id="transactions-list-body"></tbody>
+        </table>
+      </div>
     </div>
+  </main>
+
+  <div id="globalLoader" class="loading-overlay hidden">
+      <div class="spinner"></div>
   </div>
 
+  <script src="/static/js/dashboard.js"></script>
   <script>
-    const API_BASE_URL = 'https://bindin.uz';
+    requireRole(['admin']);
+
     let rawTransactions = [];
 
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const errorDiv = document.getElementById('login-error');
-      errorDiv.textContent = '';
-
-      const formData = new URLSearchParams();
-      formData.append('username', document.getElementById('username').value);
-      formData.append('password', document.getElementById('password').value);
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: formData
-        });
-
-        if (!response.ok) throw new Error('Login yoki parol xato!');
-
-        const data = await response.json();
-        localStorage.setItem('access_token', data.access_token);
-        showDashboard();
-      } catch (err) {
-        errorDiv.textContent = err.message;
-      }
-    });
-
-    async function fetchTransactions() {
-      const token = localStorage.getItem('access_token');
+    // Admin-only endpoint, and it's paginated — pull every page so the report
+    // covers the platform's full transaction history, not just one page.
+    async function fetchAllTransactions() {
       const statusMsg = document.getElementById('status-message');
+      let page = 1;
+      let all = [];
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/transaction/`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        while (true) {
+          const res = await apiFetch(`/admin/transactions?page=${page}&page_size=100`);
+          if (!res.ok) throw new Error("Tranzaksiyalarni yuklashda xatolik");
+          const data = await res.json();
+          all = all.concat(data.items);
+          if (!data.has_next) break;
+          page += 1;
+        }
 
-        if (!response.ok) throw new Error('Tranzaksiyalarni yuklashda xatolik');
+        rawTransactions = all;
 
-        rawTransactions = await response.json();
-        
-        if (!rawTransactions || rawTransactions.length === 0) {
+        if (rawTransactions.length === 0) {
           statusMsg.textContent = 'Tranzaksiyalar topilmadi.';
           return;
         }
 
-        statusMsg.textContent = `Jami ${rawTransactions.length} ta tranzaksiya mavjud.`;
+        statusMsg.textContent = `Jami ${rawTransactions.length} ta tranzaksiya yuklandi.`;
         renderTable(rawTransactions);
       } catch (err) {
         statusMsg.textContent = 'Xatolik: ' + err.message;
@@ -269,15 +130,10 @@
     function renderTable(transactions) {
       const tbody = document.getElementById('transactions-list-body');
       tbody.innerHTML = transactions.map(tx => {
-        const clientName = tx.sender 
-          ? [tx.sender.last_name, tx.sender.first_name, tx.sender.middle_name].filter(Boolean).join(' ') || tx.sender.username || `ID #${tx.sender_id}`
-          : `ID #${tx.sender_id}`;
-          
-        const receiverName = tx.receiver 
-          ? [tx.receiver.first_name, tx.receiver.last_name].filter(Boolean).join(' ') || tx.receiver.username || `ID #${tx.receiver_id}`
-          : `ID #${tx.receiver_id}`;
-
-        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2 });
+        const clientName = formatUserFullName(tx.sender);
+        const receiverName = formatUserFullName(tx.receiver);
+        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU');
+        const formattedFee = (tx.fee_amount || 0).toLocaleString('ru-RU');
 
         return `
           <tr>
@@ -289,6 +145,8 @@
             <td><strong>${clientName}</strong></td>
             <td>${receiverName}</td>
             <td style="font-weight: 700;">${formattedAmount} UZS</td>
+            <td>${formattedFee} UZS</td>
+            <td><span class="status-tag ${tx.status}">${tx.status}</span></td>
           </tr>
         `;
       }).join('');
@@ -307,34 +165,26 @@
 
     function printSelectedReport() {
       const checkedBoxes = Array.from(document.querySelectorAll('.tx-checkbox:checked'));
-      let selectedTransactions = [];
-
-      if (checkedBoxes.length === 0) {
-        selectedTransactions = rawTransactions;
-      } else {
-        const selectedIds = checkedBoxes.map(cb => cb.value);
-        selectedTransactions = rawTransactions.filter(tx => selectedIds.includes(String(tx.id)));
-      }
+      let selectedTransactions = checkedBoxes.length === 0
+        ? rawTransactions
+        : rawTransactions.filter(tx => checkedBoxes.map(cb => cb.value).includes(String(tx.id)));
 
       if (selectedTransactions.length === 0) {
-        alert('Chop etish uchun ma\'lumot yo\'q.');
+        showAlert("Chop etish uchun ma'lumot yo'q.", "error");
         return;
       }
 
       const totalAmount = selectedTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0);
-      const formattedTotal = totalAmount.toLocaleString('ru-RU', { minimumFractionDigits: 2 });
-      const now = new Date().toLocaleString();
+      const totalFee = selectedTransactions.reduce((sum, tx) => sum + (tx.fee_amount || 0), 0);
+      const formattedTotal = totalAmount.toLocaleString('ru-RU');
+      const formattedFeeTotal = totalFee.toLocaleString('ru-RU');
+      const now = new Date().toLocaleString('ru-RU');
 
       const tableRows = selectedTransactions.map((tx, idx) => {
-        const clientName = tx.sender 
-          ? [tx.sender.last_name, tx.sender.first_name, tx.sender.middle_name].filter(Boolean).join(' ') || tx.sender.username || `ID #${tx.sender_id}`
-          : `ID #${tx.sender_id}`;
-          
-        const receiverName = tx.receiver 
-          ? [tx.receiver.first_name, tx.receiver.last_name].filter(Boolean).join(' ') || tx.receiver.username || `ID #${tx.receiver_id}`
-          : `ID #${tx.receiver_id}`;
-
-        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU', { minimumFractionDigits: 2 });
+        const clientName = formatUserFullName(tx.sender);
+        const receiverName = formatUserFullName(tx.receiver);
+        const formattedAmount = (tx.amount || 0).toLocaleString('ru-RU');
+        const formattedFee = (tx.fee_amount || 0).toLocaleString('ru-RU');
 
         return `
           <tr>
@@ -344,6 +194,8 @@
             <td>${clientName}</td>
             <td>${receiverName}</td>
             <td style="text-align: right; font-weight: bold;">${formattedAmount} UZS</td>
+            <td style="text-align: right;">${formattedFee} UZS</td>
+            <td>${tx.status}</td>
           </tr>
         `;
       }).join('');
@@ -353,116 +205,35 @@
         <html>
           <head>
             <title>Bindin Hisoboti</title>
-            <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+            <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
             <style>
-              @page {
-                size: A4 portrait;
-                margin: 12mm;
-              }
-              body {
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-                background: #fff;
-                color: #0f172a;
-                margin: 0;
-                padding: 10px;
-              }
-              .report-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                border-bottom: 2px solid #0f172a;
-                padding-bottom: 10px;
-                margin-bottom: 16px;
-              }
-              .brand-box {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              }
-              .brand-box img {
-                width: 28px;
-                height: 28px;
-              }
-              .report-title {
-                font-size: 18px;
-                font-weight: 800;
-                text-transform: uppercase;
-                color: #0f172a;
-              }
-              .report-meta {
-                font-size: 11px;
-                color: #475569;
-                text-align: right;
-              }
-              .stats-cards {
-                display: flex;
-                gap: 15px;
-                margin-bottom: 20px;
-              }
-              .stat-box {
-                flex: 1;
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 6px;
-                padding: 10px 14px;
-              }
-              .stat-label {
-                font-size: 10px;
-                text-transform: uppercase;
-                color: #64748b;
-                font-weight: 700;
-              }
-              .stat-value {
-                font-size: 16px;
-                font-weight: 800;
-                color: #0f172a;
-                margin-top: 2px;
-              }
-              table.print-table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-              }
-              table.print-table th {
-                background: #f1f5f9;
-                color: #334155;
-                font-size: 11px;
-                text-transform: uppercase;
-                padding: 8px 10px;
-                border: 1px solid #cbd5e1;
-                text-align: left;
-              }
-              table.print-table td {
-                padding: 8px 10px;
-                border: 1px solid #cbd5e1;
-                font-size: 12px;
-              }
-              table.print-table tr:nth-child(even) {
-                background: #f8fafc;
-              }
-              .total-row td {
-                background: #e2e8f0 !important;
-                font-weight: 800;
-                font-size: 13px;
-              }
-              .footer-note {
-                font-size: 10px;
-                color: #94a3b8;
-                text-align: center;
-                margin-top: 20px;
-                border-top: 1px solid #e2e8f0;
-                padding-top: 8px;
-              }
+              @page { size: A4 landscape; margin: 12mm; }
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: #fff; color: #0f172a; margin: 0; padding: 10px; }
+              .report-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0f172a; padding-bottom: 10px; margin-bottom: 16px; }
+              .brand-box { display: flex; align-items: center; gap: 10px; }
+              .brand-box img { width: 28px; height: 28px; }
+              .report-title { font-size: 18px; font-weight: 800; text-transform: uppercase; color: #0f172a; }
+              .report-meta { font-size: 11px; color: #475569; text-align: right; }
+              .stats-cards { display: flex; gap: 15px; margin-bottom: 20px; }
+              .stat-box { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; }
+              .stat-label { font-size: 10px; text-transform: uppercase; color: #64748b; font-weight: 700; }
+              .stat-value { font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px; }
+              table.print-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+              table.print-table th { background: #f1f5f9; color: #334155; font-size: 11px; text-transform: uppercase; padding: 8px 10px; border: 1px solid #cbd5e1; text-align: left; }
+              table.print-table td { padding: 8px 10px; border: 1px solid #cbd5e1; font-size: 12px; }
+              table.print-table tr:nth-child(even) { background: #f8fafc; }
+              .total-row td { background: #e2e8f0 !important; font-weight: 800; font-size: 13px; }
+              .footer-note { font-size: 10px; color: #94a3b8; text-align: center; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
             </style>
           </head>
           <body>
             <div class="report-header">
               <div>
                 <div class="brand-box">
-                  <img src="static/favicon.ico" alt="Bindin Logo">
+                  <img src="/static/bindin-icon-64.png" alt="Bindin Logo">
                   <div class="report-title">BINDIN TRANSAKSIYALAR HISOBOTI</div>
                 </div>
-                <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 4px;">Kassa va Moliya Tizimi</div>
+                <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 4px;">Kassa va Moliya Tizimi — Admin hisoboti</div>
               </div>
               <div class="report-meta">
                 <div><strong>Vaqt:</strong> ${now}</div>
@@ -479,17 +250,23 @@
                 <div class="stat-label">Jami Aylanma Summasi</div>
                 <div class="stat-value" style="color: #2563eb;">${formattedTotal} UZS</div>
               </div>
+              <div class="stat-box">
+                <div class="stat-label">Jami Komissiya (InPay)</div>
+                <div class="stat-value" style="color: #b45309;">${formattedFeeTotal} UZS</div>
+              </div>
             </div>
 
             <table class="print-table">
               <thead>
                 <tr>
-                  <th style="width: 35px; text-align: center;">№</th>
-                  <th style="width: 80px;">ID</th>
-                  <th style="width: 130px;">Sana</th>
+                  <th style="width: 30px; text-align: center;">№</th>
+                  <th style="width: 70px;">ID</th>
+                  <th style="width: 120px;">Sana</th>
                   <th>To'lovchi (Mijoz)</th>
-                  <th>Qabul qiluvchi</th>
-                  <th style="text-align: right; width: 140px;">Summa</th>
+                  <th>Qabul qiluvchi (Servis)</th>
+                  <th style="text-align: right; width: 120px;">Summa</th>
+                  <th style="text-align: right; width: 100px;">Komissiya</th>
+                  <th style="width: 90px;">Holat</th>
                 </tr>
               </thead>
               <tbody>
@@ -497,6 +274,8 @@
                 <tr class="total-row">
                   <td colspan="5" style="text-align: right;">JAMI SUMMA:</td>
                   <td style="text-align: right;">${formattedTotal} UZS</td>
+                  <td style="text-align: right;">${formattedFeeTotal} UZS</td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -512,21 +291,7 @@
       printWindow.print();
     }
 
-    function showDashboard() {
-      document.getElementById('login-section').classList.add('hidden');
-      document.getElementById('dashboard-section').classList.remove('hidden');
-      fetchTransactions();
-    }
-
-    function logout() {
-      localStorage.removeItem('access_token');
-      document.getElementById('dashboard-section').classList.add('hidden');
-      document.getElementById('login-section').classList.remove('hidden');
-    }
-
-    if (localStorage.getItem('access_token')) {
-      showDashboard();
-    }
+    fetchAllTransactions();
   </script>
 </body>
 </html>

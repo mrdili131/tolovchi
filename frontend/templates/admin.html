@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Bindin — Admin paneli</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#1447E6">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/bindin-icon-32.png">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/admin" class="topbar-brand">
+                <img src="/static/bindin-icon-64.png" alt="Bindin">
+                Bindin Admin
+            </a>
+            <nav class="topbar-nav">
+                <a href="/admin">Umumiy</a>
+                <a href="/admin/users">Foydalanuvchilar</a>
+                <a href="/admin/applications">Arizalar</a>
+                <a href="/admin/transactions">Tranzaksiyalar</a>
+                <a href="/admin/cards">Kartalar</a>
+                <a href="/admin/payouts">To'lovlar</a>
+                <a href="/admin/logs">Loglar</a>
+            </nav>
+            <div class="topbar-actions">
+                <span id="roleBadge" class="badge">ADMIN</span>
+                <button onclick="logout()" class="icon-btn" title="Chiqish" aria-label="Chiqish">
+                    <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                </button>
+                <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menyu">
+                    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobileNavPanel" class="mobile-nav-panel">
+            <a href="/admin">Umumiy</a>
+            <a href="/admin/users">Foydalanuvchilar</a>
+            <a href="/admin/applications">Arizalar</a>
+            <a href="/admin/transactions">Tranzaksiyalar</a>
+            <a href="/admin/cards">Kartalar</a>
+            <a href="/admin/payouts">To'lovlar</a>
+            <a href="/admin/logs">Loglar</a>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="page-head">
+            <div>
+                <h1>Platforma umumiy ko'rinishi</h1>
+                <p>Bindin bo'ylab barcha asosiy ko'rsatkichlar</p>
+            </div>
+        </div>
+
+        <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);" id="statsGrid">
+            <div class="stat-tile">
+                <div class="stat-tile-label">Foydalanuvchilar</div>
+                <div class="stat-tile-value" id="statUsers">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Bizneslar</div>
+                <div class="stat-tile-value" id="statServices">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Adminlar</div>
+                <div class="stat-tile-value" id="statAdmins">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Faol arizalar</div>
+                <div class="stat-tile-value" id="statActiveApps">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Jami arizalar</div>
+                <div class="stat-tile-value" id="statTotalApps">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Jami tranzaksiya</div>
+                <div class="stat-tile-value" id="statTotalTx">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Jami aylanma</div>
+                <div class="stat-tile-value" id="statVolume">--</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Faol kartalar</div>
+                <div class="stat-tile-value" id="statCards">--</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:1.25rem;">
+            <h2>
+                <span>To'lovlarni boshqarish</span>
+                <button class="btn btn-secondary btn-sm" id="runBillingBtn" onclick="runBillingCycle()">Hoziroq undirish</button>
+            </h2>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Har kuni soat 8:00 da avtomatik ishga tushadigan to'lov undirish jarayonini hoziroq, navbatni kutmasdan boshlaydi — muddati o'tgan va hali faollashmagan barcha arizalar bo'yicha.</p>
+        </div>
+
+        <div class="card" style="margin-top:1.25rem;">
+            <h2>Bildirishnoma yuborish</h2>
+            <form onsubmit="sendNotification(event)">
+                <div class="form-group">
+                    <label>Sarlavha</label>
+                    <input type="text" id="notifTitle" required placeholder="Masalan: Texnik ishlar">
+                </div>
+                <div class="form-group">
+                    <label>Xabar matni</label>
+                    <input type="text" id="notifMessage" required placeholder="Bildirishnoma matni">
+                </div>
+                <div class="form-group">
+                    <label>Qabul qiluvchi</label>
+                    <select id="notifTarget">
+                        <option value="">Barchaga (broadcast)</option>
+                        <option value="specific">Bitta foydalanuvchiga (ID bo'yicha)</option>
+                    </select>
+                </div>
+                <div class="form-group hidden" id="notifTargetIdGroup">
+                    <label>Foydalanuvchi ID</label>
+                    <input type="number" id="notifTargetId" placeholder="Masalan: 42">
+                </div>
+                <button type="submit" class="btn btn-primary" id="sendNotifBtn">Yuborish</button>
+            </form>
+        </div>
+
+        <div class="card" style="margin-top:1.25rem;">
+            <h2>Tezkor havolalar</h2>
+            <div class="quick-actions">
+                <a class="quick-action" href="/admin/users">
+                    <div class="list-item-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+                    <div><div class="quick-action-label">Foydalanuvchilar</div><div class="quick-action-sub">Rol, holat boshqarish</div></div>
+                </a>
+                <a class="quick-action" href="/admin/applications">
+                    <div class="list-item-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg></div>
+                    <div><div class="quick-action-label">Arizalar</div><div class="quick-action-sub">Deaktivatsiya, qayta urinish</div></div>
+                </a>
+                <a class="quick-action" href="/admin/logs">
+                    <div class="list-item-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></div>
+                    <div><div class="quick-action-label">Loglar</div><div class="quick-action-sub">To'lov urinishlari, audit</div></div>
+                </a>
+                <a class="quick-action" href="/printables">
+                    <div class="list-item-icon"><svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg></div>
+                    <div><div class="quick-action-label">Kassa hisoboti</div><div class="quick-action-sub">Tranzaksiyalarni chop etish</div></div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div id="govModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="govModalTitle">Tizim bildirishnomasi</h3>
+            <div id="govModalBody" class="gov-alert-body">--</div>
+            <button class="btn btn-primary btn-block" onclick="closeGovAlert()">Tushundim</button>
+        </div>
+    </div>
+
+    <div id="globalLoader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+        requireRole(['admin']);
+
+        async function loadStats() {
+            const res = await apiFetch("/admin/stats");
+            if (!res.ok) return;
+            const stats = await res.json();
+
+            document.getElementById("statUsers").innerText = stats.total_users;
+            document.getElementById("statServices").innerText = stats.total_services;
+            document.getElementById("statAdmins").innerText = stats.total_admins;
+            document.getElementById("statActiveApps").innerText = stats.active_applications;
+            document.getElementById("statTotalApps").innerText = stats.total_applications;
+            document.getElementById("statTotalTx").innerText = stats.total_transactions;
+            document.getElementById("statVolume").innerText = `${stats.total_volume.toLocaleString('ru-RU')} UZS`;
+            document.getElementById("statCards").innerText = stats.active_cards;
+        }
+
+        async function runBillingCycle() {
+            if (!confirm("To'lov undirish jarayonini hoziroq ishga tushirmoqchimisiz?")) return;
+            const restore = setButtonLoading(document.getElementById("runBillingBtn"), "Ishlamoqda...");
+            try {
+                const res = await apiFetch("/admin/run-billing-cycle", { method: "POST" });
+                if (res.ok) { showAlert("To'lov undirish jarayoni yakunlandi.", "success"); loadStats(); }
+                else showAlert(await extractErrorMessage(res), "error");
+            } finally {
+                restore();
+            }
+        }
+
+        document.getElementById("notifTarget").addEventListener("change", (e) => {
+            document.getElementById("notifTargetIdGroup").classList.toggle("hidden", e.target.value !== "specific");
+        });
+
+        async function sendNotification(e) {
+            e.preventDefault();
+            const targetMode = document.getElementById("notifTarget").value;
+            const targetId = document.getElementById("notifTargetId").value;
+
+            if (targetMode === "specific" && !targetId) {
+                showAlert("Foydalanuvchi ID sini kiriting.", "error");
+                return;
+            }
+
+            const restore = setButtonLoading(document.getElementById("sendNotifBtn"), "Yuborilmoqda...");
+            try {
+                const payload = {
+                    title: document.getElementById("notifTitle").value,
+                    message: document.getElementById("notifMessage").value,
+                    target_user_id: targetMode === "specific" ? parseInt(targetId) : null,
+                };
+                const res = await apiFetch("/admin/notifications", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showAlert("Bildirishnoma yuborildi.", "success");
+                    document.getElementById("notifTitle").value = '';
+                    document.getElementById("notifMessage").value = '';
+                    document.getElementById("notifTargetId").value = '';
+                } else {
+                    showAlert(await extractErrorMessage(res), "error");
+                }
+            } finally {
+                restore();
+            }
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>
