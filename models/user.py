@@ -24,6 +24,7 @@ class User(Base):
     middle_name = Column(String,default="")
     phone_number = Column(String, nullable=True)
     webhook_url = Column(String, nullable=True)
+    inpay_customer_id = Column(String, nullable=True)
 
     role = Column(SQLEnum(UserType),default=UserType.USER)
     is_active = Column(Boolean, default=True)

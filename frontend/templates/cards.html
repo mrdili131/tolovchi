@@ -83,6 +83,34 @@
         </div>
     </main>
 
+    <div id="bindCardModal" class="modal hidden">
+        <div class="modal-content">
+            <div id="bindStepCard">
+                <h3>Yangi karta qo'shish</h3>
+                <div class="form-group">
+                    <label>Karta raqami</label>
+                    <input type="text" id="bindCardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="8600 1234 5678 9012" maxlength="19" oninput="formatCardNumber(this)">
+                </div>
+                <div class="form-group">
+                    <label>Amal qilish muddati</label>
+                    <input type="text" id="bindCardExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" oninput="formatCardExpiry(this)">
+                </div>
+                <button class="btn btn-primary btn-block" id="bindCardSubmitBtn" onclick="submitCardBind()">SMS kod olish</button>
+            </div>
+            <div id="bindStepCode" class="hidden">
+                <h3>SMS kodni kiriting</h3>
+                <p id="bindCodeHint" class="list-item-sub" style="margin-bottom:0.9rem;"></p>
+                <div class="form-group">
+                    <label>SMS kod</label>
+                    <input type="text" id="bindCardCode" inputmode="numeric" autocomplete="one-time-code" maxlength="12">
+                </div>
+                <button class="btn btn-primary btn-block" id="bindCodeSubmitBtn" onclick="submitCardVerify()">Tasdiqlash</button>
+                <button class="btn btn-secondary btn-block" style="margin-top:0.6rem;" id="bindResendBtn" onclick="resendCardCode()" disabled>Kodni qayta yuborish</button>
+            </div>
+            <button class="btn btn-outline btn-block" style="margin-top:0.6rem;" onclick="closeBindCardModal()">Bekor qilish</button>
+        </div>
+    </div>
+
     <div id="govModal" class="modal hidden">
         <div class="modal-content">
             <h3 id="govModalTitle">Tizim bildirishnomasi</h3>
@@ -106,7 +134,13 @@
             const container = document.getElementById("userCardsContainer");
             container.innerHTML = '<div class="skeleton-row"></div>';
 
-            const res = await apiFetch(`/card/?page=${page}&page_size=10`);
+            let res;
+            try {
+                res = await apiFetch(`/card/?page=${page}&page_size=10`);
+            } catch {
+                container.innerHTML = emptyState("Server bilan aloqa yo'q. Sahifani yangilang.");
+                return;
+            }
             if (res.ok) {
                 const paginated = await res.json();
                 const cards = paginated.items;
@@ -141,8 +175,10 @@
                     showAlert("Kartalar yangilandi.", "success");
                     await loadCards(cardsPage);
                 } else {
-                    showAlert("Kartalarni yangilashda xatolik.", "error");
+                    await showApiError(res, "Kartalarni yangilashda xatolik");
                 }
+            } catch {
+                showNetworkError();
             } finally {
                 restore();
             }
@@ -162,27 +198,151 @@
                     showAlert(data.detail || "Karta olib tashlandi.", "success");
                     loadCards(cardsPage);
                 } else {
-                    const err = await extractErrorMessage(res);
-                    showAlert(`Kartani olib tashlashda xatolik: ${err}`, "error");
+                    await showApiError(res, "Kartani olib tashlashda xatolik");
                     restore();
                 }
-            } catch (err) {
-                showAlert("Kartani olib tashlashda xatolik.", "error");
+            } catch {
+                showNetworkError();
                 restore();
             }
         }
 
-        async function bindCard() {
-            const restore = setButtonLoading(document.getElementById("bindCardBtn"), "Ochilmoqda...");
-            try {
-                const returnUrl = encodeURIComponent(window.location.href);
-                const res = await apiFetch(`/card/bind?return_url=${returnUrl}`, { method: "POST" });
-                if (res.ok) {
-                    const data = await res.json();
-                    window.open(data.card_link_url, '_blank');
+        let pendingCardId = null;
+        // Kept only in memory while the modal is open, so the SMS can be resent.
+        let pendingCardData = null;
+        let resendTimer = null;
+
+        function startResendCountdown(waitMs) {
+            const btn = document.getElementById("bindResendBtn");
+            let left = Math.max(1, Math.round((waitMs || 60000) / 1000));
+            clearInterval(resendTimer);
+            btn.disabled = true;
+            btn.innerText = `Kodni qayta yuborish (${left})`;
+            resendTimer = setInterval(() => {
+                left -= 1;
+                if (left <= 0) {
+                    clearInterval(resendTimer);
+                    btn.disabled = false;
+                    btn.innerText = "Kodni qayta yuborish";
                 } else {
-                    showAlert("Karta biriktirishda xatolik.", "error");
+                    btn.innerText = `Kodni qayta yuborish (${left})`;
                 }
+            }, 1000);
+        }
+
+        function formatCardNumber(input) {
+            const digits = input.value.replace(/\D/g, '').slice(0, 16);
+            input.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+        }
+
+        function formatCardExpiry(input) {
+            const digits = input.value.replace(/\D/g, '').slice(0, 4);
+            input.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+        }
+
+        function bindCard() {
+            pendingCardId = null;
+            pendingCardData = null;
+            document.getElementById("bindCardNumber").value = '';
+            document.getElementById("bindCardExpiry").value = '';
+            document.getElementById("bindCardCode").value = '';
+            document.getElementById("bindStepCard").classList.remove("hidden");
+            document.getElementById("bindStepCode").classList.add("hidden");
+            document.getElementById("bindCardModal").classList.remove("hidden");
+            document.getElementById("bindCardNumber").focus();
+        }
+
+        function closeBindCardModal() {
+            document.getElementById("bindCardModal").classList.add("hidden");
+            // Don't keep the card number around longer than needed.
+            document.getElementById("bindCardNumber").value = '';
+            pendingCardData = null;
+            clearInterval(resendTimer);
+        }
+
+        async function submitCardBind() {
+            const cardNumber = document.getElementById("bindCardNumber").value.replace(/\D/g, '');
+            const expiry = document.getElementById("bindCardExpiry").value.replace(/\D/g, '');
+            if (cardNumber.length !== 16 || expiry.length !== 4) {
+                showAlert("Karta raqami (16 ta raqam) va muddatini (MM/YY) to'liq kiriting.", "error");
+                return;
+            }
+
+            const restore = setButtonLoading(document.getElementById("bindCardSubmitBtn"), "Yuborilmoqda...");
+            let data = null;
+            try {
+                data = await requestCardCode({ card_number: cardNumber, expire_date: expiry });
+            } catch {
+                showNetworkError();
+            } finally {
+                restore();
+            }
+            if (data) {
+                document.getElementById("bindCardNumber").value = '';
+                document.getElementById("bindStepCard").classList.add("hidden");
+                document.getElementById("bindStepCode").classList.remove("hidden");
+                document.getElementById("bindCardCode").focus();
+                startResendCountdown(data.wait_ms);
+            }
+        }
+
+        async function requestCardCode(cardData) {
+            const res = await apiFetch("/card/bind", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(cardData)
+            });
+            if (!res.ok) {
+                await showApiError(res, "Karta biriktirishda xatolik");
+                return null;
+            }
+            const data = await res.json();
+            pendingCardId = data.card_id;
+            pendingCardData = cardData;
+            document.getElementById("bindCodeHint").innerText = data.phone_masked
+                ? `Kod ${data.phone_masked} raqamiga yuborildi.`
+                : "Kod karta egasining telefoniga yuborildi.";
+            return data;
+        }
+
+        async function resendCardCode() {
+            if (!pendingCardData) return;
+            const restore = setButtonLoading(document.getElementById("bindResendBtn"), "Yuborilmoqda...");
+            let data = null;
+            try {
+                data = await requestCardCode(pendingCardData);
+            } catch {
+                showNetworkError();
+            } finally {
+                restore();
+            }
+            if (data) {
+                document.getElementById("bindCardCode").value = '';
+                startResendCountdown(data.wait_ms);
+                showAlert("Yangi kod yuborildi.", "success");
+            }
+        }
+
+        async function submitCardVerify() {
+            const code = document.getElementById("bindCardCode").value.trim();
+            if (!code || !pendingCardId) return;
+
+            const restore = setButtonLoading(document.getElementById("bindCodeSubmitBtn"), "Tekshirilmoqda...");
+            try {
+                const res = await apiFetch("/card/bind/verify", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ card_id: pendingCardId, code })
+                });
+                if (res.ok) {
+                    closeBindCardModal();
+                    showAlert("Karta muvaffaqiyatli biriktirildi.", "success");
+                    await loadCards(1);
+                } else {
+                    await showApiError(res, "Kod tasdiqlanmadi");
+                }
+            } catch {
+                showNetworkError();
             } finally {
                 restore();
             }

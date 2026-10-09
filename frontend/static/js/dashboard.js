@@ -85,6 +85,8 @@ const FIELD_LABELS_UZ = {
     middle_name: "Sharif",
     amount: "Summa",
     card_number: "Karta raqami",
+    expire_date: "Amal qilish muddati",
+    code: "SMS kod",
     name: "Nomi",
     description: "Tavsif",
     pay_day: "To'lov kuni",
@@ -93,6 +95,8 @@ const FIELD_LABELS_UZ = {
 // Translates a single FastAPI/Pydantic validation message into Uzbek where we
 // recognize the pattern; falls back to the raw message so nothing disappears.
 function translateValidationMessage(msg) {
+    // Our own pydantic validators already speak Uzbek; drop pydantic's prefix.
+    msg = msg.replace(/^Value error,\s*/i, '');
     if (/at least (\d+) character/i.test(msg)) {
         const n = msg.match(/at least (\d+) character/i)[1];
         return `Kamida ${n} ta belgidan iborat bo'lishi kerak`;
@@ -125,8 +129,25 @@ async function extractErrorMessage(res) {
         }
         return data.detail || "Xatolik yuz berdi.";
     } catch {
+        if (res.status >= 500) return `${SERVICE_ERROR_PREFIX}Serverda vaqtinchalik nosozlik. Birozdan so'ng qayta urinib ko'ring.`;
         return "Noma'lum xatolik yuz berdi.";
     }
+}
+
+const SERVICE_ERROR_PREFIX = "SERVICE ERROR: ";
+const NETWORK_ERROR_MESSAGE = `${SERVICE_ERROR_PREFIX}Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.`;
+
+// Shows an API error in the custom alert. Errors coming from the payment
+// gateway (or our server failing) arrive as "SERVICE ERROR: <text>" and get
+// their own title so users can tell them apart from their own input mistakes.
+async function showApiError(res, title = 'Xatolik') {
+    const message = await extractErrorMessage(res);
+    const isServiceError = message.startsWith(SERVICE_ERROR_PREFIX);
+    showAlert(message, 'error', isServiceError ? "To'lov tizimi xatosi" : title);
+}
+
+function showNetworkError() {
+    showAlert(NETWORK_ERROR_MESSAGE, 'error', "To'lov tizimi xatosi");
 }
 
 function logout() {

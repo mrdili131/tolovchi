@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi import HTTPException
 from sqlalchemy import select, or_, and_
 from database import Session
-from services import InpayAutoPayService
+from services.inpay_v2_service import InpayV2Service, charge_saved_card
 from services.billing_service import (
     apply_successful_charge, apply_failed_attempt, log_successful_attempt, gross_up,
     NO_ACTIVE_CARDS_REASON,
@@ -48,7 +48,7 @@ async def process_application(db: Session, app: Application):
         await db.commit()
         return
 
-    inpay = InpayAutoPayService()
+    inpay = InpayV2Service()
     last_error = "Could not charge any of the payer's cards"
     gross_amount = gross_up(app.amount)
 
@@ -66,7 +66,7 @@ async def process_application(db: Session, app: Application):
         await db.refresh(transaction)
 
         try:
-            inpay.charge(card_id=card.charge_id, amount=gross_amount, idem_key=f"txn-{transaction.id}", reason="BINDIN AVTO-TO‘LOV TIZIMI")
+            await charge_saved_card(inpay, client_user, card, gross_amount, transaction, description=f"BINDIN AVTO-TO‘LOV: {app.name}")
 
             apply_successful_charge(app, app.amount)
             service_user.balance += app.amount

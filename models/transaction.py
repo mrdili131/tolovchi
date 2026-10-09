@@ -20,6 +20,7 @@ class Transaction(Base):
     is_flagged = Column(Boolean, default=False)
     admin_note = Column(String, nullable=True)
     refunded_at = Column(Date, nullable=True)
+    gateway_payment_id = Column(String, nullable=True)
 
     sender_id = Column(Integer,ForeignKey("users.id"))
     receiver_id = Column(Integer,ForeignKey("users.id"))

@@ -54,47 +54,50 @@
     </header>
 
     <main class="page">
-        <div class="page-head">
-            <div>
-                <h1 id="greeting">Xush kelibsiz</h1>
-                <p>Hisobingiz holati va so'nggi harakatlar</p>
-            </div>
-        </div>
-
         <div class="stack">
-            <div class="profile-hero">
-                <div class="profile-hero-top">
-                    <div class="profile-hero-avatar" id="profAvatar">--</div>
-                    <div>
-                        <div class="profile-hero-name" id="profFullName">--</div>
-                        <div class="profile-hero-sub">@<span id="profUsername">--</span></div>
+            <section class="home-hero">
+                <div class="home-hero-main">
+                    <div class="home-hero-avatar" id="profAvatar">--</div>
+                    <div class="home-hero-text">
+                        <div class="home-hero-date" id="todayLabel"></div>
+                        <h1 id="greeting">Xush kelibsiz</h1>
+                        <div class="home-hero-sub"><span id="profFullName">--</span> · @<span id="profUsername">--</span></div>
                     </div>
                 </div>
-                <div id="serviceBalanceRow" class="profile-hero-stat hidden">
+                <div id="serviceBalanceRow" class="home-hero-balance hidden">
                     <span>Joriy balans</span>
                     <strong id="profBalance">0 UZS</strong>
                 </div>
+            </section>
+
+            <div class="home-stats" id="statRow">
+                <div class="home-stat">
+                    <div class="home-stat-icon tone-blue" id="statActiveIcon"></div>
+                    <div>
+                        <div class="home-stat-label" id="statActiveLabel">Faol arizalar</div>
+                        <div class="home-stat-value" id="statActive">--</div>
+                    </div>
+                </div>
+                <div class="home-stat">
+                    <div class="home-stat-icon tone-violet" id="statSecondIcon"></div>
+                    <div>
+                        <div class="home-stat-label" id="statSecondLabel">Bog'langan kartalar</div>
+                        <div class="home-stat-value" id="statSecond">--</div>
+                    </div>
+                </div>
+                <div class="home-stat">
+                    <div class="home-stat-icon tone-green" id="statTxIcon"></div>
+                    <div>
+                        <div class="home-stat-label">Jami tranzaksiya</div>
+                        <div class="home-stat-value" id="statTx">--</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="stat-row" id="statRow">
-                <div class="stat-tile">
-                    <div class="stat-tile-label" id="statActiveLabel">Faol arizalar</div>
-                    <div class="stat-tile-value" id="statActive">--</div>
-                </div>
-                <div class="stat-tile">
-                    <div class="stat-tile-label" id="statSecondLabel">Bog'langan kartalar</div>
-                    <div class="stat-tile-value" id="statSecond">--</div>
-                </div>
-                <div class="stat-tile">
-                    <div class="stat-tile-label">Jami tranzaksiya</div>
-                    <div class="stat-tile-value" id="statTx">--</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Tezkor amallar</h2>
-                <div class="quick-actions" id="quickActions"></div>
-            </div>
+            <section>
+                <h2 class="home-section-title">Tezkor amallar</h2>
+                <div class="home-actions" id="quickActions"></div>
+            </section>
 
             <div class="card">
                 <h2>
@@ -126,25 +129,50 @@
     <script>
         requireRole(['user', 'service']);
 
-        function quickActionMarkup(icon, label, sub, href) {
-            return `<a class="quick-action" href="${href}">
-                <div class="list-item-icon">${icon}</div>
-                <div>
-                    <div class="quick-action-label">${label}</div>
-                    <div class="quick-action-sub">${sub}</div>
+        const TX_STATUS_LABELS = { provided: "Bajarildi", pending: "Kutilmoqda", rejected: "Rad etildi" };
+        const UZ_MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
+
+        function quickActionMarkup(icon, label, sub, href, tone) {
+            return `<a class="home-action" href="${href}">
+                <div class="home-action-icon ${tone}">${icon}</div>
+                <div class="home-action-text">
+                    <div class="home-action-label">${label}</div>
+                    <div class="home-action-sub">${sub}</div>
                 </div>
+                <svg class="home-action-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
             </a>`;
+        }
+
+        function greetingByHour() {
+            const h = new Date().getHours();
+            if (h < 5) return "Xayrli tun";
+            if (h < 12) return "Xayrli tong";
+            if (h < 18) return "Xayrli kun";
+            return "Xayrli kech";
+        }
+
+        function formatShortDate(value) {
+            if (!value) return '';
+            const d = new Date(value);
+            if (isNaN(d)) return '';
+            return `${d.getDate()} ${UZ_MONTHS[d.getMonth()]}`;
         }
 
         async function initOverview() {
             const role = localStorage.getItem("role");
+            const now = new Date();
+            document.getElementById("todayLabel").innerText = `${now.getDate()} ${UZ_MONTHS[now.getMonth()]}, ${now.getFullYear()}`;
+            document.getElementById("statActiveIcon").innerHTML = appIconSvg();
+            document.getElementById("statSecondIcon").innerHTML = role === 'service' ? txIconSvg() : cardIconSvg();
+            document.getElementById("statTxIcon").innerHTML = txIconSvg();
+
             const profile = await loadNavProfile();
 
             if (profile) {
                 document.getElementById("profFullName").innerText = formatUserFullName(profile);
                 document.getElementById("profUsername").innerText = profile.username || 'Mavjud emas';
                 document.getElementById("profAvatar").innerText = initials(profile.first_name, profile.last_name) || initials(profile.username, '');
-                document.getElementById("greeting").innerText = `Salom, ${profile.first_name || profile.username || ''}`;
+                document.getElementById("greeting").innerText = `${greetingByHour()}, ${profile.first_name || profile.username || ''}`;
 
                 if (role === 'service') {
                     document.getElementById("serviceBalanceRow").classList.remove("hidden");
@@ -155,13 +183,15 @@
             if (role === 'service') {
                 document.getElementById("statSecondLabel").innerText = "Joriy balans";
                 document.getElementById("quickActions").innerHTML =
-                    quickActionMarkup(appIconSvg(), "Ariza yaratish", "Yangi obuna arizasi", "/dashboard/applications") +
-                    quickActionMarkup(txIconSvg(), "Mablag' yechish", "Mijozdan to'lov undirish", "/dashboard/transactions");
+                    quickActionMarkup(appIconSvg(), "Ariza yaratish", "Yangi obuna arizasi", "/dashboard/applications", "tone-blue") +
+                    quickActionMarkup(txIconSvg(), "Mablag' yechish", "Mijozdan to'lov undirish", "/dashboard/transactions", "tone-green") +
+                    quickActionMarkup(cardIconSvg(), "Pul yechish", "Balansdan pul chiqarish", "/dashboard/payouts", "tone-violet");
             } else {
                 document.getElementById("statSecondLabel").innerText = "Bog'langan kartalar";
                 document.getElementById("quickActions").innerHTML =
-                    quickActionMarkup(cardIconSvg(), "Karta biriktirish", "Yangi bank kartasi qo'shish", "/dashboard/cards") +
-                    quickActionMarkup(appIconSvg(), "QR skanerlash", "Xizmatga obuna bo'lish", "/dashboard/applications");
+                    quickActionMarkup(cardIconSvg(), "Karta biriktirish", "Yangi bank kartasi qo'shish", "/dashboard/cards", "tone-violet") +
+                    quickActionMarkup(appIconSvg(), "QR skanerlash", "Xizmatga obuna bo'lish", "/dashboard/applications", "tone-blue") +
+                    quickActionMarkup(txIconSvg(), "Tranzaksiyalar", "To'lovlar tarixi", "/dashboard/transactions", "tone-green");
             }
 
             const [appsRes, txRes, cardsRes] = await Promise.all([
@@ -197,10 +227,13 @@
                                 <div class="list-item-icon">${txIconSvg()}</div>
                                 <div class="list-item-info">
                                     <span class="list-item-title">${(t.amount || 0).toLocaleString('ru-RU')} UZS</span>
-                                    <span class="list-item-sub">#${t.id} · ${formatUserFullName(t.sender)} → ${formatServiceName(t.receiver)}</span>
+                                    <span class="list-item-sub">${formatUserFullName(t.sender)} → ${formatServiceName(t.receiver)}</span>
                                 </div>
                             </div>
-                            <span class="status-tag ${t.status}">${t.status}</span>
+                            <div class="home-tx-side">
+                                <span class="status-tag ${t.status}">${TX_STATUS_LABELS[t.status] || t.status}</span>
+                                <span class="home-tx-date">#${t.id}${t.created_at ? ' · ' + formatShortDate(t.created_at) : ''}</span>
+                            </div>
                         </div>
                     `).join('');
                 }

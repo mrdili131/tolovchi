@@ -78,6 +78,10 @@ def admin_payouts_page():
 def notifications_page():
     return template("notifications.html")
 
+@router.get('/about')
+def about_page():
+    return template("about.html")
+
 @router.get('/info')
 def info_page():
     return template("info.html")

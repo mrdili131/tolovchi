@@ -4,26 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Bindin.uz — Obunalar va avtomatik to‘lovlarni boshqarish</title>
-    <meta name="description" content="Bindin.uz — O‘zbekistondagi obunalar va avtomatik to‘lovlarni boshqarish platformasi. Kartangizni ulang, xizmatlarga obuna bo‘ling va oylik to‘lovlarni avtomatik amalga oshiring.">
-    <meta name="keywords" content="Bindin,Bindin.uz,avtomatik to‘lov,karta orqali to‘lov,obunalar,obuna boshqarish,oylik to‘lov,subscription,subscription manager,Uzbekistan,biznes uchun to‘lov">
+    <meta name="description" content="Bindin.uz — mijozlaringizdan har oy to‘lovni avtomatik yig‘ing. Mijoz kartasini bir marta ulaydi, QR orqali obuna bo‘ladi, to‘lov esa belgilangan kuni o‘zi yechiladi. Bindin bepul — kelishilgan summa balansingizga to‘liq tushadi.">
+    <meta name="keywords" content="Bindin,Bindin.uz,avtomatik to‘lov,karta orqali to‘lov,obunalar,obuna boshqarish,oylik to‘lov,subscription,recurring payments,Uzbekistan,biznes uchun to‘lov,to‘lov API">
     <meta name="author" content="Bindin.uz">
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#1447E6">
     <link rel="canonical" href="https://bindin.uz/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Bindin.uz">
-    <meta property="og:title" content="Bindin.uz — Obunalar va avtomatik to‘lovlar">
-    <meta property="og:description" content="Kartangizni ulang, xizmatlarga obuna bo‘ling va oylik to‘lovlarni avtomatik amalga oshiring.">
+    <meta property="og:title" content="Bindin.uz — Oylik to‘lovlarni avtomatik yig‘ing">
+    <meta property="og:description" content="Mijoz kartasini bir marta ulaydi — har oylik to‘lov o‘zi yechiladi. Bindin bepul — kelishilgan summa balansingizga to‘liq tushadi.">
     <meta property="og:url" content="https://bindin.uz/">
     <meta property="og:locale" content="uz_UZ">
     <meta property="og:image" content="https://bindin.uz/static/bindin-logo.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Bindin.uz — Obunalar va avtomatik to‘lovlar">
+    <meta name="twitter:title" content="Bindin.uz — Oylik to‘lovlarni avtomatik yig‘ing">
     <meta name="twitter:description" content="O‘zbekistondagi obunalar va kartadan avtomatik to‘lovlarni boshqarish platformasi.">
     <meta name="twitter:image" content="https://bindin.uz/static/bindin-logo.png">
     <link rel="icon" type="image/png" sizes="32x32" href="static/bindin-icon-32.png">
     <link rel="apple-touch-icon" href="static/bindin-icon-180.png">
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://bindin.uz/#organization",
+                "name": "Bindin",
+                "alternateName": "Bindin.uz",
+                "url": "https://bindin.uz/",
+                "logo": "https://bindin.uz/static/bindin-logo.png",
+                "description": "O‘zbekistondagi obunalar va kartadan avtomatik to‘lovlarni boshqarish platformasi.",
+                "founder": {
+                    "@type": "Person",
+                    "@id": "https://bindin.uz/about#ceo",
+                    "name": "Abduqodirov Dilmuhammad Sodirjon o‘g‘li",
+                    "jobTitle": "Asoschi va bosh direktor (CEO)",
+                    "url": "https://bindin.uz/about"
+                },
+                "address": { "@type": "PostalAddress", "addressLocality": "Toshkent", "addressCountry": "UZ" },
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+998941390772",
+                    "contactType": "customer support",
+                    "availableLanguage": ["uz", "ru"]
+                },
+                "sameAs": ["https://t.me/mrdili131"]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://bindin.uz/#website",
+                "url": "https://bindin.uz/",
+                "name": "Bindin.uz",
+                "inLanguage": "uz",
+                "publisher": { "@id": "https://bindin.uz/#organization" }
+            }
+        ]
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +74,7 @@
         :root {
             --primary: #1447E6;
             --primary-dark: #0B2F9E;
+            --primary-light: #EAF0FE;
             --ink: #0B1220;
             --ink-soft: #4B5567;
             --ink-faint: #8891A3;
@@ -40,559 +82,665 @@
             --bg: #F6F8FC;
             --surface: #FFFFFF;
             --accent: #16C4A6;
+            --accent-dark: #0D8F77;
             --accent-soft: #E7FBF6;
             --violet: #7C5CFC;
+            --violet-soft: #F1EDFF;
+            --danger: #E5484D;
+            --danger-soft: #FEF0F0;
+            --night: #0B1220;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         html { scroll-behavior: smooth; }
-
         body {
             font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--ink);
             background: var(--bg);
-            line-height: 1.5;
+            line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-
         a { color: inherit; text-decoration: none; }
         img { max-width: 100%; }
+        svg { flex-shrink: 0; }
+        .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
-        .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-
-        /* ---------- Navbar ---------- */
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            background: var(--bg);
-            border-bottom: 1px solid var(--line);
-        }
-
-        .nav-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.9rem 0;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-weight: 800;
-            font-size: 1.15rem;
-        }
-
-        .brand-mark {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            font-weight: 600;
-            font-size: 0.92rem;
-            color: var(--ink-soft);
-        }
-
-        .nav-links a:hover { color: var(--primary); }
-
-        .nav-cta { display: flex; align-items: center; gap: 0.7rem; }
-
+        /* ---------- Buttons ---------- */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            padding: 0.65rem 1.3rem;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.7rem 1.3rem;
+            border-radius: 11px;
+            font-weight: 700; font-size: 0.92rem; font-family: inherit;
+            cursor: pointer; border: none; white-space: nowrap;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
         }
         .btn:active { transform: scale(0.98); }
-
+        .btn svg { width: 18px; height: 18px; fill: currentColor; }
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--violet));
             color: #fff;
-            box-shadow: 0 10px 24px -10px rgba(20,71,230,0.55);
+            box-shadow: 0 12px 26px -12px rgba(20,71,230,0.65);
         }
-        .btn-primary:hover { opacity: 0.94; }
-
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 16px 30px -12px rgba(20,71,230,0.7); }
         .btn-ghost { background: transparent; color: var(--ink); }
         .btn-ghost:hover { color: var(--primary); }
-
-        .btn-outline {
-            background: #fff;
-            color: var(--ink);
-            border: 1.5px solid var(--line);
-        }
+        .btn-outline { background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-white { background: #fff; color: var(--primary); }
+        .btn-white:hover { transform: translateY(-1px); }
+        .btn-glass { background: rgba(255,255,255,0.08); color: #fff; border: 1.5px solid rgba(255,255,255,0.25); }
+        .btn-glass:hover { background: rgba(255,255,255,0.14); }
+        .btn-lg { padding: 0.95rem 1.7rem; font-size: 1rem; border-radius: 13px; }
 
-        .btn-lg { padding: 0.9rem 1.7rem; font-size: 0.98rem; border-radius: 12px; }
-
-        .mobile-nav-toggle {
+        /* ---------- Navbar ---------- */
+        .nav {
+            position: sticky; top: 0; z-index: 200;
+            background: rgba(246,248,252,0.82);
+            backdrop-filter: saturate(180%) blur(14px);
+            -webkit-backdrop-filter: saturate(180%) blur(14px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        .nav.scrolled { border-bottom-color: var(--line); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 0; }
+        .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.15rem; }
+        .brand img { width: 32px; height: 32px; object-fit: contain; }
+        .nav-links { display: flex; align-items: center; gap: 1.8rem; font-weight: 600; font-size: 0.9rem; color: var(--ink-soft); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-cta { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-toggle {
             display: none;
-            width: 38px; height: 38px;
-            border-radius: 9px;
+            width: 40px; height: 40px;
+            border-radius: 10px;
             border: 1px solid var(--line);
             background: #fff;
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
+            cursor: pointer;
         }
-        .mobile-nav-toggle svg { width: 18px; height: 18px; fill: var(--ink); }
+        .nav-toggle svg { width: 20px; height: 20px; fill: var(--ink); }
+        .nav-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 0.4rem 0 1rem;
+        }
+        .nav-mobile a { padding: 0.75rem 0.5rem; border-radius: 10px; font-weight: 700; color: var(--ink-soft); }
+        .nav-mobile a:hover { background: var(--surface); color: var(--ink); }
+        .nav-mobile .btn { margin-top: 0.5rem; }
+        .nav.open .nav-mobile { display: flex; }
 
         /* ---------- Hero ---------- */
-        .hero {
-            position: relative;
-            padding: 4.5rem 0 5rem;
-            overflow: hidden;
+        .hero { position: relative; padding: 4.5rem 0 4rem; }
+        .hero-bg { position: absolute; inset: -200px 0 -200px; overflow: hidden; pointer-events: none; mask-image: linear-gradient(#000 70%, transparent); -webkit-mask-image: linear-gradient(#000 70%, transparent); }
+        .hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(20,71,230,0.10) 1px, transparent 1px);
+            background-size: 22px 22px;
+            mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 30%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 30%, transparent 75%);
+            pointer-events: none;
         }
-
-        .hero-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.35;
-            z-index: 0;
-        }
-        .hero-blob.b1 { width: 420px; height: 420px; background: var(--primary); top: -160px; right: -120px; }
-        .hero-blob.b2 { width: 300px; height: 300px; background: var(--accent); bottom: -120px; left: -100px; opacity: 0.25; }
-
-        .hero-grid {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
-            gap: 3rem;
-            align-items: center;
-        }
+        .hero-blob { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+        .hero-blob.b1 { width: 460px; height: 460px; background: var(--primary); top: 20px; right: -120px; opacity: 0.28; }
+        .hero-blob.b2 { width: 320px; height: 320px; background: var(--accent); bottom: 60px; left: -120px; opacity: 0.22; }
+        .hero-blob.b3 { width: 260px; height: 260px; background: var(--violet); top: 320px; right: 260px; opacity: 0.14; }
+        .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 3.5rem; align-items: center; }
 
         .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
+            display: inline-flex; align-items: center; gap: 0.45rem;
             background: var(--accent-soft);
-            color: #0D8F77;
-            font-weight: 700;
-            font-size: 0.78rem;
-            padding: 0.4rem 0.8rem;
+            color: var(--accent-dark);
+            font-weight: 800; font-size: 0.76rem; letter-spacing: 0.02em;
+            padding: 0.4rem 0.85rem;
             border-radius: 999px;
-            margin-bottom: 1.1rem;
+            margin-bottom: 1.2rem;
         }
+        .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(22,196,166,0.2); }
 
-        .hero h1 {
-            font-size: 2.9rem;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.1rem;
+        .hero h1 { font-size: 3.3rem; font-weight: 800; line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+        .grad {
+            background: linear-gradient(135deg, var(--primary) 10%, var(--violet) 90%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary), var(--violet));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.08rem;
-            color: var(--ink-soft);
-            max-width: 480px;
-            margin-bottom: 1.8rem;
-        }
-
-        .hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
-
-        .hero-trust {
-            display: flex;
-            gap: 1.6rem;
-            color: var(--ink-faint);
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
+        .hero-lead { font-size: 1.12rem; color: var(--ink-soft); max-width: 520px; margin-bottom: 2rem; }
+        .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+        .hero-trust { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; color: var(--ink-soft); font-size: 0.85rem; font-weight: 600; }
         .hero-trust span { display: flex; align-items: center; gap: 0.4rem; }
-        .hero-trust svg { width: 15px; height: 15px; fill: var(--accent); }
+        .hero-trust svg { width: 17px; height: 17px; fill: var(--accent); }
 
-        /* ---------- Hero mockup ---------- */
+        /* Hero visual */
+        .hero-visual { position: relative; padding: 1.5rem 0; }
         .mock-phone {
             position: relative;
-            background: var(--ink);
-            border-radius: 32px;
-            padding: 10px;
-            box-shadow: 0 40px 80px -30px rgba(11,18,32,0.45);
+            background: var(--night);
+            border-radius: 38px;
+            padding: 11px;
+            box-shadow: 0 50px 90px -35px rgba(11,18,32,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset;
             max-width: 300px;
             margin: 0 auto;
         }
-        .mock-screen {
-            background: var(--bg);
-            border-radius: 24px;
-            overflow: hidden;
-            padding-bottom: 1rem;
-        }
-        .mock-topbar {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 1.4rem 1rem 2.2rem;
+        .mock-screen { background: var(--bg); border-radius: 28px; overflow: hidden; padding-bottom: 1rem; }
+        .mock-top {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark) 60%, var(--violet) 140%);
+            padding: 1.5rem 1.1rem 2.4rem;
             color: #fff;
         }
-        .mock-topbar-label { font-size: 0.72rem; opacity: 0.75; font-weight: 600; }
-        .mock-topbar-value { font-size: 1.5rem; font-weight: 800; margin-top: 0.2rem; }
-        .mock-card {
-            background: #fff;
-            margin: -1.4rem 0.9rem 0.7rem;
-            border-radius: 14px;
-            padding: 0.75rem 0.9rem;
-            box-shadow: 0 10px 20px -12px rgba(11,18,32,0.18);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .mock-card-info { display: flex; flex-direction: column; gap: 2px; }
-        .mock-card-title { font-size: 0.78rem; font-weight: 700; }
-        .mock-card-sub { font-size: 0.68rem; color: var(--ink-faint); }
-        .mock-pill {
-            font-size: 0.62rem;
-            font-weight: 800;
-            background: var(--accent-soft);
-            color: #0D8F77;
-            padding: 0.18rem 0.5rem;
-            border-radius: 999px;
-        }
-        .mock-list-item {
-            margin: 0 0.9rem 0.6rem;
+        .mock-top-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; opacity: 0.8; font-weight: 600; margin-bottom: 0.9rem; }
+        .mock-label { font-size: 0.72rem; opacity: 0.78; font-weight: 600; }
+        .mock-value { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.01em; margin-top: 0.15rem; }
+        .mock-delta { display: inline-block; margin-top: 0.35rem; font-size: 0.68rem; font-weight: 800; background: rgba(255,255,255,0.16); padding: 0.18rem 0.5rem; border-radius: 999px; }
+        .mock-item {
+            margin: 0 0.9rem 0.55rem;
             background: #fff;
             border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 0.6rem 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 14px;
+            padding: 0.65rem 0.75rem;
+            display: flex; align-items: center; gap: 0.6rem;
         }
-        .mock-list-item .mock-card-title { font-size: 0.74rem; }
-        .mock-list-item .mock-card-sub { font-size: 0.65rem; }
+        .mock-item:first-of-type { margin-top: -1.5rem; box-shadow: 0 12px 24px -14px rgba(11,18,32,0.25); }
+        .mock-ico { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; }
+        .mock-ico.a { background: var(--primary-light); color: var(--primary); }
+        .mock-ico.b { background: var(--violet-soft); color: var(--violet); }
+        .mock-ico.c { background: var(--accent-soft); color: var(--accent-dark); }
+        .mock-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+        .mock-title { font-size: 0.74rem; font-weight: 800; }
+        .mock-sub { font-size: 0.64rem; color: var(--ink-faint); font-weight: 600; }
+        .mock-amt { font-size: 0.7rem; font-weight: 800; }
+        .mock-amt.ok { color: var(--accent-dark); }
+
+        .float-card {
+            position: absolute;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 0.75rem 0.95rem;
+            box-shadow: 0 22px 40px -22px rgba(11,18,32,0.35);
+            display: flex; align-items: center; gap: 0.65rem;
+            font-size: 0.78rem;
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+        .float-card strong { display: block; font-size: 0.82rem; font-weight: 800; }
+        .float-card span { color: var(--ink-faint); font-weight: 600; font-size: 0.7rem; }
+        .float-card .fi { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .float-card .fi svg { width: 18px; height: 18px; fill: currentColor; }
+        .float-card.f1 { top: -4px; left: -2%; }
+        .float-card.f1 .fi { background: var(--accent-soft); color: var(--accent-dark); }
+        .float-card.f2 { bottom: 14%; right: -6%; animation-delay: -3s; }
+        .float-card.f2 .fi { background: var(--violet-soft); color: var(--violet); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* ---------- Fact strip ---------- */
+        .facts { position: relative; z-index: 1; padding: 0 0 1rem; }
+        .facts-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 18px 40px -30px rgba(11,18,32,0.25);
+        }
+        .fact { padding: 1.4rem 1.5rem; border-left: 1px solid var(--line); }
+        .fact:first-child { border-left: none; }
+        .fact-value { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+        .fact-label { font-size: 0.84rem; color: var(--ink-soft); font-weight: 600; margin-top: 0.15rem; }
 
         /* ---------- Sections ---------- */
-        section { padding: 4.5rem 0; }
+        section { padding: 5rem 0; }
+        .alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .section-head { text-align: center; max-width: 660px; margin: 0 auto 3rem; }
+        .section-head h2 { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.8rem; }
+        .section-head p { color: var(--ink-soft); font-size: 1.04rem; }
 
-        .section-head { text-align: center; max-width: 620px; margin: 0 auto 3rem; }
-        .section-head .eyebrow { margin-bottom: 0.9rem; }
-        .section-head h2 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.8rem; }
-        .section-head p { color: var(--ink-soft); font-size: 1.02rem; }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.3rem;
+        /* ---------- Before / after ---------- */
+        .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+        .compare-card { border-radius: 22px; padding: 2rem 1.8rem; border: 1px solid var(--line); background: var(--bg); }
+        .compare-card.good {
+            background: linear-gradient(160deg, #fff 0%, var(--primary-light) 140%);
+            border-color: #C9D6FB;
+            box-shadow: 0 24px 50px -32px rgba(20,71,230,0.45);
         }
+        .compare-tag { display: inline-block; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; padding: 0.3rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; }
+        .compare-card.bad .compare-tag { background: var(--danger-soft); color: var(--danger); }
+        .compare-card.good .compare-tag { background: var(--primary); color: #fff; }
+        .compare-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: -0.01em; }
+        .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+        .check-list li { display: flex; gap: 0.65rem; align-items: flex-start; font-size: 0.93rem; color: var(--ink-soft); }
+        .check-list li strong { color: var(--ink); }
+        .check-list svg { width: 20px; height: 20px; margin-top: 1px; }
+        .bad .check-list svg { fill: var(--danger); }
+        .good .check-list svg { fill: var(--primary); }
 
+        /* ---------- Feature grid ---------- */
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
         .feature-card {
             background: var(--surface);
             border: 1px solid var(--line);
-            border-radius: 18px;
-            padding: 1.6rem 1.4rem;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            border-radius: 20px;
+            padding: 1.7rem 1.5rem;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
         }
-        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -18px rgba(11,18,32,0.18); }
+        .feature-card:hover { transform: translateY(-3px); border-color: #C9D6FB; box-shadow: 0 20px 40px -26px rgba(11,18,32,0.3); }
+        .feature-card.wide { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: center; }
+        .feature-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; }
+        .feature-icon svg { width: 23px; height: 23px; fill: currentColor; }
+        .t-blue { background: var(--primary-light); color: var(--primary); }
+        .t-green { background: var(--accent-soft); color: var(--accent-dark); }
+        .t-violet { background: var(--violet-soft); color: var(--violet); }
+        .feature-card h3 { font-size: 1.06rem; font-weight: 800; margin-bottom: 0.45rem; }
+        .feature-card p { font-size: 0.9rem; color: var(--ink-soft); }
 
-        .feature-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 12px;
-            background: var(--accent-soft);
-            color: #0D8F77;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
+        .feature-card.cta-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark) 60%, var(--violet) 140%);
+            border: none; color: #fff;
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 0.4rem;
         }
-        .feature-icon.blue { background: #EAF0FE; color: var(--primary); }
-        .feature-icon.violet { background: #F1EDFF; color: var(--violet); }
-        .feature-icon svg { width: 22px; height: 22px; fill: currentColor; }
+        .feature-card.cta-card p { color: rgba(255,255,255,0.82); margin-bottom: 0.8rem; max-width: 440px; }
+        .split-math { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.2rem; font-size: 0.86rem; }
+        .split-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.45rem 0; color: var(--ink-soft); font-weight: 600; }
+        .split-row + .split-row { border-top: 1px dashed var(--line); }
+        .split-row strong { color: var(--ink); font-weight: 800; white-space: nowrap; }
+        .split-row.total strong { color: var(--accent-dark); font-size: 1rem; }
 
-        .feature-card h3 { font-size: 1.02rem; font-weight: 800; margin-bottom: 0.45rem; }
-        .feature-card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.55; }
-
-        /* ---------- Audience section ---------- */
-        .audience-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.4rem;
+        /* ---------- How it works (tabs) ---------- */
+        .tabs { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+        .tab-switch { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 5px; gap: 4px; }
+        .tab-btn {
+            border: none; background: transparent; cursor: pointer;
+            font-family: inherit; font-weight: 800; font-size: 0.9rem; color: var(--ink-soft);
+            padding: 0.65rem 1.3rem; border-radius: 10px;
+            transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
         }
-
-        .audience-card {
-            border-radius: 22px;
-            padding: 2rem 1.8rem;
+        .tab-btn.active { background: #fff; color: var(--primary); box-shadow: 0 4px 12px -6px rgba(11,18,32,0.25); }
+        .steps { display: none; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; counter-reset: step; }
+        .steps.active { display: grid; }
+        .step {
             position: relative;
-            overflow: hidden;
-            color: #fff;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 1.5rem 1.3rem;
         }
-        .audience-card.user { background: linear-gradient(150deg, var(--primary), var(--primary-dark)); }
-        .audience-card.service { background: linear-gradient(150deg, #1B1F3B, #0B0D22); }
-
-        .audience-tag {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            background: rgba(255,255,255,0.15);
-            padding: 0.3rem 0.7rem;
-            border-radius: 999px;
-            margin-bottom: 1rem;
-        }
-
-        .audience-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.6rem; }
-        .audience-card p { font-size: 0.92rem; opacity: 0.85; margin-bottom: 1.4rem; max-width: 380px; }
-
-        .audience-list { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.6rem; }
-        .audience-list li {
-            list-style: none;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.55rem;
-            font-size: 0.86rem;
-            opacity: 0.92;
-        }
-        .audience-list svg { width: 16px; height: 16px; fill: var(--accent); flex-shrink: 0; margin-top: 2px; }
-
-        /* ---------- Steps ---------- */
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.2rem;
-        }
-        .step-card { text-align: center; padding: 0 0.5rem; }
         .step-num {
-            width: 42px; height: 42px;
-            border-radius: 50%;
+            width: 40px; height: 40px; border-radius: 12px;
             background: linear-gradient(135deg, var(--primary), var(--violet));
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            margin: 0 auto 0.9rem;
+            color: #fff; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 20px -10px rgba(20,71,230,0.6);
         }
-        .step-card h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.4rem; }
-        .step-card p { font-size: 0.82rem; color: var(--ink-soft); }
+        .step h4 { font-size: 1rem; font-weight: 800; margin-bottom: 0.35rem; }
+        .step p { font-size: 0.86rem; color: var(--ink-soft); }
 
-        /* ---------- CTA banner ---------- */
-        .cta-banner {
-            background: linear-gradient(135deg, var(--primary), var(--violet));
-            border-radius: 26px;
-            padding: 3rem 2.5rem;
-            text-align: center;
+        /* ---------- Use cases ---------- */
+        .uses { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .use {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 1.3rem 1.2rem;
+            display: flex; flex-direction: column; gap: 0.7rem;
+        }
+        .use .feature-icon { margin-bottom: 0; width: 44px; height: 44px; }
+        .use h4 { font-size: 0.98rem; font-weight: 800; }
+        .use p { font-size: 0.84rem; color: var(--ink-soft); }
+
+        /* ---------- Developers ---------- */
+        .dev {
+            background: radial-gradient(circle at 90% 0%, rgba(124,92,252,0.35), transparent 45%), radial-gradient(circle at 0% 100%, rgba(20,71,230,0.4), transparent 50%), var(--night);
             color: #fff;
-            position: relative;
+            border-radius: 28px;
+            padding: 3rem;
+            display: grid; grid-template-columns: 1fr 1.1fr; gap: 2.5rem; align-items: center;
             overflow: hidden;
         }
-        .cta-banner h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.7rem; }
-        .cta-banner p { opacity: 0.85; margin-bottom: 1.6rem; }
-        .cta-banner .btn-outline { background: #fff; border: none; color: var(--primary); }
+        .dev .eyebrow { background: rgba(22,196,166,0.15); color: #5EEAD4; }
+        .dev h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.9rem; }
+        .dev p { color: #AEB6C7; margin-bottom: 1.4rem; }
+        .dev .check-list li { color: #C9D0DE; }
+        .dev .check-list svg { fill: #5EEAD4; }
+        .dev-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.6rem; }
+        .code {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            overflow: hidden;
+            min-width: 0;
+        }
+        .code-bar { display: flex; align-items: center; gap: 6px; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .code-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.18); }
+        .code-bar span { margin-left: 0.5rem; font-size: 0.74rem; color: #8891A3; font-weight: 700; }
+        .code pre {
+            padding: 1.1rem 1.2rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.8rem; line-height: 1.7;
+            color: #DCE3F0;
+            overflow-x: auto;
+        }
+        .c-k { color: #7DD3FC; } .c-s { color: #86EFAC; } .c-c { color: #6B7386; } .c-n { color: #FCA5A5; }
+
+        /* ---------- App banner ---------- */
+        .app-banner {
+            display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 2rem; align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark) 60%, var(--violet) 140%);
+            color: #fff;
+            border-radius: 28px;
+            padding: 2.8rem 3rem;
+            position: relative; overflow: hidden;
+        }
+        .app-banner::after {
+            content: ""; position: absolute; right: -80px; top: -100px;
+            width: 320px; height: 320px; border-radius: 50%;
+            border: 50px solid rgba(255,255,255,0.06);
+        }
+        .app-banner .eyebrow { background: rgba(255,255,255,0.14); color: #fff; }
+        .app-banner .eyebrow .dot { background: #5EEAD4; }
+        .app-banner h2 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.7rem; }
+        .app-banner p { opacity: 0.85; max-width: 480px; }
+        .app-note { font-size: 0.76rem; opacity: 0.65 !important; margin-top: 1rem; }
+        .app-cta { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+        .app-cta small { font-size: 0.76rem; opacity: 0.75; font-weight: 600; }
+
+        /* ---------- FAQ ---------- */
+        .faq { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.7rem; }
+        .faq details {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 0 1.3rem;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .faq details[open] { border-color: #C9D6FB; box-shadow: 0 16px 32px -26px rgba(20,71,230,0.5); }
+        .faq summary {
+            list-style: none; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+            padding: 1.1rem 0;
+            font-weight: 800; font-size: 0.98rem;
+        }
+        .faq summary::-webkit-details-marker { display: none; }
+        .faq summary svg { width: 22px; height: 22px; fill: var(--ink-faint); transition: transform 0.2s ease; }
+        .faq details[open] summary svg { transform: rotate(45deg); fill: var(--primary); }
+        .faq details p { color: var(--ink-soft); font-size: 0.92rem; padding-bottom: 1.2rem; }
+
+        /* ---------- Final CTA ---------- */
+        .cta {
+            text-align: center;
+            background: radial-gradient(circle at 50% -20%, rgba(124,92,252,0.45), transparent 60%), var(--night);
+            color: #fff;
+            border-radius: 28px;
+            padding: 4rem 2rem;
+        }
+        .cta h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.8rem; }
+        .cta p { color: #AEB6C7; margin: 0 auto 2rem; max-width: 520px; }
+        .cta-actions { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
 
         /* ---------- Footer ---------- */
-        footer { background: #0B1220; color: #C9D0DE; padding: 3.5rem 0 2rem; }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr;
-            gap: 2.5rem;
-            margin-bottom: 2.5rem;
-        }
+        footer { background: var(--night); color: #C9D0DE; padding: 3.5rem 0 2rem; margin-top: 5rem; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 2.5rem; margin-bottom: 2.5rem; }
         .footer-brand .brand { color: #fff; margin-bottom: 0.8rem; }
-        .footer-brand p { font-size: 0.85rem; color: #8891A3; max-width: 280px; }
-        footer h5 { color: #fff; font-size: 0.85rem; font-weight: 800; margin-bottom: 1rem; }
+        .footer-brand p { font-size: 0.86rem; color: #8891A3; max-width: 290px; }
+        footer h5 { color: #fff; font-size: 0.86rem; font-weight: 800; margin-bottom: 1rem; }
         footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-        footer ul a { font-size: 0.86rem; color: #C9D0DE; }
+        footer ul a { font-size: 0.87rem; color: #C9D0DE; }
         footer ul a:hover { color: #fff; }
         .footer-contact-item { display: flex; align-items: center; gap: 0.5rem; }
-        .footer-contact-item svg { width: 15px; height: 15px; fill: var(--accent); flex-shrink: 0; }
+        .footer-contact-item svg { width: 15px; height: 15px; fill: var(--accent); }
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.08);
             padding-top: 1.5rem;
-            font-size: 0.78rem;
-            color: #6B7386;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.6rem;
+            font-size: 0.78rem; color: #6B7386;
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;
+        }
+
+        /* ---------- Reveal on scroll ---------- */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .float-card { animation: none; }
+            html { scroll-behavior: auto; }
         }
 
         /* ---------- Responsive ---------- */
-        @media (max-width: 860px) {
-            .nav-links { display: none; }
-            .mobile-nav-toggle { display: flex; }
-            .hero-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero { padding: 2.5rem 0 3rem; text-align: left; }
+        @media (max-width: 980px) {
+            .hero h1 { font-size: 2.7rem; }
             .feature-grid { grid-template-columns: 1fr 1fr; }
-            .audience-grid { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .mock-phone { max-width: 240px; }
+            .feature-card.wide, .feature-card.cta-card { grid-column: span 2; }
+            .uses { grid-template-columns: 1fr 1fr; }
+            .dev { grid-template-columns: 1fr; padding: 2.4rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
-
-        @media (max-width: 520px) {
-            .feature-grid { grid-template-columns: 1fr; }
+        @media (max-width: 860px) {
+            .nav-links, .nav-cta .hide-mobile { display: none; }
+            .nav-toggle { display: flex; }
+            .hero { padding: 2.5rem 0 3rem; }
+            .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .facts-grid { grid-template-columns: 1fr 1fr; }
+            .fact:nth-child(3) { border-left: none; }
+            .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+            .compare { grid-template-columns: 1fr; }
             .steps { grid-template-columns: 1fr 1fr; }
-            .nav-cta .btn-outline.hide-mobile { display: none; }
+            .app-banner { grid-template-columns: 1fr; padding: 2.2rem; }
+            section { padding: 3.8rem 0; }
+            .section-head h2 { font-size: 1.9rem; }
+        }
+        @media (max-width: 560px) {
+            .wrap { padding: 0 16px; }
+            .hero h1 { font-size: 2.15rem; }
+            .hero-lead { font-size: 1rem; }
             .hero-actions .btn { flex: 1; }
+            .float-card.f1 { left: 0; top: -4px; }
+            .float-card.f2 { right: 0; bottom: 6%; }
+            .mock-phone { max-width: 250px; }
+            .fact { padding: 1.1rem; }
+            .fact-value { font-size: 1.35rem; }
+            .feature-grid, .uses, .steps { grid-template-columns: 1fr; }
+            .feature-card.wide { grid-column: auto; grid-template-columns: 1fr; }
+            .feature-card.cta-card { grid-column: auto; }
+            .tab-btn { padding: 0.6rem 0.9rem; font-size: 0.84rem; }
+            .dev { padding: 1.8rem 1.3rem; }
+            .dev h2, .app-banner h2 { font-size: 1.6rem; }
+            .app-banner { padding: 1.8rem 1.4rem; }
+            .cta { padding: 3rem 1.3rem; }
+            .cta h2 { font-size: 1.8rem; }
+            .footer-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="nav">
-        <div class="wrap nav-inner">
-            <a href="/" class="brand">
-                <span class="brand-mark">
-                    <img src="static/bindin-icon-64.png" alt="Bindin">
-                </span>
-                Bindin
-            </a>
-            <div class="nav-links">
-                <a href="#features">Imkoniyatlar</a>
-                <a href="#audience">Kimlar uchun</a>
-                <a href="#how">Qanday ishlaydi</a>
-                <a href="#mobile-app">Mobil ilova</a>
-                <a href="/info">Aloqa</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="nav-inner">
+                <a href="/" class="brand">
+                    <img src="static/bindin-icon-64.png" alt="Bindin logotipi">
+                    Bindin
+                </a>
+                <div class="nav-links">
+                    <a href="#business">Biznes uchun</a>
+                    <a href="#how">Qanday ishlaydi</a>
+                    <a href="#developers">API</a>
+                    <a href="#faq">Savollar</a>
+                    <a href="/about">Biz haqimizda</a>
+                    <a href="/info">Aloqa</a>
+                </div>
+                <div class="nav-cta">
+                    <a href="/auth?mode=login" class="btn btn-ghost hide-mobile">Kirish</a>
+                    <a href="/auth?mode=register" class="btn btn-primary">Boshlash</a>
+                    <button class="nav-toggle" id="navToggle" aria-label="Menyu" aria-expanded="false">
+                        <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+                    </button>
+                </div>
             </div>
-            <div class="nav-cta">
-                <a href="/auth?mode=login" class="btn btn-ghost hide-mobile">Kirish</a>
-                <a href="/auth?mode=register" class="btn btn-primary">Boshlash</a>
+            <div class="nav-mobile" id="navMobile">
+                <a href="#business">Biznes uchun</a>
+                <a href="#how">Qanday ishlaydi</a>
+                <a href="#developers">API</a>
+                <a href="#faq">Savollar</a>
+                <a href="/about">Biz haqimizda</a>
+                <a href="/info">Aloqa</a>
+                <a href="/auth?mode=login" class="btn btn-outline">Kirish</a>
             </div>
         </div>
     </nav>
 
     <header class="hero">
-        <span class="hero-blob b1"></span>
-        <span class="hero-blob b2"></span>
+        <div class="hero-bg" aria-hidden="true">
+            <span class="hero-blob b1"></span>
+            <span class="hero-blob b2"></span>
+            <span class="hero-blob b3"></span>
+        </div>
         <div class="wrap hero-grid">
             <div>
-                <h1>Obunalar va <span>avtomatik to‘lovlarni</span> bir joyda boshqaring</h1>
-                <p>Bank kartangizni ulang, xizmatlarga QR orqali obuna bo‘ling va oylik to‘lovlarni avtomatik amalga oshiring. Bizneslar uchun — mijozlar to‘lovini to‘liq nazorat qilish imkoniyati.</p>
+                <h1>Oylik to‘lovlarni <span class="grad">o‘zi yig‘iladigan</span> qiling</h1>
+                <p class="hero-lead">Mijoz kartasini bir marta ulaydi va QR orqali obuna bo‘ladi. Shundan keyin Bindin har oy belgilangan kuni to‘lovni avtomatik yechadi — eslatma, qo‘ng‘iroq va qarzdorlarsiz.</p>
                 <div class="hero-actions">
-                    <a href="/auth?mode=register" class="btn btn-primary btn-lg">Bepul boshlash</a>
+                    <a href="/auth?mode=register" class="btn btn-primary btn-lg">
+                        Bepul boshlash
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
                     <a href="#how" class="btn btn-outline btn-lg">Qanday ishlaydi?</a>
                 </div>
                 <div class="hero-trust">
-                    <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Xavfsiz to‘lovlar</span>
-                    <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Istalgan vaqt bekor qilish</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Summa biznesga to‘liq tushadi</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Mijoz istalgan vaqt bekor qiladi</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Bindin — butunlay bepul</span>
                 </div>
             </div>
-            <div class="mock-phone">
-                <div class="mock-screen">
-                    <div class="mock-topbar">
-                        <div class="mock-topbar-label">Joriy balans</div>
-                        <div class="mock-topbar-value">12 450 000 UZS</div>
-                    </div>
-                    <div class="mock-card">
-                        <div class="mock-card-info">
-                            <span class="mock-card-title">Vali Aliyev</span>
-                            <span class="mock-card-sub">•••• 4482</span>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="float-card f1">
+                    <div class="fi"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></div>
+                    <div><strong>+250 000 UZS</strong><span>To‘lov qabul qilindi</span></div>
+                </div>
+                <div class="mock-phone">
+                    <div class="mock-screen">
+                        <div class="mock-top">
+                            <div class="mock-top-row"><span>Bindin Biznes</span><span>●●●</span></div>
+                            <div class="mock-label">Joriy balans</div>
+                            <div class="mock-value">12 450 000 UZS</div>
+                            <span class="mock-delta">Bu oy: 48 ta to‘lov</span>
                         </div>
-                        <span class="mock-pill">Faol</span>
-                    </div>
-                    <div class="mock-list-item">
-                        <div class="mock-card-info">
-                            <span class="mock-card-title">Netflix obunasi</span>
-                            <span class="mock-card-sub">Har oy · 5-kun</span>
+                        <div class="mock-item">
+                            <div class="mock-ico a">SZ</div>
+                            <div class="mock-info"><span class="mock-title">Sport zal · oylik</span><span class="mock-sub">Aliyev V. · bugun</span></div>
+                            <span class="mock-amt ok">+250 000</span>
                         </div>
-                        <span class="mock-pill">45 000 UZS</span>
-                    </div>
-                    <div class="mock-list-item">
-                        <div class="mock-card-info">
-                            <span class="mock-card-title">Sport zal a'zoligi</span>
-                            <span class="mock-card-sub">Har oy · 1-kun</span>
+                        <div class="mock-item">
+                            <div class="mock-ico b">IT</div>
+                            <div class="mock-info"><span class="mock-title">Ingliz tili kursi</span><span class="mock-sub">Karimova N. · bugun</span></div>
+                            <span class="mock-amt ok">+400 000</span>
                         </div>
-                        <span class="mock-pill">250 000 UZS</span>
+                        <div class="mock-item">
+                            <div class="mock-ico c">NT</div>
+                            <div class="mock-info"><span class="mock-title">Internet tarifi</span><span class="mock-sub">Rahimov S. · kecha</span></div>
+                            <span class="mock-amt ok">+120 000</span>
+                        </div>
                     </div>
+                </div>
+                <div class="float-card f2">
+                    <div class="fi"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"/></svg></div>
+                    <div><strong>Keyingi yechish</strong><span>Har oy · 5-kun</span></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="features">
+    <div class="facts">
         <div class="wrap">
-            <div class="section-head">
-                <span class="eyebrow">Imkoniyatlar</span>
-                <h2>Barcha to‘lov jarayonlari bitta ilovada</h2>
-                <p>Bindin orqali kartangizni bog‘lang, obunalarni kuzating va har bir tranzaksiyani nazorat qiling.</p>
+            <div class="facts-grid reveal">
+                <div class="fact"><div class="fact-value grad">0 so‘m</div><div class="fact-label">Bindin xizmati uchun to‘lov</div></div>
+                <div class="fact"><div class="fact-value grad">100%</div><div class="fact-label">kelishilgan summa balansingizga</div></div>
+                <div class="fact"><div class="fact-value grad">3 urinish</div><div class="fact-label">to‘lov o‘tmasa, avtomatik qayta</div></div>
+                <div class="fact"><div class="fact-value grad">REST API</div><div class="fact-label">tizimingizga ulash uchun</div></div>
             </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon blue"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
-                    <h3>Kartani ulash</h3>
-                    <p>Bank kartangizni bir marta ulang va istalgan xizmatga to‘lovni avtomatlashtiring.</p>
+        </div>
+    </div>
+
+    <section>
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">Muammo va yechim</span>
+                <h2>Har oy pul so‘rab yurishni to‘xtating</h2>
+                <p>Obuna asosida ishlaydigan har bir biznes bir xil muammoga duch keladi. Bindin uni ildizi bilan hal qiladi.</p>
+            </div>
+            <div class="compare">
+                <div class="compare-card bad reveal">
+                    <span class="compare-tag">HOZIR</span>
+                    <h3>Qo‘lda to‘lov yig‘ish</h3>
+                    <ul class="check-list">
+                        <li><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> Har oy mijozlarga eslatma yozish va qo‘ng‘iroq qilish</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> Kechikkan to‘lovlar va to‘planib qolgan qarzlar</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> Kim to‘lagan, kim to‘lamaganini Excel’da kuzatish</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> Mijoz uchun ham noqulay: har oy o‘tkazma qilishni unutmaslik</li>
+                    </ul>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5z"/></svg></div>
-                    <h3>QR orqali obuna</h3>
-                    <p>Xizmatning QR kodini skanerlang va bir zumda obunaga ulaning — hech qanday qog‘ozbozliksiz.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon violet"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
-                    <h3>Avtomatik yechish</h3>
-                    <p>Belgilangan kuni to‘lov avtomatik amalga oshadi — hech narsani qo‘lda kiritish shart emas.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></div>
-                    <h3>Tranzaksiyalar tarixi</h3>
-                    <p>Har bir to‘lov avtomatik ravishda daftaringizda saqlanadi va istalgan vaqt ko‘rish mumkin.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
-                    <h3>Xavfsizlik</h3>
-                    <p>Barcha ma'lumotlar shifrlangan holda saqlanadi, to‘lovlar rasmiy provayder orqali amalga oshadi.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon violet"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-                    <h3>Biznes uchun panel</h3>
-                    <p>Mijozlaringiz ro‘yxatini, arizalarni va balansni bitta boshqaruv panelida kuzating.</p>
+                <div class="compare-card good reveal">
+                    <span class="compare-tag">BINDIN BILAN</span>
+                    <h3>To‘lovlar o‘zi yig‘iladi</h3>
+                    <ul class="check-list">
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> <span><strong>Belgilangan kuni</strong> to‘lov kartadan o‘zi yechiladi</span></li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> <span>O‘tmagan to‘lov uchun <strong>avtomatik qayta urinish</strong></span></li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> <span>Barcha mijoz va tranzaksiyalar <strong>bitta panelda</strong></span></li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> <span>Mijoz uchun: <strong>bir marta ulaydi</strong> — boshqa o‘ylamaydi</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="audience" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <section id="business" class="alt">
         <div class="wrap">
-            <div class="section-head">
-                <span class="eyebrow">Kimlar uchun</span>
-                <h2>Foydalanuvchilar va bizneslar uchun</h2>
-                <p>Bindin ikkala tomon uchun ham qulay boshqaruv imkonini beradi.</p>
+            <div class="section-head reveal">
+                <span class="eyebrow">Biznes uchun</span>
+                <h2>Daromadingizni barqaror qiladigan vositalar</h2>
+                <p>Ariza yarating, mijozni QR orqali ulang — qolganini Bindin bajaradi.</p>
             </div>
-            <div class="audience-grid">
-                <div class="audience-card user">
-                    <span class="audience-tag">FOYDALANUVCHI UCHUN</span>
-                    <h3>Barcha obunalaringizni nazorat qiling</h3>
-                    <p>Kartangizni ulang, xizmatlarga QR orqali obuna bo‘ling va to‘lovlaringizni istalgan vaqt bekor qiling.</p>
-                    <ul class="audience-list">
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Bir nechta kartani bog‘lash</li>
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> QR skaner orqali tezkor ulanish</li>
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> To‘lovlar tarixini kuzatish</li>
-                    </ul>
-                    <a href="/auth?mode=register" class="btn btn-outline">Foydalanuvchi sifatida boshlash</a>
+            <div class="feature-grid">
+                <div class="feature-card wide reveal">
+                    <div>
+                        <div class="feature-icon t-green"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+                        <h3>Bindin bepul — summani to‘liq olasiz</h3>
+                        <p>Bindin o‘z xizmati uchun hech qanday haq olmaydi. Faqat InPay to‘lov tizimining 6% komissiyasi mijoz to‘lovi ustiga qo‘shiladi — siz belgilagan narx balansingizga to‘liq tushadi.</p>
+                    </div>
+                    <div class="split-math">
+                        <div class="split-row"><span>Obuna narxi</span><strong>250 000 UZS</strong></div>
+                        <div class="split-row"><span>InPay komissiyasi (6%) — mijozdan</span><strong>+15 000 UZS</strong></div>
+                        <div class="split-row"><span>Bindin komissiyasi</span><strong>0 UZS</strong></div>
+                        <div class="split-row total"><span>Balansingizga tushadi</span><strong>250 000 UZS</strong></div>
+                    </div>
                 </div>
-                <div class="audience-card service">
-                    <span class="audience-tag">BIZNES UCHUN</span>
-                    <h3>Mijozlar to‘lovini avtomatlashtiring</h3>
-                    <p>Ariza yarating, QR kod orqali mijoz ulang va oylik to‘lovlarni avtomatik yechib oling.</p>
-                    <ul class="audience-list">
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Cheksiz ariza yaratish</li>
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Balans va tranzaksiya nazorati</li>
-                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Avtomatik yechish jadvali</li>
-                    </ul>
-                    <a href="/info" class="btn btn-outline" style="background:transparent; border:1.5px solid rgba(255,255,255,0.35); color:#fff;">Biznes sifatida ulanish</a>
+                <div class="feature-card reveal">
+                    <div class="feature-icon t-blue"><svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></div>
+                    <h3>Avtomatik qayta urinish</h3>
+                    <p>Kartada mablag‘ yetmasa, tizim keyingi kunlari yana urinadi. Mijozning bir nechta kartasi bo‘lsa — navbatdagisidan yechadi.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon t-violet"><svg viewBox="0 0 24 24"><path d="M3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm2 10H3v4c0 1.1.9 2 2 2h4v-2H5v-4zm14 4h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zm0-14h-4V3h4c1.1 0 2 .9 2 2v4h-2V5z"/></svg></div>
+                    <h3>QR orqali ulash</h3>
+                    <p>Har bir ariza uchun QR kod chiqaring. Mijoz skanerlaydi — obuna bir zumda bog‘lanadi, shartnoma va qog‘ozsiz.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon t-green"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+                    <h3>Panel va hisobotlar</h3>
+                    <p>Faol obunalar, balans va har bir tranzaksiya real vaqtda. Hisobotlarni chop etish uchun tayyor ko‘rinishda yuklab oling.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon t-blue"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14c1.1 0 2 .9 2 2v1h-9a2 2 0 00-2 2v8a2 2 0 002 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+                    <h3>Pul yechish</h3>
+                    <p>To‘plangan balansni panel orqali so‘rov yuborib, o‘z hisobingizga chiqarib oling.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon t-violet"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div>
+                    <h3>Har kuni avtomatik</h3>
+                    <p>Tizim har kuni ertalab muddati kelgan obunalarni tekshiradi va to‘lovni o‘zi yechadi — sizdan hech qanday harakat talab qilinmaydi.</p>
+                </div>
+                <div class="feature-card cta-card reveal">
+                    <h3>Biznesingizni ulashga tayyormisiz?</h3>
+                    <p>Hamkorlik bo‘yicha Telegram’da yozing — hisobingizni biznes sifatida faollashtirib, birinchi arizangizni yaratishda yordam beramiz.</p>
+                    <a href="https://t.me/mrdili131" target="_blank" rel="noopener" class="btn btn-white"><svg viewBox="0 0 24 24"><path d="M21.94 6.07c-.13-.53-.63-.9-1.19-.79L2.9 9.13c-.6.13-1 .68-.9 1.28.08.46.44.81.9.9l4.98 1 1.9 6.02c.15.48.6.8 1.1.8.35 0 .68-.16.9-.44l2.4-3.02 4.5 3.3c.2.15.44.22.68.22.15 0 .3-.03.44-.09.4-.16.68-.53.72-.96l1.5-11.5c.02-.19 0-.38-.08-.57z"/></svg> Telegram’da yozish</a>
                 </div>
             </div>
         </div>
@@ -600,57 +748,163 @@
 
     <section id="how">
         <div class="wrap">
-            <div class="section-head">
+            <div class="section-head reveal">
                 <span class="eyebrow">Qanday ishlaydi</span>
-                <h2>4 ta oddiy qadam</h2>
-                <p>Bir necha daqiqada tizimdan foydalanishni boshlang.</p>
+                <h2>Bir necha daqiqada ishga tushiring</h2>
+                <p>Biznes ham, mijoz ham bir martalik sozlashdan keyin boshqa hech narsa qilmaydi.</p>
             </div>
-            <div class="steps">
-                <div class="step-card">
-                    <div class="step-num">1</div>
-                    <h4>Ro‘yxatdan o‘ting</h4>
-                    <p>Ism va login ma'lumotlaringiz bilan hisob yarating.</p>
+            <div class="tabs reveal">
+                <div class="tab-switch" role="tablist">
+                    <button class="tab-btn active" role="tab" aria-selected="true" data-tab="steps-business">Biznes uchun</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" data-tab="steps-user">Mijoz uchun</button>
                 </div>
-                <div class="step-card">
-                    <div class="step-num">2</div>
-                    <h4>Kartani ulang</h4>
-                    <p>Bank kartangizni xavfsiz tarzda tizimga biriktiring.</p>
+            </div>
+            <div class="steps active" id="steps-business">
+                <div class="step reveal"><div class="step-num">1</div><h4>Biznes hisobi</h4><p>Hamkorlik bo‘yicha <a href="https://t.me/mrdili131" target="_blank" rel="noopener" style="color:var(--primary); font-weight:700;">@mrdili131</a> ga Telegram’da yozing — hisobingizni biznes sifatida faollashtiramiz.</p></div>
+                <div class="step reveal"><div class="step-num">2</div><h4>Ariza yarating</h4><p>Obuna summasi va har oylik to‘lov kunini belgilang.</p></div>
+                <div class="step reveal"><div class="step-num">3</div><h4>QR’ni ulashing</h4><p>Mijoz QR kodni skanerlab, kartasi bilan obunaga ulanadi.</p></div>
+                <div class="step reveal"><div class="step-num">4</div><h4>Pul tushadi</h4><p>Har oy belgilangan kuni summa balansingizga avtomatik tushadi.</p></div>
+            </div>
+            <div class="steps" id="steps-user">
+                <div class="step"><div class="step-num">1</div><h4>Ro‘yxatdan o‘ting</h4><p>Ism va login bilan bir daqiqada hisob yarating.</p></div>
+                <div class="step"><div class="step-num">2</div><h4>Kartani ulang</h4><p>Karta raqami va muddatini kiriting, telefoningizga kelgan SMS kod bilan tasdiqlang.</p></div>
+                <div class="step"><div class="step-num">3</div><h4>QR skanerlang</h4><p>Xizmat ko‘rsatgan QR kod orqali obunaga ulaning.</p></div>
+                <div class="step"><div class="step-num">4</div><h4>Unuting</h4><p>To‘lov o‘z vaqtida o‘tadi. Kerak bo‘lsa, obunani istalgan vaqt bekor qilasiz.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="alt">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">Kimlar uchun</span>
+                <h2>Har oy to‘lov oladigan har qanday biznes uchun</h2>
+            </div>
+            <div class="uses">
+                <div class="use reveal">
+                    <div class="feature-icon t-blue"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg></div>
+                    <h4>Sport zallar</h4>
+                    <p>Oylik a‘zolik to‘lovlari kechikmasdan.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-num">3</div>
-                    <h4>QR skanerlang</h4>
-                    <p>Xizmatning QR kodi orqali obunaga ulaning.</p>
+                <div class="use reveal">
+                    <div class="feature-icon t-violet"><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div>
+                    <h4>O‘quv markazlari</h4>
+                    <p>Kurs to‘lovlari har oy o‘z vaqtida.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-num">4</div>
-                    <h4>Avtomatik to‘lov</h4>
-                    <p>Belgilangan kunda to‘lov avtomatik amalga oshadi.</p>
+                <div class="use reveal">
+                    <div class="feature-icon t-green"><svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg></div>
+                    <h4>Internet va xizmatlar</h4>
+                    <p>Abonent to‘lovlari avtomatik yechiladi.</p>
+                </div>
+                <div class="use reveal">
+                    <div class="feature-icon t-blue"><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg></div>
+                    <h4>Onlayn servislar</h4>
+                    <p>SaaS va kontent obunalari API orqali.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="mobile-app" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <section id="developers">
         <div class="wrap">
-            <div class="audience-card service" style="max-width:none;">
-                <span class="audience-tag">MOBIL ILOVA</span>
-                <h3>Bindin endi Android uchun ham mavjud</h3>
-                <p>Kartangizni ulang, QR orqali obuna bo‘ling va to‘lovlaringizni telefoningizdan boshqaring — brauzerga muhtoj bo‘lmasdan.</p>
-                <a href="/static/downloads/bindin-1.3.apk" class="btn btn-outline" style="background:transparent; border:1.5px solid rgba(255,255,255,0.35); color:#fff; display:inline-flex; align-items:center; gap:0.5rem;">
-                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24c-1.44-.65-3.06-1.01-4.47-1.01s-3.03.36-4.47 1.01L5.65 5.67c-.19-.29-.58-.38-.87-.2-.28.18-.37.54-.22.83L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
-                    APK yuklab olish (Bindin 1.3)
-                </a>
-                <p style="margin-top:0.9rem; font-size:0.78rem; opacity:0.7;">Google Play’dan tashqarida joylashgan APK fayl — o‘rnatishdan oldin qurilmangizda "noma’lum manbalardan o‘rnatish" ruxsatini yoqishingiz kerak bo‘lishi mumkin.</p>
+            <div class="dev reveal">
+                <div>
+                    <span class="eyebrow">Dasturchilar uchun</span>
+                    <h2>O‘z tizimingizga bir necha qatorda ulang</h2>
+                    <p>Bindin API orqali arizalar va tranzaksiyalarni o‘z tizimingizdan boshqaring, muhim hodisalar haqida webhook orqali xabar oling.</p>
+                    <ul class="check-list">
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> API kalit orqali xavfsiz autentifikatsiya</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Obuna yopilganda webhook xabari</li>
+                        <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> O‘zbek tilidagi to‘liq hujjatlar</li>
+                    </ul>
+                    <div class="dev-actions">
+                        <a href="/api-docs" class="btn btn-white">API hujjatlari</a>
+                    </div>
+                </div>
+                <div class="code">
+                    <div class="code-bar"><i></i><i></i><i></i><span>terminal</span></div>
+<pre><span class="c-c"># Biznesingiz arizalarini olish</span>
+<span class="c-k">curl</span> https://bindin.uz/api/application/ \
+  -H <span class="c-s">"X-API-Key: bnd_live_..."</span>
+
+<span class="c-c"># Javob</span>
+{
+  <span class="c-s">"items"</span>: [{
+    <span class="c-s">"id"</span>: <span class="c-n">42</span>,
+    <span class="c-s">"amount"</span>: <span class="c-n">250000</span>,
+    <span class="c-s">"is_active"</span>: <span class="c-k">true</span>
+  }],
+  <span class="c-s">"total"</span>: <span class="c-n">1</span>
+}</pre>
+                </div>
             </div>
         </div>
     </section>
 
-    <section>
+    <section style="padding-top:0;">
         <div class="wrap">
-            <div class="cta-banner">
-                <h2>Bugundan boshlang</h2>
-                <p>Ro‘yxatdan o‘tish bir necha daqiqa vaqt oladi, xolos.</p>
-                <a href="/auth?mode=register" class="btn btn-outline btn-lg">Hisob yaratish</a>
+            <div class="app-banner reveal">
+                <div style="position:relative; z-index:1;">
+                    <span class="eyebrow"><span class="dot"></span> Mobil ilova</span>
+                    <h2>Bindin endi Android’da</h2>
+                    <p>Kartangizni ulang, QR orqali obuna bo‘ling va to‘lovlaringizni telefoningizdan boshqaring.</p>
+                    <p class="app-note">Google Play’dan tashqarida joylashgan APK fayl — o‘rnatishdan oldin “noma’lum manbalardan o‘rnatish” ruxsatini yoqishingiz kerak bo‘lishi mumkin.</p>
+                </div>
+                <div class="app-cta">
+                    <a href="/static/downloads/bindin-1.3.apk" class="btn btn-white btn-lg">
+                        <svg viewBox="0 0 24 24"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24c-1.44-.65-3.06-1.01-4.47-1.01s-3.03.36-4.47 1.01L5.65 5.67c-.19-.29-.58-.38-.87-.2-.28.18-.37.54-.22.83L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+                        APK yuklab olish
+                    </a>
+                    <small>Bindin 1.3 · Android</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="alt">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <span class="eyebrow">Savollar</span>
+                <h2>Ko‘p beriladigan savollar</h2>
+            </div>
+            <div class="faq">
+                <details class="reveal">
+                    <summary>Bindin pullikmi? Komissiyani kim to‘laydi? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Bindin butunlay bepul — biz hech qanday komissiya yoki obuna haqi olmaymiz. Har bir to‘lovdan faqat InPay to‘lov tizimi 6% komissiya oladi. U obuna narxi ustiga qo‘shiladi va mijoz kartasidan yechiladi. Masalan, 100 000 so‘mlik obunada mijozdan 106 000 so‘m yechiladi, biznes balansiga esa to‘liq 100 000 so‘m tushadi.</p>
+                </details>
+                <details class="reveal">
+                    <summary>Kartada pul bo‘lmasa nima bo‘ladi? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Tizim mijozning boshqa ulangan kartalaridan yechishga harakat qiladi, o‘tmasa keyingi kunlari qayta urinadi. Ketma-ket 3 marta muvaffaqiyatsiz urinishdan keyin obuna yopiladi. Webhook ulangan bo‘lsa, biznes tizimiga bu haqda avtomatik xabar yuboriladi.</p>
+                </details>
+                <details class="reveal">
+                    <summary>Mijoz obunani bekor qila oladimi? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Ha. Mijoz o‘z panelidan istalgan obunani istalgan vaqt bekor qilishi mumkin — keyingi to‘lovlar yechilmaydi.</p>
+                </details>
+                <details class="reveal">
+                    <summary>Biznes pulni qanday yechib oladi? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Biznes panelidagi “Pul yechish” bo‘limidan so‘rov yuboriladi. Minimal summa — 100 000 so‘m, oyiga bir marta yechish mumkin.</p>
+                </details>
+                <details class="reveal">
+                    <summary>Karta ma’lumotlarim xavfsizmi? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Karta egasining telefoniga yuborilgan SMS kod bilan tasdiqlanadi. Bindin karta raqamini saqlamaydi — faqat yashirilgan raqam (8600 12** **** 4821) ko‘rinadi, to‘lov tizimida esa karta o‘rniga token saqlanadi. Barcha yechimlar shu provayder orqali amalga oshiriladi.</p>
+                </details>
+                <details class="reveal">
+                    <summary>Biznes sifatida qanday ulanaman? <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></summary>
+                    <p>Hamkorlik bo‘yicha Telegram’da <a href="https://t.me/mrdili131" target="_blank" rel="noopener" style="color:var(--primary); font-weight:700;">@mrdili131</a> ga yozing — hisobingizni biznes sifatida faollashtirib, birinchi arizangizni yaratishda yordam beramiz.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding-bottom:0;">
+        <div class="wrap">
+            <div class="cta reveal">
+                <h2>Keyingi oydan to‘lovlarni<br>o‘ylamang</h2>
+                <p>Ro‘yxatdan o‘tish bir daqiqa oladi. Biznes sifatida hamkorlik qilmoqchi bo‘lsangiz — Telegram’da @mrdili131 ga yozing.</p>
+                <div class="cta-actions">
+                    <a href="/auth?mode=register" class="btn btn-white btn-lg">Hisob yaratish</a>
+                    <a href="https://t.me/mrdili131" target="_blank" rel="noopener" class="btn btn-glass btn-lg"><svg viewBox="0 0 24 24"><path d="M21.94 6.07c-.13-.53-.63-.9-1.19-.79L2.9 9.13c-.6.13-1 .68-.9 1.28.08.46.44.81.9.9l4.98 1 1.9 6.02c.15.48.6.8 1.1.8.35 0 .68-.16.9-.44l2.4-3.02 4.5 3.3c.2.15.44.22.68.22.15 0 .3-.03.44-.09.4-.16.68-.53.72-.96l1.5-11.5c.02-.19 0-.38-.08-.57z"/></svg> Biznes uchun yozish</a>
+                </div>
             </div>
         </div>
     </section>
@@ -660,9 +914,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="/" class="brand">
-                        <span class="brand-mark">
-                            <img src="static/bindin-icon-64.png" alt="Bindin">
-                        </span>
+                        <img src="static/bindin-icon-64.png" alt="Bindin">
                         Bindin
                     </a>
                     <p>O‘zbekistondagi obunalar va avtomatik to‘lovlarni boshqarish platformasi.</p>
@@ -671,13 +923,23 @@
                     <h5>Sahifalar</h5>
                     <ul>
                         <li><a href="/">Bosh sahifa</a></li>
+                        <li><a href="/about">Asoschi haqida</a></li>
                         <li><a href="/info">Aloqa</a></li>
                         <li><a href="/oferta">Ommaviy oferta</a></li>
                         <li><a href="/auth?mode=login">Kirish</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5>Bog'lanish</h5>
+                    <h5>Mahsulot</h5>
+                    <ul>
+                        <li><a href="#business">Biznes uchun</a></li>
+                        <li><a href="/api-docs">API hujjatlari</a></li>
+                        <li><a href="/static/downloads/bindin-1.3.apk">Android ilova</a></li>
+                        <li><a href="#faq">Savollar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Bog‘lanish</h5>
                     <ul>
                         <li class="footer-contact-item">
                             <svg viewBox="0 0 24 24"><path d="M21.94 6.07c-.13-.53-.63-.9-1.19-.79L2.9 9.13c-.6.13-1 .68-.9 1.28.08.46.44.81.9.9l4.98 1 1.9 6.02c.15.48.6.8 1.1.8.35 0 .68-.16.9-.44l2.4-3.02 4.5 3.3c.2.15.44.22.68.22.15 0 .3-.03.44-.09.4-.16.68-.53.72-.96l1.5-11.5c.02-.19 0-.38-.08-.57z"/></svg>
@@ -710,6 +972,46 @@
                 window.location.href = localStorage.getItem('role') === 'admin' ? '/admin' : '/dashboard';
             }
         } catch (e) {}
+
+        const nav = document.getElementById('nav');
+        const navToggle = document.getElementById('navToggle');
+        navToggle.addEventListener('click', () => {
+            const open = nav.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', open);
+        });
+        document.querySelectorAll('#navMobile a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+        const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.toggle('active', b === btn);
+                    b.setAttribute('aria-selected', b === btn);
+                });
+                document.querySelectorAll('.steps').forEach(s => s.classList.toggle('active', s.id === btn.dataset.tab));
+            });
+        });
+
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in');
+                        io.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+        }
     </script>
 </body>
 </html>
